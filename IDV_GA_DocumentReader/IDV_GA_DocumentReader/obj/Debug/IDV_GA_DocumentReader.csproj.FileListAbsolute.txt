@@ -1,0 +1,8 @@
+E:\Project\09- Gemalto\Source\IDV_GA_DocumentReader\IDV_GA_DocumentReader\bin\Debug\IDV_GA_DocumentReader.exe.config
+E:\Project\09- Gemalto\Source\IDV_GA_DocumentReader\IDV_GA_DocumentReader\bin\Debug\IDV_GA_DocumentReader.exe
+E:\Project\09- Gemalto\Source\IDV_GA_DocumentReader\IDV_GA_DocumentReader\bin\Debug\IDV_GA_DocumentReader.pdb
+E:\Project\09- Gemalto\Source\IDV_GA_DocumentReader\IDV_GA_DocumentReader\obj\Debug\IDV_GA_DocumentReader.csprojAssemblyReference.cache
+E:\Project\09- Gemalto\Source\IDV_GA_DocumentReader\IDV_GA_DocumentReader\obj\Debug\IDV_GA_DocumentReader.Properties.Resources.resources
+E:\Project\09- Gemalto\Source\IDV_GA_DocumentReader\IDV_GA_DocumentReader\obj\Debug\IDV_GA_DocumentReader.csproj.GenerateResource.cache
+E:\Project\09- Gemalto\Source\IDV_GA_DocumentReader\IDV_GA_DocumentReader\obj\Debug\IDV_GA_DocumentReader.exe
+E:\Project\09- Gemalto\Source\IDV_GA_DocumentReader\IDV_GA_DocumentReader\obj\Debug\IDV_GA_DocumentReader.pdb

@@ -1,0 +1,274 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-6 col-md-6">
+        <div class="card card-stats card-round">
+            <div class="card-body ">
+                <div class="row align-items-center" onclick="ShowReportList('1','0')" style="cursor:pointer">
+                    <div class="col-icon">
+                        <div class="icon-big text-center icon-success bubble-shadow-small">
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                    </div>
+                    <div class="col col-stats ml-3 ml-sm-0">
+                        <div class="numbers">
+                            <p class="card-category">Accepted</p>
+                            <h4 class="card-title">@ViewBag.C1</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <div class="card card-stats card-round">
+            <div class="card-body ">
+                <div class="row align-items-center" onclick="ShowReportList('1','1')" style="cursor:pointer">
+                    <div class="col-icon">
+                        <div class="icon-big text-center icon-success bubble-shadow-small">
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                    </div>
+                    <div class="col col-stats ml-3 ml-sm-0">
+                        <div class="numbers">
+                            <p class="card-category">Accepted Unread</p>
+                            <h4 class="card-title">@ViewBag.C2</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <div class="card card-stats card-round">
+            <div class="card-body ">
+                <div class="row align-items-center" onclick="ShowReportList('2','0')" style="cursor:pointer">
+                    <div class="col-icon">
+                        <div class="icon-big text-center icon-danger bubble-shadow-small">
+                            <i class="fas fa-user-slash"></i>
+                        </div>
+                    </div>
+                    <div class="col col-stats ml-3 ml-sm-0">
+                        <div class="numbers">
+                            <p class="card-category">Failed</p>
+                            <h4 class="card-title">@ViewBag.C3</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <div class="card card-stats card-round">
+            <div class="card-body ">
+                <div class="row align-items-center" onclick="ShowReportList('2','1')" style="cursor:pointer">
+                    <div class="col-icon">
+                        <div class="icon-big text-center icon-danger bubble-shadow-small">
+                            <i class="fas fa-user-slash"></i>
+                        </div>
+                    </div>
+                    <div class="col col-stats ml-3 ml-sm-0">
+                        <div class="numbers">
+                            <p class="card-category">Failed Unread</p>
+                            <h4 class="card-title">@ViewBag.C4</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <div class="card card-stats card-round">
+            <div class="card-body ">
+                <div class="row align-items-center" onclick="ShowReportList('3','0')" style="cursor:pointer">
+                    <div class="col-icon">
+                        <div class="icon-big text-center icon-warning bubble-shadow-small">
+                            <i class="fa fa-sync"></i>
+                        </div>
+                    </div>
+                    <div class="col col-stats ml-3 ml-sm-0">
+                        <div class="numbers">
+                            <p class="card-category">Reffered</p>
+                            <h4 class="card-title">@ViewBag.C5</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <div class="card card-stats card-round">
+            <div class="card-body ">
+                <div class="row align-items-center" onclick="ShowReportList('3','1')" style="cursor:pointer">
+                    <div class="col-icon">
+                        <div class="icon-big text-center icon-warning bubble-shadow-small">
+                            <i class="fa fa-sync"></i>
+                        </div>
+                    </div>
+                    <div class="col col-stats ml-3 ml-sm-0">
+                        <div class="numbers">
+                            <p class="card-category">Reffered Unread</p>
+                            <h4 class="card-title">@ViewBag.C6</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <div class="card card-stats card-round">
+            <div class="card-body ">
+                <div class="row align-items-center" onclick="ShowReportList('4','0')" style="cursor:pointer">
+                    <div class="col-icon">
+                        <div class="icon-big text-center btn-dark bubble-shadow-small">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                    </div>
+                    <div class="col col-stats ml-3 ml-sm-0">
+                        <div class="numbers">
+                            <p class="card-category">No Validation</p>
+                            <h4 class="card-title">@ViewBag.C7</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <div class="card card-stats card-round">
+            <div class="card-body ">
+                <div class="row align-items-center" onclick="ShowReportList('4','1')" style="cursor:pointer">
+                    <div class="col-icon">
+                        <div class="icon-big text-center btn-dark bubble-shadow-small">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                    </div>
+                    <div class="col col-stats ml-3 ml-sm-0">
+                        <div class="numbers">
+                            <p class="card-category">No Validation Unread</p>
+                            <h4 class="card-title">@ViewBag.C8</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <div class="card card-stats card-round">
+            <div class="card-body ">
+                <div class="row align-items-center" onclick="ShowReportList('5','0')" style="cursor:pointer">
+                    <div class="col-icon">
+                        <div class="icon-big text-center btn-primary bubble-shadow-small">
+                            <i class="fas fa-paperclip"></i>
+                        </div>
+                    </div>
+                    <div class="col col-stats ml-3 ml-sm-0">
+                        <div class="numbers">
+                            <p class="card-category">All Documents</p>
+                            <h4 class="card-title">@ViewBag.C9</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-6">
+        <div class="card card-stats card-round">
+            <div class="card-body ">
+                <div class="row align-items-center" onclick="ShowReportList('5','1')" style="cursor:pointer">
+                    <div class="col-icon">
+                        <div class="icon-big text-center btn-primary bubble-shadow-small">
+                            <i class="fas fa-paperclip"></i>
+                        </div>
+                    </div>
+                    <div class="col col-stats ml-3 ml-sm-0">
+                        <div class="numbers">
+                            <p class="card-category">All Documents Unread</p>
+                            <h4 class="card-title">@ViewBag.C10</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row row-card-no-pd">
+    <div class="col-sm-6 col-md-4">
+        <div class="card card-stats card-round">
+            <div class="card-body ">
+                <div class="row">
+                    <div class="col-5">
+                        <div class="icon-big text-center">
+                            <i class="fa fa-copyright text-warning"></i>
+                        </div>
+                    </div>
+                    <div class="col-7 col-stats">
+                        <div class="numbers">
+                            <p class="card-category">Company</p>
+                            <h4 class="card-title">@ViewBag.C11</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-4">
+        <div class="card card-stats card-round">
+            <div class="card-body ">
+                <div class="row">
+                    <div class="col-5">
+                        <div class="icon-big text-center">
+                            <i class="fas fa-code-branch text-success"></i>
+                        </div>
+                    </div>
+                    <div class="col-7 col-stats">
+                        <div class="numbers">
+                            <p class="card-category">Branch</p>
+                            <h4 class="card-title">@ViewBag.C12</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-4">
+        <div class="card card-stats card-round">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-5">
+                        <div class="icon-big text-center">
+                            <i class="fas fa-flag-checkered text-danger"></i>
+                        </div>
+                    </div>
+                    <div class="col-7 col-stats">
+                        <div class="numbers">
+                            <p class="card-category">Counter</p>
+                            <h4 class="card-title">@ViewBag.C13</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section JavaSCR{
+    <script>
+        function ShowReportList(PageCode, Unread) {
+            var BaseUrl = "";
+            switch (PageCode) {
+                case '1': { BaseUrl = "@Url.Action("Accepted","ReportList")"; break; }
+                case '2': { BaseUrl = "@Url.Action("Failed","ReportList")"; break; }
+                case '3': { BaseUrl = "@Url.Action("Reffered","ReportList")"; break; }
+                case '4': { BaseUrl = "@Url.Action("NoValidation","ReportList")"; break; }
+                case '5': { BaseUrl = "@Url.Action("AllDocuments","ReportList")"; break; }
+            }
+            if (Unread == '1') { BaseUrl = BaseUrl + "/UnRead"; }
+            window.location.href = BaseUrl;
+        }
+    </script>
+}

@@ -1,0 +1,216 @@
+﻿@{
+    string UserNameFull = "";
+    string UserRole = "Administrator";
+    try { UserNameFull = Session["Admin_FullName"].ToString().Trim(); } catch (Exception) { }
+    int EditActive = 0;
+    try { if (Session["Admin_Editable"].ToString().Trim() == "1") { UserRole += " [ Editor ]"; EditActive = 1; } } catch (Exception) { }
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+    <meta name="Author" content="IDV Pacific - Scanner Admin Panel - [EMAS]">
+    <meta name="robots" content="index, follow">
+    <title>IDV Scanner - @ViewBag.Title</title>
+    <meta name="description" content="IDV Scanner Admin Manager System">
+    <meta name="keywords" content="IDV, IDV Pacific, Scanner, Gemalto">
+    <link rel="icon" href="~/Theme/Base/images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="~/Theme/Admin/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Theme/Admin/assets/css/atlantis.min.css">
+    <link href="~/Theme/Admin/ImageFrame.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css" integrity="sha256-AWdeVMUYtwLH09F6ZHxNgvJI37p+te8hJuSMo44NVm0=" crossorigin="anonymous" />
+    <link href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="main-header">
+            <div class="logo-header" data-background-color="blue">
+                <a href="@Url.Action("Index","Dashboard")" class="logo">
+                    <img src="~/Theme/Base/images/Logo_White.png" alt="navbar brand" class="navbar-brand" style="height:60px">
+                </a>
+                <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon">
+                        <i class="fas fa-list-ul"></i>
+                    </span>
+                </button>
+                <div class="nav-toggle">
+                    <button class="btn btn-toggle toggle-sidebar">
+                        <i class="fas fa-list-ul"></i>
+                    </button>
+                </div>
+            </div>
+            <nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue2" style="text-align:right">
+                <div class="col-lg-12" style="text-align:right">
+                    <a href="@Url.Action("Logout","Dashboard")" style="color:white;font-size:14px;text-decoration:none"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </nav>
+        </div>
+        <div class="sidebar sidebar-style-2">
+            <div class="sidebar-wrapper scrollbar scrollbar-inner">
+                <div class="sidebar-content">
+                    <div class="user">
+                        <div class="info">
+                            <a>
+                                <span>
+                                    @UserNameFull
+                                    <span class="user-level">@UserRole</span>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                    <ul class="nav nav-primary">
+                        <li class="nav-item">
+                            <a href="@Url.Action("index","Dashboard")">
+                                <i class="fas fa-tachometer-alt" style="color:#1269db"></i>
+                                <p>Dashboard</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Accepted","ReportList")">
+                                <i class="fas fa-user-check" style="color:#1269db"></i>
+                                <p>Accepted</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Failed","ReportList")">
+                                <i class="fas fa-user-slash" style="color:#1269db"></i>
+                                <p>Failed</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Reffered","ReportList")">
+                                <i class="fa fa-sync" style="color:#1269db"></i>
+                                <p>Reffered</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("NoValidation","ReportList")">
+                                <i class="fas fa-exclamation-triangle" style="color:#1269db"></i>
+                                <p>No Validation</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("AllDocuments","ReportList")">
+                                <i class="fas fa-paperclip" style="color:#1269db"></i>
+                                <p>All Documents</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a data-toggle="collapse" href="#Company">
+                                <i class="fa fa-copyright" style="color:#1269db"></i>
+                                <p>Customers</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" id="Company">
+                                <ul class="nav nav-collapse">
+                                    <li>
+                                        <a href="#">
+                                            <span class="sub-item">Company List</span>
+                                        </a>
+                                        <a href="#">
+                                            <span class="sub-item">Branch List</span>
+                                        </a>
+                                        <a href="#">
+                                            <span class="sub-item">Counter List</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        @if (EditActive == 1)
+                        {
+                            <hr />
+                            <li class="nav-item">
+                                <a data-toggle="collapse" href="#AddManually">
+                                    <i class="fa fa-plus" style="color:#1269db"></i>
+                                    <p>Add Manually</p>
+                                    <span class="caret"></span>
+                                </a>
+                                <div class="collapse" id="AddManually">
+                                    <ul class="nav nav-collapse">
+                                        <li>
+                                            <a href="@Url.Action("GA_NewPassport","AUE")">
+                                                <span class="sub-item">Gemalto Passport</span>
+                                            </a>
+                                            <a href="@Url.Action("GA_NewDrivinglicense","AUE")">
+                                                <span class="sub-item">Gemalto Driving Lic</span>
+                                            </a>
+                                            <a href="@Url.Action("AC_NewPassport","AUE")">
+                                                <span class="sub-item">Acuant Passport</span>
+                                            </a>
+                                            <a href="@Url.Action("AC_NewDrivinglicense","AUE")">
+                                                <span class="sub-item">Acuant Driving Lic</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="main-panel">
+            <div class="content">
+                <div class="panel-header bg-primary-gradient">
+                    <div class="page-inner py-5">
+                        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                        </div>
+                    </div>
+                </div>
+                <div class="page-inner mt--5">
+                    @RenderBody()
+                </div>
+            </div>
+            <footer class="footer">
+                <div class="container-fluid">
+                    <nav class="pull-left">
+                        <ul class="nav">
+                            <li class="nav-item">
+                                <a class="nav-link" style="font-size:12px" href="https://www.idvpacific.com.au/tos">
+                                    Term
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" style="font-size:12px" href="https://idvpacific.com.au/cookie-policy">
+                                    Cookies
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" style="font-size:12px" href="https://www.idvpacific.com.au/privacy-policy">
+                                    Privacy
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="copyright ml-auto" style="font-size:12px">IDV Pacific Pty Ltd - All right Reserved © 2020</div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="~/Theme/Admin/assets/js/core/jquery.3.2.1.min.js"></script>
+    <script src="~/Theme/Admin/assets/js/core/popper.min.js"></script>
+    <script src="~/Theme/Admin/assets/js/core/bootstrap.min.js"></script>
+    <script src="~/Theme/Admin/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+    <script src="~/Theme/Admin/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+    <script src="~/Theme/Admin/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="~/Theme/Admin/assets/js/plugin/datatables/datatables.min.js"></script>
+    <script src="~/Theme/Admin/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+    <script src="~/Theme/Admin/assets/js/plugin/jqvmap/jquery.vmap.min.js"></script>
+    <script src="~/Theme/Admin/assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>
+    <script src="~/Theme/Admin/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+    <script src="~/Theme/Admin/assets/js/atlantis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js" integrity="sha256-SUaao5Q7ifr2twwET0iyXVy0OVnuFJhGVi5E/dqEiLU=" crossorigin="anonymous"></script>
+    <script>
+        function ShowNoti(placementFrom, placementAlign, state, style, title, message, icon) {
+            var content = {};
+            content.message = message;
+            content.title = title;
+            if (style == "withicon") { content.icon = icon; } else { content.icon = 'none'; }
+            $.notify(content, { type: state, placement: { from: placementFrom, align: placementAlign }, time: 1000, delay: 1500, });
+        };
+    </script>
+    @RenderSection("JavaSCR", false)
+</body>
+</html>
