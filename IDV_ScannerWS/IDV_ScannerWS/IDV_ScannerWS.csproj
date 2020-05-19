@@ -47,6 +47,9 @@
     <Reference Include="Swashbuckle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cd1bb07a5ac7c7bc, processorArchitecture=MSIL">
       <HintPath>..\packages\Swashbuckle.Core.5.6.0\lib\net40\Swashbuckle.Core.dll</HintPath>
     </Reference>
+    <Reference Include="System.Interactive, Version=4.1.0.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Interactive.4.1.1\lib\net45\System.Interactive.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -485,6 +488,7 @@
     <Content Include="Theme\Admin\assets\js\plugin\webfont\webfont.min.js" />
     <Content Include="Theme\Admin\assets\js\setting-demo.js" />
     <Content Include="Theme\Admin\assets\js\setting-demo2.js" />
+    <Content Include="Theme\Admin\CSS_SAlert.css" />
     <Content Include="Theme\Admin\ImageFrame.css" />
     <Content Include="Theme\Base\images\favicon.ico" />
     <Content Include="Theme\Base\images\logo.png" />
@@ -549,6 +553,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AUEController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CustomersController.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Admin\Controllers\EditorController.cs" />
     <Compile Include="Areas\Admin\Controllers\ReportListController.cs" />
@@ -559,6 +564,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Security\EMASRoleProvider.cs" />
+    <Compile Include="Modules\Crypt.cs" />
     <Compile Include="Modules\HTTPRequest_Header.cs" />
     <Compile Include="Modules\PublicFunctions.cs" />
     <Compile Include="Modules\SQL_Tranceiver.cs" />
@@ -580,6 +586,8 @@
     <Content Include="Areas\Admin\Views\Reports\ACD.cshtml" />
     <Content Include="Areas\Admin\Views\AUE\GA_NewPassport.cshtml" />
     <Content Include="Areas\Admin\Views\Editor\GAP.cshtml" />
+    <Content Include="Areas\Admin\Views\Customers\Company.cshtml" />
+    <Content Include="Areas\Admin\Views\Customers\CompanyEditor.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\ErrorPage\Error404.cshtml" />
     <Content Include="Views\ErrorPage\Error500.cshtml" />

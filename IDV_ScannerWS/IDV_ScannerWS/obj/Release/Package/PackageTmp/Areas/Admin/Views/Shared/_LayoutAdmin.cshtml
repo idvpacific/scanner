@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="~/Theme/Admin/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/Theme/Admin/assets/css/atlantis.min.css">
     <link href="~/Theme/Admin/ImageFrame.css" rel="stylesheet" />
+    <link href="~/Theme/Admin/CSS_SAlert.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css" integrity="sha256-AWdeVMUYtwLH09F6ZHxNgvJI37p+te8hJuSMo44NVm0=" crossorigin="anonymous" />
     <link href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 </head>
@@ -105,14 +106,17 @@
                             <div class="collapse" id="Company">
                                 <ul class="nav nav-collapse">
                                     <li>
-                                        <a href="#">
+                                        <a href="@Url.Action("Company","Customers")">
                                             <span class="sub-item">Company List</span>
                                         </a>
-                                        <a href="#">
+                                        <a href="@Url.Action("Branch","Customers")" style="opacity:0.5;pointer-events:none">
                                             <span class="sub-item">Branch List</span>
                                         </a>
-                                        <a href="#">
+                                        <a href="@Url.Action("Counter","Customers")" style="opacity:0.5;pointer-events:none">
                                             <span class="sub-item">Counter List</span>
+                                        </a>
+                                        <a href="@Url.Action("Logs","Customers")">
+                                            <span class="sub-item">Device Log</span>
                                         </a>
                                     </li>
                                 </ul>

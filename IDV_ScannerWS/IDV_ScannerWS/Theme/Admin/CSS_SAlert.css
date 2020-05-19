@@ -1,0 +1,38 @@
+﻿
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+    .closebtn:hover {
+        color: black;
+    }
+
+
+.swal-text {
+    text-align: left;
+    font-size: 14px;
+    font-family: Arial;
+    direction: ltr
+}
+
+.swal-header {
+    text-align: center;
+    font-size: 14px;
+    font-family: Arial;
+    direction: rtl
+}
+
+.swal-footer {
+    background-color: rgb(245, 248, 250);
+    margin-top: 32px;
+    border-top: 1px solid #E9EEF1;
+    overflow: hidden;
+}
+

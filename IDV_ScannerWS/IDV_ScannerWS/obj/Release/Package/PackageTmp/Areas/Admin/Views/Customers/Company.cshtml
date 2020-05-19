@@ -1,0 +1,379 @@
+﻿@using System.Data;
+@{
+    ViewBag.Title = "Company Manager";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="row mt--2">
+    <div class="col-md-12">
+        <div class="card full-height">
+            <div class="card-body">
+                <div class="card-title" style="color:#146de0"><i class="fa fa-building"></i> Add New Company</div>
+                <form class="d-flex flex-wrap justify-content-around pb-2 pt-4" id="EmasFrm">
+                    <div class="form-group col-lg-4">
+                        <label for="Txt_FistName" style="margin-left:10px">Company Name</label>
+                        <input type="text" class="form-control" id="Txt_ComName" placeholder="Company Name *">
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label for="Txt_FistName" style="margin-left:10px">Company ABN</label>
+                        <input type="text" class="form-control" id="Txt_ABN" placeholder="Company ABN">
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label for="Txt_FistName" style="margin-left:10px">License Expiration Date</label>
+                        <input type="text" class="form-control" id="Txt_EXP" placeholder="Expiry Date (DD/MM/YYYY)">
+                    </div>
+                    <div class="form-group col-lg-12">
+                        <label for="Txt_FistName" style="margin-left:10px">Company Address</label>
+                        <input type="text" class="form-control" id="Txt_ADD" placeholder="Address">
+                    </div>
+                    <hr class="col-lg-12" style="height:1px" />
+                    <div class="col-lg-12" style="font-weight:bold;font-size:15px;color:#146de0"><i class="fa fa-lock" style="margin-right:10px"></i>Security Setting</div>
+                    <div class="form-group col-lg-6">
+                        <label for="Txt_FistName" style="margin-left:10px">API Private Key<i class="fa fa-sync-alt" style="margin-left:10px;color:#146de0;cursor:pointer" onclick="GenerateCode('1')"></i></label>
+                        <input type="text" class="form-control" id="Txt_PK" placeholder="Private Key *">
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label for="Txt_FistName" style="margin-left:10px">API Password<i class="fa fa-sync-alt" style="margin-left:10px;color:#146de0;cursor:pointer" onclick="GenerateCode('2')"></i></label>
+                        <input type="text" class="form-control" id="Txt_PS" placeholder="Password *">
+                    </div>
+                    <div class="form-group col-lg-12">
+                        <label for="Txt_FistName" style="margin-left:10px">Call Back URL</label>
+                        <input type="text" class="form-control" id="Txt_CBU" placeholder="Call Back URL">
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label for="Txt_FistName" style="margin-left:10px">Win App Passwrod<i class="fa fa-sync-alt" style="margin-left:10px;color:#146de0;cursor:pointer" onclick="GenerateCode('3')"></i></label>
+                        <input type="text" class="form-control" id="Txt_PS_Con" placeholder="Config Password *">
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label for="Txt_FistName" style="margin-left:10px">Authentication Username<i class="fa fa-sync-alt" style="margin-left:10px;color:#146de0;cursor:pointer" onclick="GenerateCode('4')"></i></label>
+                        <input type="text" class="form-control" id="Txt_AT_US" placeholder="Authentication Username">
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label for="Txt_FistName" style="margin-left:10px">Authentication Password<i class="fa fa-sync-alt" style="margin-left:10px;color:#146de0;cursor:pointer" onclick="GenerateCode('5')"></i></label>
+                        <input type="text" class="form-control" id="Txt_AT_PS" placeholder="Authentication Password">
+                    </div>
+                    <hr class="col-lg-12" style="height:1px" />
+                    <div class="col-lg-12" style="font-weight:bold;font-size:15px;color:#146de0"><i class="fa fa-user" style="margin-right:10px"></i>Prime Contact</div>
+                    <div class="form-group col-lg-4">
+                        <label for="Txt_FistName" style="margin-left:10px">First Name</label>
+                        <input type="text" class="form-control" id="Txt_PC_FN" placeholder="First Name *">
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label for="Txt_FistName" style="margin-left:10px">Last Name</label>
+                        <input type="text" class="form-control" id="Txt_PC_LN" placeholder="Last Name *">
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label for="Txt_FistName" style="margin-left:10px">Position</label>
+                        <input type="text" class="form-control" id="Txt_PC_PS" placeholder="Position">
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label for="Txt_FistName" style="margin-left:10px">Phone Number</label>
+                        <input type="text" class="form-control" id="Txt_PC_PN" placeholder="Phone Number *">
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label for="Txt_FistName" style="margin-left:10px">Email Address</label>
+                        <input type="text" class="form-control" id="Txt_PC_EA" placeholder="Email Address *">
+                    </div>
+                    <hr class="col-lg-12" style="height:1px" />
+                    <div class="col-lg-12" style="font-weight:bold;font-size:15px;color:#146de0"><i class="fa fa-user" style="margin-right:10px"></i>Secondary Contact</div>
+                    <div class="form-group col-lg-4">
+                        <label for="Txt_FistName" style="margin-left:10px">First Name</label>
+                        <input type="text" class="form-control" id="Txt_SC_FN" placeholder="First Name">
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label for="Txt_FistName" style="margin-left:10px">Last Name</label>
+                        <input type="text" class="form-control" id="Txt_SC_LN" placeholder="Last Name">
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label for="Txt_FistName" style="margin-left:10px">Position</label>
+                        <input type="text" class="form-control" id="Txt_SC_PS" placeholder="Position">
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label for="Txt_FistName" style="margin-left:10px">Phone Number</label>
+                        <input type="text" class="form-control" id="Txt_SC_PN" placeholder="Phone Number">
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label for="Txt_FistName" style="margin-left:10px">Email Address</label>
+                        <input type="text" class="form-control" id="Txt_SC_EA" placeholder="Email Address">
+                    </div>
+                    <div class="col-lg-12" style="text-align:right;margin-top:25px">
+                        <a href="javascript:void(0)" id="BtnUF" onclick="AddNew()" class="btn btn-success col-lg-2 col-md-12 col-sm-12" style="min-width:200px;margin:5px"><i class="fas fa-address-card" style="margin-right:10px"></i>Add New Company</a>
+                        <a href="javascript:void(0)" onclick="ResetData()" class="btn btn-danger col-lg-2 col-md-12 col-sm-12" style="min-width:200px;margin:5px"><i class="fas fa-trash" style="margin-right:10px"></i>Clear Form</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title" style="color:#146de0"><i class="fa fa-address-book"></i> Company List</div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="basic-datatables" class="display table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th style="font-size:12px;text-align:center">Name</th>
+                                <th style="font-size:12px;text-align:center">[P] Name</th>
+                                <th style="font-size:12px;text-align:center">[P] Email</th>
+                                <th style="font-size:12px;text-align:center">[P] Position</th>
+                                <th style="font-size:12px;text-align:center">Status</th>
+                                <th style="font-size:12px;text-align:center">Tools</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th style="font-size:12px;text-align:center">Name</th>
+                                <th style="font-size:12px;text-align:center">[P] Name</th>
+                                <th style="font-size:12px;text-align:center">[P] Email</th>
+                                <th style="font-size:12px;text-align:center">[P] Position</th>
+                                <th style="font-size:12px;text-align:center">Status</th>
+                                <th style="font-size:12px;text-align:center">Tools</th>
+                            </tr>
+                        </tfoot>
+                        <tbody id="TBD">
+                            @foreach (DataRow Row in ViewBag.DT)
+                            {
+                                <tr>
+                                    <td style="text-align:left;cursor:pointer" onclick="ShowBranch('@Row[0].ToString().Trim()')">@Row[1].ToString().Trim()</td>
+                                    <td style="text-align:left;cursor:pointer" onclick="ShowBranch('@Row[0].ToString().Trim()')">@Row[2].ToString().Trim()</td>
+                                    <td style="text-align:left;cursor:pointer" onclick="ShowBranch('@Row[0].ToString().Trim()')">@Row[3].ToString().Trim()</td>
+                                    <td style="text-align:left;cursor:pointer" onclick="ShowBranch('@Row[0].ToString().Trim()')">@Row[4].ToString().Trim()</td>
+                                    @if (Row[8].ToString().Trim() == "0")
+                                    {
+                                        <td style="text-align:center;cursor:pointer" onclick="ShowBranch('@Row[0].ToString().Trim()')"><i class="far fa-circle"></i></td>
+                                    }
+                                    else
+                                    {
+                                        <td style="text-align:center;cursor:pointer" onclick="ShowBranch('@Row[0].ToString().Trim()')"><i class="far fa-check-circle"></i></td>
+                                    }
+                                    <td style="text-align:center">
+                                        <a href="javascript:void(0)" onclick="DLCF('@Row[0].ToString().Trim()','1')" class="fa fa-sticky-note" style="text-decoration:none;margin-right:5px" title=" Download Authentication Keys "></a>
+                                        <a href="javascript:void(0)" onclick="DLCF('@Row[0].ToString().Trim()','2')" class="fa fa-lock" style="text-decoration:none;margin-right:5px" title=" Download Secure Config File "></a>
+                                        <a href="javascript:void(0)" onclick="ShowInfo('@Row[0].ToString().Trim()')" class="fa fa-info-circle" style="text-decoration:none;margin-right:5px" title=" Show Company Information "></a>
+                                        <a href="javascript:void(0)" onclick="RowEdit('@Row[0].ToString().Trim()')" class="fa fa-pen" style="text-decoration:none;margin-right:5px" title=" Edit Company Account "></a>
+                                        <a href="javascript:void(0)" onclick="RowDelete('@Row[0].ToString().Trim()')" class="fa fa-trash" style="text-decoration:none" title=" Delete Company Account "></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section JavaSCR{
+    <script>
+        oTable = $('#basic-datatables').DataTable();
+        function ResetData() {
+            document.getElementById("EmasFrm").reset();
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+            document.getElementById("Txt_ComName").focus();
+        }
+        function GridReload() {
+            $.ajax({
+                url: "@Url.Action("Company_GridReload", "Customers")",
+                type: "POST",
+                dataType: 'json',
+                async: true,
+                error: function () { ShowNoti('top', 'right', 'warning', 'withicon', 'System Error ...', "The server encountered an error while executing your request [Err1]", 'fa fa-exclamation-triangle'); },
+                success: function (data)
+                {
+                    var ResText = ""; var ResCode = "";
+                    $.each(data, function (i, item) { ResText = item.Text; ResCode = item.Value; });
+                    if (ResCode == "2") {
+                        document.getElementById("TBD").innerHTML = "";
+                        document.getElementById("TBD").innerHTML = ResText.trim();
+                        oTable = $('#basic-datatables').DataTable();
+                    }
+                    else {
+                        ShowNoti('top', 'right', 'warning', 'withicon', 'System Error ...', "The server encountered an error while executing your request [Err2]", 'fa fa-exclamation-triangle');
+                    }
+                }
+            });
+        }
+        function AddNew() {
+            var ErrOC = 0;
+            if (document.getElementById("Txt_ComName").value.trim() == "") { ErrOC = 1; ShowNoti('top', 'right', 'danger', 'withicon', 'System Error ...', "Please fill Please enter the company name field", 'fa fa-exclamation-triangle'); }
+            if (document.getElementById("Txt_PK").value.trim() == "") { ErrOC = 1; ShowNoti('top', 'right', 'danger', 'withicon', 'System Error ...', "Please fill Please enter the API private key field", 'fa fa-exclamation-triangle'); }
+            if (document.getElementById("Txt_PS").value.trim() == "") { ErrOC = 1; ShowNoti('top', 'right', 'danger', 'withicon', 'System Error ...', "Please fill Please enter the API password field", 'fa fa-exclamation-triangle'); }
+            if (document.getElementById("Txt_PS_Con").value.trim() == "") { ErrOC = 1; ShowNoti('top', 'right', 'danger', 'withicon', 'System Error ...', "Please fill Please enter the windows application password field", 'fa fa-exclamation-triangle'); }
+            if (document.getElementById("Txt_PC_FN").value.trim() == "") { ErrOC = 1; ShowNoti('top', 'right', 'danger', 'withicon', 'System Error ...', "Please fill Please enter the prime contact first name field", 'fa fa-exclamation-triangle'); }
+            if (document.getElementById("Txt_PC_LN").value.trim() == "") { ErrOC = 1; ShowNoti('top', 'right', 'danger', 'withicon', 'System Error ...', "Please fill Please enter the prime contact last name field", 'fa fa-exclamation-triangle'); }
+            if (document.getElementById("Txt_PC_PN").value.trim() == "") { ErrOC = 1; ShowNoti('top', 'right', 'danger', 'withicon', 'System Error ...', "Please fill Please enter the prime contact phone number field", 'fa fa-exclamation-triangle'); }
+            if (document.getElementById("Txt_PC_EA").value.trim() == "") { ErrOC = 1; ShowNoti('top', 'right', 'danger', 'withicon', 'System Error ...', "Please fill Please enter the prime contact email address field", 'fa fa-exclamation-triangle'); }
+            if (ErrOC == 1) { $('#BtnUF').blur(); return; }
+            $.ajax({
+                url: "@Url.Action("Company_A1", "Customers")",
+                type: "POST",
+                dataType: 'json',
+                data: { NM: $("#Txt_ComName").val(), ABN: $("#Txt_ABN").val(), EXD: $("#Txt_EXP").val(), ADD: $("#Txt_ADD").val()},
+                async: false,
+                error: function () { ShowNoti('top', 'right', 'warning', 'withicon', 'System Error ...', "The server encountered an error while executing your request [Err1]", 'fa fa-exclamation-triangle'); },
+                success: function (data)
+                {
+                    var ResText = ""; var ResCode = ""; $.each(data, function (i, item) { ResText = item.Text; ResCode = item.Value; });
+                    if (ResCode == "2") {
+                        $.ajax({
+                            url: "@Url.Action("Company_A2", "Customers")",
+                            type: "POST",
+                            dataType: 'json',
+                            data: { BC: ResText, PK: $("#Txt_PK").val(), PS: $("#Txt_PS").val(), CBU: $("#Txt_CBU").val(), CPS: $("#Txt_PS_Con").val(), ATU: $("#Txt_AT_US").val(), ATP: $("#Txt_AT_PS").val() },
+                            async: false,
+                            error: function () {},
+                            success: function (data) { }
+                        });
+                        $.ajax({
+                            url: "@Url.Action("Company_A3", "Customers")",
+                            type: "POST",
+                            dataType: 'json',
+                            data: { BC: ResText, FN: $("#Txt_PC_FN").val(), LN: $("#Txt_PC_LN").val(), PS: $("#Txt_PC_PS").val(), PN: $("#Txt_PC_PN").val(), EA: $("#Txt_PC_EA").val() },
+                            async: false,
+                            error: function () {},
+                            success: function (data) { }
+                        });
+                        $.ajax({
+                            url: "@Url.Action("Company_A4", "Customers")",
+                            type: "POST",
+                            dataType: 'json',
+                            data: { BC: ResText, FN: $("#Txt_SC_FN").val(), LN: $("#Txt_SC_LN").val(), PS: $("#Txt_SC_PS").val(), PN: $("#Txt_SC_PN").val(), EA: $("#Txt_SC_EA").val() },
+                            async: false,
+                            error: function () { },
+                            success: function (data) { }
+                        });
+                        ShowNoti('top', 'right', 'success', 'withicon', 'Congratulations', "New company added to your list successfully", 'fas fa-check');
+                        GridReload();
+                        ResetData();
+                    }
+                    else {
+                        ShowNoti('top', 'right', 'warning', 'withicon', 'System Error ...', "The server encountered an error while executing your request [Err2]", 'fa fa-exclamation-triangle');
+                    }
+                }
+            });
+        }
+        function GenerateCode(WOT) {
+            $.ajax({
+                url: "@Url.Action("GenerateRandomKey", "Customers")",
+                type: "POST",
+                dataType: 'json',
+                data: { WOT: WOT },
+                async: false,
+                error: function () { ShowNoti('top', 'right', 'warning', 'withicon', 'System Error ...', "The server encountered an error while executing your request [Err1]", 'fa fa-exclamation-triangle'); },
+                success: function (data)
+                {
+                    var ResText = ""; var ResCode = "";
+                    $.each(data, function (i, item) { ResText = item.Text; ResCode = item.Value; });
+                    if (ResCode == "2") {
+                        if (WOT == '1') {
+                            document.getElementById("Txt_PK").value = ResText;
+                        }
+                        else {
+                            if (WOT == '2') {
+                                document.getElementById("Txt_PS").value = ResText;
+                            }
+                            else {
+                                if (WOT == '3') {
+                                    document.getElementById("Txt_PS_Con").value = ResText;
+                                }
+                                else {
+                                    if (WOT == '4') {
+                                        document.getElementById("Txt_AT_US").value = ResText;
+                                    }
+                                    else {
+                                        if (WOT == '5') {
+                                            document.getElementById("Txt_AT_PS").value = ResText;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else {
+                        ShowNoti('top', 'right', 'warning', 'withicon', 'System Error ...', "The server encountered an error while executing your request [Err2]", 'fa fa-exclamation-triangle');
+                    }
+                }
+            });
+        }
+        function ShowBranch(CID) {
+            ShowNoti('top', 'right', 'warning', 'withicon', 'Admin Access ...', "This feature is disabled on the version", 'fa fa-exclamation-triangle');
+            return;
+            var BaseUrl = "@Url.Action("Branch", "Customers")";
+            BaseUrl = BaseUrl + "/" + CID;
+            window.location.href = BaseUrl;
+        }
+        function ShowInfo(CID) {
+            $.ajax({
+                url: "@Url.Action("Company_ShowInfo", "Customers")",
+                type: "POST",
+                dataType: 'json',
+                data: { CID: CID },
+                async: false,
+                error: function () { ShowNoti('top', 'right', 'warning', 'withicon', 'System Error ...', "The server encountered an error while executing your request [Err1]", 'fa fa-exclamation-triangle'); },
+                success: function (data)
+                {
+                    var ResText = ""; var ResCode = "";
+                    $.each(data, function (i, item) { ResText = item.Text; ResCode = item.Value; });
+                    if (ResCode == "2") {
+                        swal({ text: ResText, icon: "info", button: "OK", });
+                    }
+                    else {
+                        ShowNoti('top', 'right', 'warning', 'withicon', 'System Error ...', "The server encountered an error while executing your request [Err2]", 'fa fa-exclamation-triangle');
+                    }
+                }
+            });
+        }
+        function RowEdit(CID) {
+            var BaseUrl = "@Url.Action("CompanyEditor", "Customers")";
+            BaseUrl = BaseUrl + "/" + CID;
+            window.location.href = BaseUrl;
+        }
+        function RowDelete(CID) {
+            swal({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                buttons: {
+                    confirm: {
+                        text: 'Yes, delete it!',
+                        className: 'btn btn-success'
+                    },
+                    cancel: {
+                        visible: true,
+                        className: 'btn btn-danger'
+                    }
+                }
+            }).then((Data) => {
+                if (Data) {
+                    $.ajax({
+                        url: "@Url.Action("Company_Remove", "Customers")",
+                        type: "POST",
+                        dataType: 'json',
+                        data: { CID: CID },
+                        async: false,
+                        error: function () { ShowNoti('top', 'right', 'warning', 'withicon', 'System Error ...', "The server encountered an error while executing your request [Err1]", 'fa fa-exclamation-triangle'); },
+                        success: function (data)
+                        {
+                            var ResText = ""; var ResCode = "";
+                            $.each(data, function (i, item) { ResText = item.Text; ResCode = item.Value; });
+                            if (ResCode == "2") {
+                                ShowNoti('top', 'right', 'success', 'withicon', 'Congratulations', ResText, 'fas fa-check');
+                                GridReload();
+                            }
+                            else {
+                                ShowNoti('top', 'right', 'warning', 'withicon', 'System Error ...', "The server encountered an error while executing your request [Err2]", 'fa fa-exclamation-triangle');
+                            }
+                        }
+                    });
+                } else { swal.close(); }
+            });
+        }
+        function DLCF(CFS, DCD) {
+            var BURL = "@Url.Action("DwnldFL", "Customers", new { id="ABC" })";
+            BURL = BURL.replace("ABC", CFS + "-" + DCD);
+            window.open(BURL, '_blank');
+        }
+    </script>
+}

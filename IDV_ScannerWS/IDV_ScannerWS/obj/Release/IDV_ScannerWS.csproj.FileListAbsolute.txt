@@ -76,3 +76,6 @@ E:\Project\09- Gemalto\Source\IDV_ScannerWS\IDV_ScannerWS\obj\Release\IDV_Scanne
 E:\Project\09- Gemalto\Source\IDV_ScannerWS\IDV_ScannerWS\obj\Release\IDV_ScannerWS.csproj.CopyComplete
 E:\Project\09- Gemalto\Source\IDV_ScannerWS\IDV_ScannerWS\obj\Release\IDV_ScannerWS.dll
 E:\Project\09- Gemalto\Source\IDV_ScannerWS\IDV_ScannerWS\obj\Release\IDV_ScannerWS.pdb
+E:\Project\09- Gemalto\Source\IDV_ScannerWS\IDV_ScannerWS\obj\Release\IDV_ScannerWS.csproj.CoreCompileInputs.cache
+E:\Project\09- Gemalto\Source\IDV_ScannerWS\IDV_ScannerWS\bin\System.Interactive.dll
+E:\Project\09- Gemalto\Source\IDV_ScannerWS\IDV_ScannerWS\bin\System.Interactive.xml
