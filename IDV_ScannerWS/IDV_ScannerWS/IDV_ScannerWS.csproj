@@ -543,11 +543,14 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\AddLogController.cs" />
     <Compile Include="API\BaseInfoController.cs" />
     <Compile Include="API\GA_01_MRZ_DataController.cs" />
     <Compile Include="API\GA_03_ValidateController.cs" />
     <Compile Include="API\GA_04_PhotoUploaderController.cs" />
     <Compile Include="API\GA_02_ChipDataController.cs" />
+    <Compile Include="API\WA_01_LoginController.cs" />
+    <Compile Include="API\WA_02_AppLicController.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />

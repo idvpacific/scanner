@@ -326,6 +326,7 @@ namespace IDV_ScannerWS.Areas.Admin.Controllers
                 string ATP = "";
                 string MainBody = "";
                 string DownFileName = "";
+                string API_Address = "";
                 DataTable DT = new DataTable();
                 DT = SQ.Get_DTable_TSQL("Select ID,Name,API_PrivateKey,API_Password,Config_Password,Authentication_User,Authentication_Password,ExpiryDate From Reader_Company Where (ID = '" + ComID + "') And (Is_Active = '1') And (Removed = '0')");
                 if (DT.Rows != null)
@@ -340,6 +341,11 @@ namespace IDV_ScannerWS.Areas.Admin.Controllers
                         WPS = DT.Rows[0][4].ToString().Trim();
                         ATU = DT.Rows[0][5].ToString().Trim();
                         ATP = DT.Rows[0][6].ToString().Trim();
+                        API_Address = Request.Url.GetLeftPart(UriPartial.Authority);
+                        if (API_Address.Substring((API_Address.Length) - 1, 1) == "/") 
+                        {
+                            API_Address = API_Address.Substring(0, API_Address.Length - 1).Trim();
+                        }
                         if (DataType == "1")
                         {
                             MainBody = "";
@@ -357,6 +363,8 @@ namespace IDV_ScannerWS.Areas.Admin.Controllers
                             {
                                 MainBody += "- License Expired : " + "Unlimited" + "\r\n";
                             }
+                            MainBody += "---------------------------------------------------------" + "\r\n\r\n";
+                            MainBody += "API Address : " + API_Address + "\r\n\r\n";
                             MainBody += "---------------------------------------------------------" + "\r\n\r\n";
                             MainBody += "API Private Key : " + PK + "\r\n";
                             MainBody += "API Password : " + PS + "\r\n\r\n";
@@ -379,7 +387,16 @@ namespace IDV_ScannerWS.Areas.Admin.Controllers
                             string EncCode3 = PB.Make_Security_CodeFake(1200);
                             System.Threading.Thread.Sleep(100);
                             string EncCode4 = PB.Make_Security_CodeFake(2300);
-                            MainBody = "IDV" + "-" + CompanyID + "-" + CompanyName + "-" + LicExpDate + "-" + PK + "-" + "EMAS" + "-" + PS + "-" + WPS + "-" + ATU + "-" + ATP + "-" + "PACIFIC";
+                            CompanyID = CompanyID.Replace("-", "_");
+                            CompanyName = CompanyName.Replace("-", "_");
+                            LicExpDate = LicExpDate.Replace("-", "_");
+                            PK = PK.Replace("-", "^");
+                            PS = PS.Replace("-", "^");
+                            WPS = WPS.Replace("-", "^");
+                            ATU = ATU.Replace("-", "^");
+                            ATP = ATP.Replace("-", "^");
+                            API_Address = API_Address.Replace("-", "^");
+                            MainBody = "IDV" + "-" + CompanyID + "-" + CompanyName + "-" + LicExpDate + "-" + PK + "-" + API_Address + "-" + "EMAS" + "-" + PS + "-" + WPS + "-" + ATU + "-" + ATP + "-" + "PACIFIC";
                             MainBody = EncDec.Encrypt(MainBody, EncCode1);
                             MainBody = EncDec.Encrypt(MainBody, EncCode2);
                             MainBody = EncCode3 + EncCode1 + MainBody + EncCode2 + EncCode4;
