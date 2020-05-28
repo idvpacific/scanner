@@ -43,7 +43,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AssureTec.AssureID.Web.SDK">
+      <HintPath>..\..\..\..\12- IDV Reader\Test\AssureTec.AssureID.Web.SDK.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PresentationCore" />
     <Reference Include="Swashbuckle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cd1bb07a5ac7c7bc, processorArchitecture=MSIL">
       <HintPath>..\packages\Swashbuckle.Core.5.6.0\lib\net40\Swashbuckle.Core.dll</HintPath>
     </Reference>
@@ -545,6 +549,13 @@
   <ItemGroup>
     <Compile Include="API\AddLogController.cs" />
     <Compile Include="API\BaseInfoController.cs" />
+    <Compile Include="API\DL_01_CreateApplicationController.cs" />
+    <Compile Include="API\DL_02_UploadImageController.cs" />
+    <Compile Include="API\DL_03_PublishController.cs" />
+    <Compile Include="API\DL_04_ApplicationStatusController.cs" />
+    <Compile Include="API\DL_05_ResultController.cs" />
+    <Compile Include="API\DL_06_SaveResultController.cs" />
+    <Compile Include="API\DL_07_CallBackURLController.cs" />
     <Compile Include="API\GA_01_MRZ_DataController.cs" />
     <Compile Include="API\GA_03_ValidateController.cs" />
     <Compile Include="API\GA_04_PhotoUploaderController.cs" />
@@ -567,6 +578,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Security\EMASRoleProvider.cs" />
+    <Compile Include="Modules\AssureID.cs" />
     <Compile Include="Modules\Crypt.cs" />
     <Compile Include="Modules\HTTPRequest_Header.cs" />
     <Compile Include="Modules\PublicFunctions.cs" />
