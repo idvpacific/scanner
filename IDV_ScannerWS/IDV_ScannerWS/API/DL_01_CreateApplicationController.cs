@@ -32,7 +32,9 @@ namespace IDV_ScannerWS.API
                 {
                     if (DT1.Rows.Count == 1)
                     {
-                        if (PB.ExpiredDateCheck(DT1.Rows[0][0].ToString().Trim(), PB.Get_Date()) == true)
+                        string EXPD = DT1.Rows[0][0].ToString().Trim();
+                        if (EXPD.Trim() == "") { EXPD = PB.Get_Date(); }
+                        if (PB.ExpiredDateCheck(EXPD, PB.Get_Date()) == true)
                         {
                             string RelatCode = (CID + DID + UID + PB.Make_Security_Code(10) + PB.Get_Date().Replace("/", "") + PB.Get_Time().Replace(":", "")).Replace(" ", "");
                             SQ.Execute_TSql("Insert Into US_DL_01_Application Values ('" + CID + "','" + DID + "','" + UID + "','" + IP + "','" + PB.Get_Date() + "','" + PB.Get_Time() + "','" + RelatCode + "','0','1','Wait For Upload','" + PB.Get_Date() + "','" + PB.Get_Time() + "')");

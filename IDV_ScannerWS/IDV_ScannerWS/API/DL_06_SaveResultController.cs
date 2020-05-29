@@ -20,8 +20,19 @@ namespace IDV_ScannerWS.API
         SQL_Tranceiver SQ = new SQL_Tranceiver();
         PublicFunctions PB = new PublicFunctions();
         //--------------------------------------------------------------------------
-        public void Post(string APPID)
+        public void Post(string APPID,string DocID,string Key, string Value)
         {
+            try
+            {
+                APPID = APPID.Trim();
+                DocID = DocID.Trim();
+                Key = Key.Trim();
+                Value = Value.Trim();
+                SQ.Execute_TSql("Delete From US_DL_04_DocumentsLast Where (App_ID = '" + APPID + "') And (Document_ID = '" + DocID + "')");
+                SQ.Execute_TSql("Insert Into US_DL_04_DocumentsLast Values ('" + APPID+ "','" + DocID + "','" + Key + "','" + Value + "')");
+            }
+            catch (Exception)
+            { }
         }
     }
 }

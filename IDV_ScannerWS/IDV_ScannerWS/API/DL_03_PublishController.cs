@@ -17,7 +17,7 @@ namespace IDV_ScannerWS.API
         PublicFunctions PB = new PublicFunctions();
         AssureID AID = new AssureID();
         //--------------------------------------------------------------------------
-        public string Post(string CID, string DID, string UID,string APPID, string UNM, string PAS)
+        public string PostAsync(string CID, string DID, string UID,string APPID, string UNM, string PAS)
         {
             string LastRes = "";
             try
@@ -32,11 +32,15 @@ namespace IDV_ScannerWS.API
                 {
                     if (DT1.Rows.Count == 1)
                     {
-                        if (PB.ExpiredDateCheck(DT1.Rows[0][0].ToString().Trim(), PB.Get_Date()) == true)
+                        string EXPD = DT1.Rows[0][0].ToString().Trim();
+                        if (EXPD.Trim() == "") { EXPD = PB.Get_Date(); }
+                        if (PB.ExpiredDateCheck(EXPD, PB.Get_Date()) == true)
                         {
-                            SQ.Execute_TSql("Update US_DL_01_Application Set [Status_Code] = '2',[Status_Text] = 'Pending',[Update_Date] = '" + PB.Get_Date() + "',[Update_Time] = '" + PB.Get_Time() + "' Where And (Company_ID = '" + CID + "') And (Dealer_ID = '" + DID + "') And (User_ID = '" + UID + "') And (ApplicationID = '" + APPID + "')");
-                            Task<int> task = AID.GetData(APPID);
-                            task.Start();
+                            SQ.Execute_TSql("Update US_DL_01_Application Set [Status_Code] = '2',[Status_Text] = 'Pending',[Update_Date] = '" + PB.Get_Date() + "',[Update_Time] = '" + PB.Get_Time() + "' Where (Company_ID = '" + CID + "') And (Dealer_ID = '" + DID + "') And (User_ID = '" + UID + "') And (ApplicationID = '" + APPID + "')");
+                            Task.Run(() =>
+                            {
+                                AID.GetData(APPID);
+                            });
                             LastRes = "OK";
                         }
                         else
@@ -54,7 +58,7 @@ namespace IDV_ScannerWS.API
                     LastRes = "ERR_009"; // Sql no response.
                 }
             }
-            catch (Exception)
+            catch (Exception )
             {
                 LastRes = "ERR_008"; // Function error.
             }

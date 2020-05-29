@@ -36,8 +36,8 @@ namespace IDV_ScannerWS.Modules
         private SensorType? _sensorType = null;
         private CroppingExpectedSize? _croppingExpectedSize = null;
         private CroppingMode? _croppingMode = null;
-        private bool _frontWhiteImgFlag, _frontIrImgFlag, _frontUvImgFlag, _backWhiteImgFlag, _backIrImgFlag, _backUvImgFlag;
-        private string _frontWhiteImgFilePath, _frontIrImgFilePath, _frontUvImgFilePath, _backWhiteImgFilePath, _backIrImgFilePath, _backUvImgFilePath;
+        //private bool _frontWhiteImgFlag, _frontIrImgFlag, _frontUvImgFlag, _backWhiteImgFlag, _backIrImgFlag, _backUvImgFlag;
+        //private string _frontWhiteImgFilePath, _frontIrImgFilePath, _frontUvImgFilePath, _backWhiteImgFilePath, _backIrImgFilePath, _backUvImgFilePath;
         //--------------------------------------------------------------------------
         public AssureIDServiceClient AssureIdServiceClient(string endpoint, string username, string password)
         {
@@ -90,7 +90,7 @@ namespace IDV_ScannerWS.Modules
             return bitmap;
         }
 
-        public async Task<int> GetData(string AppID)
+        public void GetData(string AppID)
         {
             try
             {
@@ -110,12 +110,12 @@ namespace IDV_ScannerWS.Modules
 
                             if (!CheckSubscription())
                             {
-                                return 1;
+                                return;
                             }
                         }
                         else
                         {
-                            return 1;
+                            return;
                         }
                         _sensorType = SensorType.Scanner;
                         _croppingMode = CroppingMode.None;
@@ -136,34 +136,20 @@ namespace IDV_ScannerWS.Modules
                         if (Directory.Exists(BaseFolder + "\\" + "Result") == false) { Directory.CreateDirectory(BaseFolder + "\\" + "Result"); }
                         bool WI_F_F = false; string WI_F_A = "";
                         bool WI_B_F = false; string WI_B_A = "";
-                        bool UI_F_F = false; string UI_F_A = "";
-                        bool UI_B_F = false; string VI_B_A = "";
-                        var filePath1 = HttpContext.Current.Server.MapPath("~/Photos/Acuant/" + AppID + "/Scanned/" + "2" + ".jpg");
+                        var filePath1 = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Scanned/" + "2" + ".jpg");
                         if (File.Exists(filePath1) == true)
                         {
                             WI_F_F = true;
                             WI_F_A = filePath1;
                         }
-                        var filePath2 = HttpContext.Current.Server.MapPath("~/Photos/Acuant/" + AppID + "/Scanned/" + "3" + ".jpg");
+                        var filePath2 = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Scanned/" + "3" + ".jpg");
                         if (File.Exists(filePath2) == true)
                         {
                             WI_B_F = true;
                             WI_B_A = filePath2;
                         }
-                        var filePath5 = HttpContext.Current.Server.MapPath("~/Photos/Acuant/" + AppID + "/Scanned/" + "6" + ".jpg");
-                        if (File.Exists(filePath5) == true)
-                        {
-                            UI_F_F = true;
-                            UI_F_A = filePath5;
-                        }
-                        var filePath6 = HttpContext.Current.Server.MapPath("~/Photos/Acuant/" + AppID + "/Scanned/" + "7" + ".jpg");
-                        if (File.Exists(filePath6) == true)
-                        {
-                            UI_B_F = true;
-                            VI_B_A = filePath6;
-                        }
-                        if (WI_F_F == false) { return 1; }
-                        if (WI_B_F == false) { return 1; }
+                        if (WI_F_F == false) { return; }
+                        if (WI_B_F == false) { return; }
                         if (WI_F_F)
                         {
                             documentSide = DocumentSide.Front;
@@ -182,43 +168,27 @@ namespace IDV_ScannerWS.Modules
                                 _assureIdServiceClient.PostDocumentImage(documentInstanceId, documentSide, lightSource, bitmap);
                             }
                         }
-                        if (UI_F_F)
-                        {
-                            documentSide = DocumentSide.Front;
-                            lightSource = LightSource.UltravioletA;
-                            using (var bitmap = new Bitmap(UI_F_A))
-                            {
-                                _assureIdServiceClient.PostDocumentImage(documentInstanceId, documentSide, lightSource, bitmap);
-                            }
-                        }
-                        if (UI_B_F)
-                        {
-                            documentSide = DocumentSide.Back;
-                            lightSource = LightSource.UltravioletA;
-                            using (var bitmap = new Bitmap(VI_B_A))
-                            {
-                                _assureIdServiceClient.PostDocumentImage(documentInstanceId, documentSide, lightSource, bitmap);
-                            }
-                        }
                         var document = _assureIdServiceClient.GetDocument(documentInstanceId);
                         var result = document.Result;
-                        if (result != AuthenticationResult.Passed && result != AuthenticationResult.Failed)
+                        SQ.Execute_TSql("Delete From US_DL_02_Alerts Where (App_ID = '" + AppID + "')");
+                        SQ.Execute_TSql("Delete From US_DL_03_Documents Where (App_ID = '" + AppID + "')");
+                        //if (result != AuthenticationResult.Passed && result != AuthenticationResult.Failed)
+                        //{
+                        if (document.Alerts.Length > 0)
                         {
-                            if (document.Alerts.Length > 0)
+                            foreach (var alert in document.Alerts)
                             {
-                                foreach (var alert in document.Alerts)
+                                if (alert.Result == result)
                                 {
-                                    if (alert.Result == result)
+                                    try
                                     {
-                                        try
-                                        {
-                                            SQ.Execute_TSql("Insert Into US_DL_02_Alerts Values ('" + AppID + "','" + alert.Key.Trim() + "')");
-                                        }
-                                        catch (Exception) { }
+                                        SQ.Execute_TSql("Insert Into US_DL_02_Alerts Values ('" + AppID + "','" + alert.Key.Trim() + "')");
                                     }
+                                    catch (Exception) { }
                                 }
                             }
                         }
+                        //}
                         int DocCounter = 0;
                         if (document.Fields.Length > 0)
                         {
@@ -233,7 +203,7 @@ namespace IDV_ScannerWS.Modules
                                                 try
                                                 {
                                                     Bitmap FIMG = _assureIdServiceClient.GetDocumentFieldImage(document.InstanceId, "Photo");
-                                                    var filePath = HttpContext.Current.Server.MapPath("~/Photos/Acuant/" + AppID + "/Result/1.jpg");
+                                                    var filePath = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Result/1.jpg");
                                                     FIMG.Save(filePath, ImageFormat.Jpeg);
                                                 }
                                                 catch (Exception) { }
@@ -242,7 +212,7 @@ namespace IDV_ScannerWS.Modules
                                         case "Signature":
                                             {
                                                 Bitmap SIMG = _assureIdServiceClient.GetDocumentFieldImage(document.InstanceId, "Signature");
-                                                var filePath = HttpContext.Current.Server.MapPath("~/Photos/Acuant/" + AppID + "/Result/8.jpg");
+                                                var filePath = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Result/8.jpg");
                                                 SIMG.Save(filePath, ImageFormat.Jpeg);
                                                 break;
                                             }
@@ -258,8 +228,117 @@ namespace IDV_ScannerWS.Modules
                                     catch (Exception) { }
                                 }
                             }
+                            try
+                            {
+                                if (document.Classification.Type.FullName.ToString().Trim() != "")
+                                {
+                                    DocCounter++;
+                                    try
+                                    {
+                                        SQ.Execute_TSql("Insert Into US_DL_03_Documents Values ('" + AppID + "','" + DocCounter.ToString() + "','Document Type','" + document.Classification.Type.FullName.ToString().Trim() + "')");
+                                    }
+                                    catch (Exception) { }
+                                }
+                            }
+                            catch (Exception) { }
                         }
-                        SetImages(AppID);
+                        // Save Last Image to Result Folder :
+                        bool VF = false; bool VB = false;
+                        bool IF = false; bool IB = false;
+                        bool UF = false; bool UB = false;
+                        Image VFI = null; Image VBI = null;
+                        Image IFI = null; Image IBI = null;
+                        Image UFI = null; Image UBI = null;
+                        string FileNameIMG = "";
+                        FileNameIMG = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Scanned/2.jpg");
+                        if (File.Exists(FileNameIMG) == true) { VF = true; VFI = new Bitmap(FileNameIMG); }
+                        FileNameIMG = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Scanned/3.jpg");
+                        if (File.Exists(FileNameIMG) == true) { VB = true; VBI = new Bitmap(FileNameIMG); }
+                        FileNameIMG = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Scanned/4.jpg");
+                        if (File.Exists(FileNameIMG) == true) { IF = true; IFI = new Bitmap(FileNameIMG); }
+                        FileNameIMG = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Scanned/5.jpg");
+                        if (File.Exists(FileNameIMG) == true) { IB = true; IBI = new Bitmap(FileNameIMG); }
+                        FileNameIMG = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Scanned/6.jpg");
+                        if (File.Exists(FileNameIMG) == true) { UF = true; UFI = new Bitmap(FileNameIMG); }
+                        FileNameIMG = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Scanned/7.jpg");
+                        if (File.Exists(FileNameIMG) == true) { UB = true; UBI = new Bitmap(FileNameIMG); }
+                        if (document.Classification.OrientationChanged == true)
+                        {
+                            try { VFI.RotateFlip(RotateFlipType.Rotate180FlipNone); } catch (Exception) { }
+                            try { VBI.RotateFlip(RotateFlipType.Rotate180FlipNone); } catch (Exception) { }
+                            try { IFI.RotateFlip(RotateFlipType.Rotate180FlipNone); } catch (Exception) { }
+                            try { IBI.RotateFlip(RotateFlipType.Rotate180FlipNone); } catch (Exception) { }
+                            try { UFI.RotateFlip(RotateFlipType.Rotate180FlipNone); } catch (Exception) { }
+                            try { UBI.RotateFlip(RotateFlipType.Rotate180FlipNone); } catch (Exception) { }
+                        }
+                        string SIMGP = "";
+                        if (document.Classification.PresentationChanged == false)
+                        {
+                            if (VF == true)
+                            {
+                                SIMGP = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Result/2.jpg");
+                                VFI.Save(SIMGP, ImageFormat.Jpeg);
+                            }
+                            if (VB == true)
+                            {
+                                SIMGP = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Result/3.jpg");
+                                VBI.Save(SIMGP, ImageFormat.Jpeg);
+                            }
+                            if (IF == true)
+                            {
+                                SIMGP = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Result/4.jpg");
+                                IFI.Save(SIMGP, ImageFormat.Jpeg);
+                            }
+                            if (IB == true)
+                            {
+                                SIMGP = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Result/5.jpg");
+                                IBI.Save(SIMGP, ImageFormat.Jpeg);
+                            }
+                            if (UF == true)
+                            {
+                                SIMGP = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Result/6.jpg");
+                                UFI.Save(SIMGP, ImageFormat.Jpeg);
+                            }
+                            if (UB == true)
+                            {
+                                SIMGP = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Result/7.jpg");
+                                UBI.Save(SIMGP, ImageFormat.Jpeg);
+                            }
+                        }
+                        else
+                        {
+                            if (VF == true)
+                            {
+                                SIMGP = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Result/3.jpg");
+                                VFI.Save(SIMGP, ImageFormat.Jpeg);
+                            }
+                            if (VB == true)
+                            {
+                                SIMGP = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Result/2.jpg");
+                                VBI.Save(SIMGP, ImageFormat.Jpeg);
+                            }
+                            if (IF == true)
+                            {
+                                SIMGP = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Result/5.jpg");
+                                IFI.Save(SIMGP, ImageFormat.Jpeg);
+                            }
+                            if (IB == true)
+                            {
+                                SIMGP = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Result/4.jpg");
+                                IBI.Save(SIMGP, ImageFormat.Jpeg);
+                            }
+                            if (UF == true)
+                            {
+                                SIMGP = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Result/7.jpg");
+                                UFI.Save(SIMGP, ImageFormat.Jpeg);
+                            }
+                            if (UB == true)
+                            {
+                                SIMGP = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Result/6.jpg");
+                                UBI.Save(SIMGP, ImageFormat.Jpeg);
+                            }
+                        }
+                        // Set Application Status :
                         if (result == AuthenticationResult.Unknown)
                         {
                             SQ.Execute_TSql("Update US_DL_01_Application Set [Status_Code] = '3',[Status_Text] = 'Unknown',[Update_Date] = '" + PB.Get_Date() + "',[Update_Time] = '" + PB.Get_Time() + "' Where (ApplicationID = '" + AppID + "')");
@@ -284,19 +363,19 @@ namespace IDV_ScannerWS.Modules
                         {
                             SQ.Execute_TSql("Update US_DL_01_Application Set [Status_Code] = '8',[Status_Text] = 'Passed',[Update_Date] = '" + PB.Get_Date() + "',[Update_Time] = '" + PB.Get_Time() + "' Where (ApplicationID = '" + AppID + "')");
                         }
-                        return 0;
+                        return;
                     }
                     else
                     {
-                        return 1;
+                        return;
                     }
                 }
                 else
                 {
-                    return 1;
+                    return;
                 }
             }
-            catch (Exception) { return 1; }
+            catch (Exception) { return; }
         }
 
         private void SetImages(string AppID)
@@ -314,37 +393,37 @@ namespace IDV_ScannerWS.Modules
             bool II_B_F = false; string II_B_A = "";
             bool UI_F_F = false; string UI_F_A = "";
             bool UI_B_F = false; string VI_B_A = "";
-            var filePath1 = HttpContext.Current.Server.MapPath("~/Photos/Acuant/" + AppID + "/Scanned/" + "2" + ".jpg");
+            var filePath1 = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Scanned/" + "2" + ".jpg");
             if (File.Exists(filePath1) == true)
             {
                 WI_F_F = true;
                 WI_F_A = filePath1;
             }
-            var filePath2 = HttpContext.Current.Server.MapPath("~/Photos/Acuant/" + AppID + "/Scanned/" + "3" + ".jpg");
+            var filePath2 = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Scanned/" + "3" + ".jpg");
             if (File.Exists(filePath2) == true)
             {
                 WI_B_F = true;
                 WI_B_A = filePath2;
             }
-            var filePath3 = HttpContext.Current.Server.MapPath("~/Photos/Acuant/" + AppID + "/Scanned/" + "4" + ".jpg");
+            var filePath3 = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Scanned/" + "4" + ".jpg");
             if (File.Exists(filePath3) == true)
             {
                 II_F_F = true;
                 II_F_A = filePath3;
             }
-            var filePath4 = HttpContext.Current.Server.MapPath("~/Photos/Acuant/" + AppID + "/Scanned/" + "5" + ".jpg");
+            var filePath4 = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Scanned/" + "5" + ".jpg");
             if (File.Exists(filePath4) == true)
             {
                 II_B_F = true;
                 II_B_A = filePath4;
             }
-            var filePath5 = HttpContext.Current.Server.MapPath("~/Photos/Acuant/" + AppID + "/Scanned/" + "6" + ".jpg");
+            var filePath5 = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Scanned/" + "6" + ".jpg");
             if (File.Exists(filePath5) == true)
             {
                 UI_F_F = true;
                 UI_F_A = filePath5;
             }
-            var filePath6 = HttpContext.Current.Server.MapPath("~/Photos/Acuant/" + AppID + "/Scanned/" + "7" + ".jpg");
+            var filePath6 = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Scanned/" + "7" + ".jpg");
             if (File.Exists(filePath6) == true)
             {
                 UI_B_F = true;
@@ -410,37 +489,37 @@ namespace IDV_ScannerWS.Modules
                 if (WI_F_F)
                 {
                     Image image = _assureIdServiceClient.GetDocumentImage(document.InstanceId, DocumentSide.Front, LightSource.White);
-                    var filePath = HttpContext.Current.Server.MapPath("~/Photos/Acuant/" + AppID + "/Result/2.jpg");
+                    var filePath = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Result/2.jpg");
                     image.Save(filePath, ImageFormat.Jpeg);
                 }
                 if (WI_B_F)
                 {
                     Image image = _assureIdServiceClient.GetDocumentImage(document.InstanceId, DocumentSide.Back, LightSource.White);
-                    var filePath = HttpContext.Current.Server.MapPath("~/Photos/Acuant/" + AppID + "/Result/3.jpg");
+                    var filePath = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Result/3.jpg");
                     image.Save(filePath, ImageFormat.Jpeg);
                 }
                 if (II_F_F)
                 {
                     Image image = _assureIdServiceClient.GetDocumentImage(document.InstanceId, DocumentSide.Front, LightSource.NearInfrared);
-                    var filePath = HttpContext.Current.Server.MapPath("~/Photos/Acuant/" + AppID + "/Result/4.jpg");
+                    var filePath = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Result/4.jpg");
                     image.Save(filePath, ImageFormat.Jpeg);
                 }
                 if (II_B_F)
                 {
                     Image image = _assureIdServiceClient.GetDocumentImage(document.InstanceId, DocumentSide.Back, LightSource.NearInfrared);
-                    var filePath = HttpContext.Current.Server.MapPath("~/Photos/Acuant/" + AppID + "/Result/5.jpg");
+                    var filePath = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Result/5.jpg");
                     image.Save(filePath, ImageFormat.Jpeg);
                 }
                 if (UI_F_F)
                 {
                     Image image = _assureIdServiceClient.GetDocumentImage(document.InstanceId, DocumentSide.Front, LightSource.UltravioletA);
-                    var filePath = HttpContext.Current.Server.MapPath("~/Photos/Acuant/" + AppID + "/Result/6.jpg");
+                    var filePath = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Result/6.jpg");
                     image.Save(filePath, ImageFormat.Jpeg);
                 }
                 if (UI_B_F)
                 {
                     Image image = _assureIdServiceClient.GetDocumentImage(document.InstanceId, DocumentSide.Back, LightSource.UltravioletA);
-                    var filePath = HttpContext.Current.Server.MapPath("~/Photos/Acuant/" + AppID + "/Result/7.jpg");
+                    var filePath = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Result/7.jpg");
                     image.Save(filePath, ImageFormat.Jpeg);
                 }
             }

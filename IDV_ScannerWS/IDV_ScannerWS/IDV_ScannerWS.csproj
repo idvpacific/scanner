@@ -556,6 +556,7 @@
     <Compile Include="API\DL_05_ResultController.cs" />
     <Compile Include="API\DL_06_SaveResultController.cs" />
     <Compile Include="API\DL_07_CallBackURLController.cs" />
+    <Compile Include="API\DL_08_EMPHController.cs" />
     <Compile Include="API\GA_01_MRZ_DataController.cs" />
     <Compile Include="API\GA_03_ValidateController.cs" />
     <Compile Include="API\GA_04_PhotoUploaderController.cs" />
