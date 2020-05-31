@@ -123,8 +123,8 @@ namespace IDV_ScannerWS.API.DrivingLicense
                 var H_Headers = H_Request.Headers;
                 if (H_Headers.Contains("X-Auth-API-Key")) { H_API_Key = H_Headers.GetValues("X-Auth-API-Key").First(); }
                 if (H_Headers.Contains("X-Auth-API-Pass")) { H_API_Pass = H_Headers.GetValues("X-Auth-API-Pass").First(); }
-                if (Res_Code == 0) { if (H_API_Key.Trim() == "") { Res_Code = 1; Res_E = "Header API-Key It is mandatory [Err002]"; } }
-                if (Res_Code == 0) { if (H_API_Pass.Trim() == "") { Res_Code = 1; Res_E = "Header API-Pass It is mandatory [Err003]"; } }
+                if (Res_Code == 0) { if (H_API_Key.Trim() == "") { Res_Code = 1; Res_E = "Header API-Key It is required [Err002]"; } }
+                if (Res_Code == 0) { if (H_API_Pass.Trim() == "") { Res_Code = 1; Res_E = "Header API-Pass It is required [Err003]"; } }
                 if (Res_Code == 0)
                 {
                     DataTable DT = new DataTable();
@@ -141,9 +141,9 @@ namespace IDV_ScannerWS.API.DrivingLicense
                                 {
                                     DLR = new DrivingLicRaw();
                                     DLR = Newtonsoft.Json.JsonConvert.DeserializeObject<DrivingLicRaw>(H_raw);
-                                    if (Res_Code == 0) { if (DLR.did == null) { Res_Code = 1; Res_E = "The DealerID parameter is missing, please provide sufficient information for your request [Err008]"; } }
-                                    if (Res_Code == 0) { if (DLR.uid == null) { Res_Code = 1; Res_E = "The UserID parameter is missing, please provide sufficient information for your request [Err009]"; } }
-                                    if (Res_Code == 0) { if (DLR.appid == null) { Res_Code = 1; Res_E = "The ApplicationID parameter is missing, please provide sufficient information for your request [Err010]"; } }
+                                    if (Res_Code == 0) { if (DLR.did == null) { Res_Code = 1; Res_E = "The DealerID is missing, please provide sufficient information for your request [Err008]"; } }
+                                    if (Res_Code == 0) { if (DLR.uid == null) { Res_Code = 1; Res_E = "The UserID is missing, please provide sufficient information for your request [Err009]"; } }
+                                    if (Res_Code == 0) { if (DLR.appid == null) { Res_Code = 1; Res_E = "The ApplicationID is missing, please provide sufficient information for your request [Err010]"; } }
                                     if (Res_Code == 0)
                                     {
                                         DataTable DT_App = new DataTable();
@@ -233,13 +233,13 @@ namespace IDV_ScannerWS.API.DrivingLicense
                                             else
                                             {
                                                 Res_Code = 1;
-                                                Res_E = "No information was found appropriate to your request, please check your request and try again [Err012]";
+                                                Res_E = "No information was found related to your request, please check your request details and try again [Err012]";
                                             }
                                         }
                                         else
                                         {
                                             Res_Code = 1;
-                                            Res_E = "No information was found appropriate to your request, please check your request and try again [Err011]";
+                                            Res_E = "No information was found related to your request, please check your request details and try again [Err011]";
                                         }
                                     }
                                 }
@@ -258,18 +258,18 @@ namespace IDV_ScannerWS.API.DrivingLicense
                         }
                         else
                         {
-                            Res_Code = 1; Res_E = "Authentication failed, Please check your structure [Err005]";
+                            Res_Code = 1; Res_E = "Authentication failed, Please check your credentials [Err005]";
                         }
                     }
                     else
                     {
-                        Res_Code = 1; Res_E = "Authentication failed, Please check your structure [Err004]";
+                        Res_Code = 1; Res_E = "Authentication failed, Please check your credentials [Err004]";
                     }
                 }
             }
             catch (Exception)
             {
-                Res_Code = 1; Res_E = "IDV server have trouble checking in your request, Please check your header and body structure [Err001]";
+                Res_Code = 1; Res_E = "We ran into an issue, please try again later or contact support [Err001]";
             }
             try
             {

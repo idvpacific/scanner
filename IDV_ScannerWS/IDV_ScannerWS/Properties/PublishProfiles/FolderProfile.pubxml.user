@@ -64,10 +64,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/11/2017 13:19:50</publishTime>
     </File>
     <File Include="bin/IDV_ScannerWS.dll">
-      <publishTime>05/31/2020 15:04:07</publishTime>
+      <publishTime>05/31/2020 15:28:12</publishTime>
     </File>
     <File Include="bin/IDV_ScannerWS.pdb">
-      <publishTime>05/31/2020 15:04:07</publishTime>
+      <publishTime>05/31/2020 15:28:12</publishTime>
     </File>
     <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
       <publishTime>05/24/2018 20:08:22</publishTime>
