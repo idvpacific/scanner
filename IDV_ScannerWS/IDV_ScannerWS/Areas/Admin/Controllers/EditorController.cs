@@ -398,7 +398,6 @@ namespace IDV_ScannerWS.Areas.Admin.Controllers
 
 
                 return RedirectToAction("Index", "Dashboard");
-                return View();
             }
             catch (Exception)
             {
@@ -421,7 +420,6 @@ namespace IDV_ScannerWS.Areas.Admin.Controllers
 
 
                 return RedirectToAction("Index", "Dashboard");
-                return View();
             }
             catch (Exception)
             {
@@ -444,7 +442,6 @@ namespace IDV_ScannerWS.Areas.Admin.Controllers
 
 
                 return RedirectToAction("Index", "Dashboard");
-                return View();
             }
             catch (Exception)
             {
