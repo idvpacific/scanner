@@ -233,13 +233,13 @@ namespace IDV_ScannerWS.API.DrivingLicense
                                             else
                                             {
                                                 Res_Code = 1;
-                                                Res_E = "No information was found related to your request, please check your request details and try again [Err012]";
+                                                Res_E = "No information was found related to your request, please check your request details and try again later [Err012]";
                                             }
                                         }
                                         else
                                         {
                                             Res_Code = 1;
-                                            Res_E = "No information was found related to your request, please check your request details and try again [Err011]";
+                                            Res_E = "No information was found related to your request, please check your request details and try again later [Err011]";
                                         }
                                     }
                                 }

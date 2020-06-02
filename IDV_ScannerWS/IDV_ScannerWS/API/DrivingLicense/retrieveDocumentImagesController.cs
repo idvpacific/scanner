@@ -188,19 +188,19 @@ namespace IDV_ScannerWS.API.DrivingLicense
                                                 else
                                                 {
                                                     Res_Code = 1;
-                                                    Res_E = "No image was found related to your request, please check your request details and try again [Err014]";
+                                                    Res_E = "No image was found related to your request, please check your request details and try again later [Err014]";
                                                 }
                                             }
                                             else
                                             {
                                                 Res_Code = 1;
-                                                Res_E = "No image was found related to your request, please check your request details and try again [Err013]";
+                                                Res_E = "No image was found related to your request, please check your request details and try again later [Err013]";
                                             }
                                         }
                                         else
                                         {
                                             Res_Code = 1;
-                                            Res_E = "No image was found related to your request, please check your request details and try again [Err012]";
+                                            Res_E = "No image was found related to your request, please check your request details and try again later [Err012]";
                                         }
                                     }
                                 }

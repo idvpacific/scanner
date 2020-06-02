@@ -47,9 +47,9 @@ namespace IDV_ScannerWS.API
                                     httpWebRequest.Method = "POST";
                                     using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                                     {
-                                        string json = "{\"DealerID\":\"" + DT1.Rows[0][1].ToString().Trim() + "\"," +
-                                                      "\"UserID\":\"" + DT1.Rows[0][2].ToString().Trim() + "\"," +
-                                                      "\"ApplicarionID\":\"" + DT1.Rows[0][4].ToString().Trim() + "\"," +
+                                        string json = "{\"did\":\"" + DT1.Rows[0][1].ToString().Trim() + "\"," +
+                                                      "\"uid\":\"" + DT1.Rows[0][2].ToString().Trim() + "\"," +
+                                                      "\"appid\":\"" + DT1.Rows[0][4].ToString().Trim() + "\"," +
                                                       "\"UserIP\":\"" + DT1.Rows[0][7].ToString().Trim() + "\"," +
                                                       "\"CreateDate\":\"" + DT1.Rows[0][8].ToString().Trim() + "\"," +
                                                       "\"CreateTime\":\"" + DT1.Rows[0][9].ToString().Trim() + "\"," +

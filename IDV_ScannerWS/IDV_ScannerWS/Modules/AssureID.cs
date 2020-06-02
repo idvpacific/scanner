@@ -126,6 +126,7 @@ namespace IDV_ScannerWS.Modules
                         _documentSettings.ImageCroppingExpectedSize = (CroppingExpectedSize)_croppingExpectedSize;
                         _documentSettings.ImageCroppingMode = (CroppingMode)_croppingMode;
                         _documentSettings.SubscriptionId = _subscriptionId;
+                        _documentSettings.ProcessMode = DocumentProcessMode.CaptureData;
                         var documentInstanceId = _assureIdServiceClient.PostDocumentInstance(_documentSettings);
                         DocumentSide documentSide;
                         LightSource lightSource;
@@ -353,7 +354,7 @@ namespace IDV_ScannerWS.Modules
                         }
                         if (result == AuthenticationResult.Skipped)
                         {
-                            SQ.Execute_TSql("Update US_DL_01_Application Set [Status_Code] = '6',[Status_Text] = 'Skipped',[Update_Date] = '" + PB.Get_Date() + "',[Update_Time] = '" + PB.Get_Time() + "' Where (ApplicationID = '" + AppID + "')");
+                            SQ.Execute_TSql("Update US_DL_01_Application Set [Status_Code] = '6',[Status_Text] = 'Done',[Update_Date] = '" + PB.Get_Date() + "',[Update_Time] = '" + PB.Get_Time() + "' Where (ApplicationID = '" + AppID + "')");
                         }
                         if (result == AuthenticationResult.Failed)
                         {
