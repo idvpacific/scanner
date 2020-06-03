@@ -569,13 +569,15 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\Controllers\AUEController.cs" />
-    <Compile Include="Areas\Admin\Controllers\CustomersController.cs" />
-    <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
-    <Compile Include="Areas\Admin\Controllers\EditorController.cs" />
-    <Compile Include="Areas\Admin\Controllers\ReportListController.cs" />
-    <Compile Include="Areas\Admin\Controllers\ReportsController.cs" />
+    <Compile Include="Areas\DrivingLicence\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\DrivingLicence\DrivingLicenceAreaRegistration.cs" />
+    <Compile Include="Areas\Passport\PassportAreaRegistration.cs" />
+    <Compile Include="Areas\Passport\Controllers\AUEController.cs" />
+    <Compile Include="Areas\Passport\Controllers\CustomersController.cs" />
+    <Compile Include="Areas\Passport\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Passport\Controllers\EditorController.cs" />
+    <Compile Include="Areas\Passport\Controllers\ReportListController.cs" />
+    <Compile Include="Areas\Passport\Controllers\ReportsController.cs" />
     <Compile Include="Controllers\ErrorPageController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
@@ -592,22 +594,25 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
-    <Content Include="Areas\Admin\Views\web.config" />
-    <Content Include="Areas\Admin\Views\Shared\_LayoutAdmin.cshtml" />
-    <Content Include="Areas\Admin\Views\Dashboard\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\ReportList\Accepted.cshtml" />
-    <Content Include="Areas\Admin\Views\ReportList\Failed.cshtml" />
-    <Content Include="Areas\Admin\Views\ReportList\Reffered.cshtml" />
-    <Content Include="Areas\Admin\Views\ReportList\NoValidation.cshtml" />
-    <Content Include="Areas\Admin\Views\ReportList\AllDocuments.cshtml" />
-    <Content Include="Areas\Admin\Views\Reports\ACP.cshtml" />
-    <Content Include="Areas\Admin\Views\Reports\GAP.cshtml" />
-    <Content Include="Areas\Admin\Views\Reports\GAD.cshtml" />
-    <Content Include="Areas\Admin\Views\Reports\ACD.cshtml" />
-    <Content Include="Areas\Admin\Views\AUE\GA_NewPassport.cshtml" />
-    <Content Include="Areas\Admin\Views\Editor\GAP.cshtml" />
-    <Content Include="Areas\Admin\Views\Customers\Company.cshtml" />
-    <Content Include="Areas\Admin\Views\Customers\CompanyEditor.cshtml" />
+    <Content Include="Areas\Passport\Views\web.config" />
+    <Content Include="Areas\Passport\Views\Shared\_LayoutAdmin.cshtml" />
+    <Content Include="Areas\Passport\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\Passport\Views\ReportList\Accepted.cshtml" />
+    <Content Include="Areas\Passport\Views\ReportList\Failed.cshtml" />
+    <Content Include="Areas\Passport\Views\ReportList\Reffered.cshtml" />
+    <Content Include="Areas\Passport\Views\ReportList\NoValidation.cshtml" />
+    <Content Include="Areas\Passport\Views\ReportList\AllDocuments.cshtml" />
+    <Content Include="Areas\Passport\Views\Reports\ACP.cshtml" />
+    <Content Include="Areas\Passport\Views\Reports\GAP.cshtml" />
+    <Content Include="Areas\Passport\Views\Reports\GAD.cshtml" />
+    <Content Include="Areas\Passport\Views\Reports\ACD.cshtml" />
+    <Content Include="Areas\Passport\Views\AUE\GA_NewPassport.cshtml" />
+    <Content Include="Areas\Passport\Views\Editor\GAP.cshtml" />
+    <Content Include="Areas\Passport\Views\Customers\Company.cshtml" />
+    <Content Include="Areas\Passport\Views\Customers\CompanyEditor.cshtml" />
+    <Content Include="Areas\DrivingLicence\Views\web.config" />
+    <Content Include="Areas\DrivingLicence\Views\Shared\_LayoutAdminDL.cshtml" />
+    <Content Include="Areas\DrivingLicence\Views\Dashboard\Index.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\ErrorPage\Error404.cshtml" />
     <Content Include="Views\ErrorPage\Error500.cshtml" />
@@ -756,7 +761,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\DrivingLicence\Data\" />
+    <Folder Include="Areas\Passport\Models\" />
     <Folder Include="Photos\Acuant\" />
     <Folder Include="Photos\Gemalto\" />
   </ItemGroup>

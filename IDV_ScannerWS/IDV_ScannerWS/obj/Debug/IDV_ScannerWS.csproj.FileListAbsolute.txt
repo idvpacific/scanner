@@ -79,3 +79,4 @@ E:\Project\09- Gemalto\Source\IDV_ScannerWS\IDV_ScannerWS\obj\Debug\IDV_ScannerW
 E:\Project\09- Gemalto\Source\IDV_ScannerWS\IDV_ScannerWS\bin\System.Interactive.dll
 E:\Project\09- Gemalto\Source\IDV_ScannerWS\IDV_ScannerWS\bin\System.Interactive.xml
 E:\Project\09- Gemalto\Source\IDV_ScannerWS\IDV_ScannerWS\bin\AssureTec.AssureID.Web.SDK.dll
+E:\Project\09- Gemalto\Source\IDV_ScannerWS\IDV_ScannerWS\obj\Debug\IDV_ScannerWS.csprojAssemblyReference.cache

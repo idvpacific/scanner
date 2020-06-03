@@ -1,0 +1,592 @@
+﻿@using System.Data;
+@{
+    ViewBag.Title = "Report Editor [ ID : " + ViewBag.Doc_ID + " ]";
+    Layout = "~/Areas/Passport/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<form style="width:100%" id="ANF">
+    <div class="page-inner mt--5">
+        <div class="row mt--2">
+            <div class="col-md-12">
+                <div class="card full-height">
+                    <div class="card-body">
+                        <div class="card-title" style="color:#146de0"><i class="fa fa-id-badge"></i> Basic Information</div>
+                        <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
+                            <div class="form-group col-lg-6">
+                                <label for="Txt_FistName">Detected First Name</label>
+                                <input type="text" class="form-control" id="Txt_FirstName" placeholder="Enter First Name" value="@ViewBag.D1">
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="Txt_FistName">Detected Last Name</label>
+                                <input type="text" class="form-control" id="Txt_LastName" placeholder="Enter Last Name" value="@ViewBag.D2">
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="Txt_FistName">Detected Document ID</label>
+                                <input type="text" class="form-control" id="Txt_DocumentIDF" placeholder="Enter Document ID" value="@ViewBag.D3">
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="Txt_Status">Status</label>
+                                <select class="form-control form-control" id="Txt_Status">
+                                    <option value="1" @ViewBag.D4_1>Accepted</option>
+                                    <option value="2" @ViewBag.D4_2>Failed</option>
+                                    <option value="3" @ViewBag.D4_3>Reffered</option>
+                                    <option value="4" @ViewBag.D4_4>No Validation</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-inner mt--5">
+        <div class="row mt--2">
+            <div class="col-md-12">
+                <div class="card full-height">
+                    <div class="card-body">
+                        <div class="card-title" style="color:#146de0"><i class="fa fa-lock"></i> Document Secure Data</div>
+                        <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
+                            <div class="form-group col-lg-3">
+                                <label for="Txt_AirBaudrate">Air Baudrate</label>
+                                <input type="text" class="form-control" id="Txt_AirBaudrate" placeholder="Enter Air Baudrate" value="@ViewBag.D5">
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label for="Txt_ChipID">Chip ID</label>
+                                <input type="text" class="form-control" id="Txt_ChipID" placeholder="Enter Chip ID" value="@ViewBag.D6">
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label for="Txt_BAC">BAC</label>
+                                <input type="text" class="form-control" id="Txt_BAC" placeholder="Enter BAC Status" value="@ViewBag.D7">
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label for="Txt_SAC">SAC</label>
+                                <input type="text" class="form-control" id="Txt_SAC" placeholder="Enter SAC Status" value="@ViewBag.D8">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-inner mt--5">
+        <div class="row mt--2">
+            <div class="col-md-12">
+                <div class="card full-height">
+                    <div class="card-body">
+                        <div class="card-title" style="color:#146de0"><i class="fas fa-tasks"></i> ePassport Status</div>
+                        <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
+                            <div class="form-group col-lg-6">
+                                <label class="form-label">Read Data :</label><br />
+                                <div class="selectgroup selectgroup-pills">
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" id="DG1" value="DG1" class="selectgroup-input" @ViewBag.D9_1>
+                                        <span class="selectgroup-button">DG1</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" id="DG2" value="DG2" class="selectgroup-input" @ViewBag.D9_2>
+                                        <span class="selectgroup-button">DG2</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" id="DG3" value="DG3" class="selectgroup-input" @ViewBag.D9_3>
+                                        <span class="selectgroup-button">DG3</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" id="DG4" value="DG4" class="selectgroup-input" @ViewBag.D9_4>
+                                        <span class="selectgroup-button">DG4</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" id="DG5" value="DG5" class="selectgroup-input" @ViewBag.D9_5>
+                                        <span class="selectgroup-button">DG5</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" id="DG6" value="DG6" class="selectgroup-input" @ViewBag.D9_6>
+                                        <span class="selectgroup-button">DG6</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" id="DG7" value="DG7" class="selectgroup-input" @ViewBag.D9_7>
+                                        <span class="selectgroup-button">DG7</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" id="DG8" value="DG8" class="selectgroup-input" @ViewBag.D9_8>
+                                        <span class="selectgroup-button">DG8</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" id="DG9" value="DG9" class="selectgroup-input" @ViewBag.D9_9>
+                                        <span class="selectgroup-button">DG9</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" id="DG10" value="DG10" class="selectgroup-input" @ViewBag.D9_10>
+                                        <span class="selectgroup-button">DG10</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" id="DG11" value="DG11" class="selectgroup-input" @ViewBag.D9_11>
+                                        <span class="selectgroup-button">DG11</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" id="DG12" value="DG12" class="selectgroup-input" @ViewBag.D9_12>
+                                        <span class="selectgroup-button">DG12</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" id="DG13" value="DG13" class="selectgroup-input" @ViewBag.D9_13>
+                                        <span class="selectgroup-button">DG13</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" id="DG14" value="DG14" class="selectgroup-input" @ViewBag.D9_14>
+                                        <span class="selectgroup-button">DG14</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" id="DG15" value="DG15" class="selectgroup-input" @ViewBag.D9_15>
+                                        <span class="selectgroup-button">DG15</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" id="DG16" value="DG16" class="selectgroup-input" @ViewBag.D9_16>
+                                        <span class="selectgroup-button">DG16</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label class="form-label">Validated :</label><br />
+                                <div class="selectgroup selectgroup-pills">
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" id="VG1" value="VG1" class="selectgroup-input" @ViewBag.D10_1>
+                                        <span class="selectgroup-button">VG1</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" id="VG2" value="VG2" class="selectgroup-input" @ViewBag.D10_2>
+                                        <span class="selectgroup-button">VG2</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" id="VG3" value="VG3" class="selectgroup-input" @ViewBag.D10_3>
+                                        <span class="selectgroup-button">VG3</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" id="VG4" value="VG4" class="selectgroup-input" @ViewBag.D10_4>
+                                        <span class="selectgroup-button">VG4</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" id="VG5" value="VG5" class="selectgroup-input" @ViewBag.D10_5>
+                                        <span class="selectgroup-button">VG5</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" id="VG6" value="VG6" class="selectgroup-input" @ViewBag.D10_6>
+                                        <span class="selectgroup-button">VG6</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" id="VG7" value="VG7" class="selectgroup-input" @ViewBag.D10_7>
+                                        <span class="selectgroup-button">VG7</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" id="VG8" value="VG8" class="selectgroup-input" @ViewBag.D10_8>
+                                        <span class="selectgroup-button">VG8</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" id="VG9" value="VG9" class="selectgroup-input" @ViewBag.D10_9>
+                                        <span class="selectgroup-button">VG9</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" id="VG10" value="VG10" class="selectgroup-input" @ViewBag.D10_10>
+                                        <span class="selectgroup-button">VG10</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" id="VG11" value="VG11" class="selectgroup-input" @ViewBag.D10_11>
+                                        <span class="selectgroup-button">VG11</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" id="VG12" value="VG12" class="selectgroup-input" @ViewBag.D10_12>
+                                        <span class="selectgroup-button">VG12</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" id="VG13" value="VG13" class="selectgroup-input" @ViewBag.D10_13>
+                                        <span class="selectgroup-button">VG13</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" id="VG14" value="VG14" class="selectgroup-input" @ViewBag.D10_14>
+                                        <span class="selectgroup-button">VG14</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" id="VG15" value="VG15" class="selectgroup-input" @ViewBag.D10_15>
+                                        <span class="selectgroup-button">VG15</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" id="VG16" value="VG16" class="selectgroup-input" @ViewBag.D10_16>
+                                        <span class="selectgroup-button">VG16</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-12">
+                                <label class="form-label">Validation :</label><br />
+                                <div class="col-lg-12 form-inline">
+                                    <div class="form-group col-lg-4">
+                                        <label class="form-label d-block" style="margin-right:10px">BAC Active : </label>
+                                        <div class="selectgroup selectgroup-secondary selectgroup-pills">
+                                            <label class="selectgroup-item">
+                                                <input type="radio" name="VAL_R1" value="1" class="selectgroup-input" @ViewBag.D11_1>
+                                                <span class="selectgroup-button selectgroup-button-icon"><i class="fa"></i></span>
+                                            </label>
+                                            <label class="selectgroup-item">
+                                                <input type="radio" name="VAL_R1" value="2" class="selectgroup-input" @ViewBag.D11_2>
+                                                <span class="selectgroup-button selectgroup-button-icon"><i class="fa fa-check"></i></span>
+                                            </label>
+                                            <label class="selectgroup-item">
+                                                <input type="radio" name="VAL_R1" value="3" class="selectgroup-input" @ViewBag.D11_3>
+                                                <span class="selectgroup-button selectgroup-button-icon"><i class="fa fa-window-close"></i></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-lg-4">
+                                        <label class="form-label d-block" style="margin-right:10px">SAC Active : </label>
+                                        <div class="selectgroup selectgroup-secondary selectgroup-pills">
+                                            <label class="selectgroup-item">
+                                                <input type="radio" name="VAL_R2" value="1" class="selectgroup-input" @ViewBag.D12_1>
+                                                <span class="selectgroup-button selectgroup-button-icon"><i class="fa"></i></span>
+                                            </label>
+                                            <label class="selectgroup-item">
+                                                <input type="radio" name="VAL_R2" value="2" class="selectgroup-input" @ViewBag.D12_2>
+                                                <span class="selectgroup-button selectgroup-button-icon"><i class="fa fa-check"></i></span>
+                                            </label>
+                                            <label class="selectgroup-item">
+                                                <input type="radio" name="VAL_R2" value="3" class="selectgroup-input" @ViewBag.D12_3>
+                                                <span class="selectgroup-button selectgroup-button-icon"><i class="fa fa-window-close"></i></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-lg-4">
+                                        <label class="form-label d-block" style="margin-right:10px">Active Auth : </label>
+                                        <div class="selectgroup selectgroup-secondary selectgroup-pills">
+                                            <label class="selectgroup-item">
+                                                <input type="radio" name="VAL_R3" value="1" class="selectgroup-input" @ViewBag.D13_1>
+                                                <span class="selectgroup-button selectgroup-button-icon"><i class="fa"></i></span>
+                                            </label>
+                                            <label class="selectgroup-item">
+                                                <input type="radio" name="VAL_R3" value="2" class="selectgroup-input" @ViewBag.D13_2>
+                                                <span class="selectgroup-button selectgroup-button-icon"><i class="fa fa-check"></i></span>
+                                            </label>
+                                            <label class="selectgroup-item">
+                                                <input type="radio" name="VAL_R3" value="3" class="selectgroup-input" @ViewBag.D13_3>
+                                                <span class="selectgroup-button selectgroup-button-icon"><i class="fa fa-window-close"></i></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-lg-4">
+                                        <label class="form-label d-block" style="margin-right:10px">Signature : </label>
+                                        <div class="selectgroup selectgroup-secondary selectgroup-pills">
+                                            <label class="selectgroup-item">
+                                                <input type="radio" name="VAL_R4" value="1" class="selectgroup-input" @ViewBag.D14_1>
+                                                <span class="selectgroup-button selectgroup-button-icon"><i class="fa"></i></span>
+                                            </label>
+                                            <label class="selectgroup-item">
+                                                <input type="radio" name="VAL_R4" value="2" class="selectgroup-input" @ViewBag.D14_2>
+                                                <span class="selectgroup-button selectgroup-button-icon"><i class="fa fa-check"></i></span>
+                                            </label>
+                                            <label class="selectgroup-item">
+                                                <input type="radio" name="VAL_R4" value="3" class="selectgroup-input" @ViewBag.D14_3>
+                                                <span class="selectgroup-button selectgroup-button-icon"><i class="fa fa-window-close"></i></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-lg-4">
+                                        <label class="form-label d-block" style="margin-right:10px">Doc Signer Cert : </label>
+                                        <div class="selectgroup selectgroup-secondary selectgroup-pills">
+                                            <label class="selectgroup-item">
+                                                <input type="radio" name="VAL_R5" value="1" class="selectgroup-input" @ViewBag.D15_1>
+                                                <span class="selectgroup-button selectgroup-button-icon"><i class="fa"></i></span>
+                                            </label>
+                                            <label class="selectgroup-item">
+                                                <input type="radio" name="VAL_R5" value="2" class="selectgroup-input" @ViewBag.D15_2>
+                                                <span class="selectgroup-button selectgroup-button-icon"><i class="fa fa-check"></i></span>
+                                            </label>
+                                            <label class="selectgroup-item">
+                                                <input type="radio" name="VAL_R5" value="3" class="selectgroup-input" @ViewBag.D15_3>
+                                                <span class="selectgroup-button selectgroup-button-icon"><i class="fa fa-window-close"></i></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-lg-4">
+                                        <label class="form-label d-block" style="margin-right:10px">Signed Attr : </label>
+                                        <div class="selectgroup selectgroup-secondary selectgroup-pills">
+                                            <label class="selectgroup-item">
+                                                <input type="radio" name="VAL_R6" value="1" class="selectgroup-input" @ViewBag.D16_1>
+                                                <span class="selectgroup-button selectgroup-button-icon"><i class="fa"></i></span>
+                                            </label>
+                                            <label class="selectgroup-item">
+                                                <input type="radio" name="VAL_R6" value="2" class="selectgroup-input" @ViewBag.D16_2>
+                                                <span class="selectgroup-button selectgroup-button-icon"><i class="fa fa-check"></i></span>
+                                            </label>
+                                            <label class="selectgroup-item">
+                                                <input type="radio" name="VAL_R6" value="3" class="selectgroup-input" @ViewBag.D16_3>
+                                                <span class="selectgroup-button selectgroup-button-icon"><i class="fa fa-window-close"></i></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-inner mt--5">
+        <div class="row mt--2">
+            <div class="col-md-6">
+                <div class="card full-height">
+                    <div class="card-body">
+                        <div class="card-title" style="color:#146de0"><i class="fas fa-user"></i> MRZ Personal Info</div>
+                        <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
+                            <div class="form-group col-lg-6">
+                                <label for="Txt_MRZ_FirstName">First Name</label>
+                                <input type="text" class="form-control" id="Txt_MRZ_FirstName" placeholder="MRZ First Name" value="@ViewBag.D17">
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="Txt_MRZ_LastName">Last Name</label>
+                                <input type="text" class="form-control" id="Txt_MRZ_LastName" placeholder="MRZ Last Name" value="@ViewBag.D18">
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="Txt_MRZ_Nationality">Nationality</label>
+                                <input type="text" class="form-control" id="Txt_MRZ_Nationality" placeholder="MRZ Nationality" value="@ViewBag.D19">
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="Txt_MRZ_Gender">Gender</label>
+                                <input type="text" class="form-control" id="Txt_MRZ_Gender" placeholder="MRZ Gender" value="@ViewBag.D20">
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="Txt_MRZ_Birthdate">Birthdate</label>
+                                <input type="text" class="form-control" id="Txt_MRZ_Birthdate" placeholder="MRZ Birthdate" value="@ViewBag.D21">
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="Txt_MRZ_DocumentNo">Document No.</label>
+                                <input type="text" class="form-control" id="Txt_MRZ_DocumentNo" placeholder="MRZ Document No." value="@ViewBag.D22">
+                            </div>
+                            <div class="form-group col-lg-12">
+                                <label for="Txt_MRZ_DocumentNo">Expire Date</label>
+                                <input type="text" class="form-control" id="Txt_MRZ_ExpireDate" placeholder="MRZ Expire Date" value="@ViewBag.D23">
+                            </div>
+                            <div class="form-group col-lg-12">
+                                <label for="Txt_MRZ_Data">MRZ Data</label>
+                                <input type="text" class="form-control" id="Txt_MRZ_Data" placeholder="MRZ Data" value="@ViewBag.D24">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card full-height">
+                    <div class="card-body">
+                        <div class="card-title" style="color:#146de0"><i class="fas fa-microchip"></i> Chip Personal Info</div>
+                        <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
+                            <div class="form-group col-lg-6">
+                                <label for="Txt_CHIP_FirstName">First Name</label>
+                                <input type="text" class="form-control" id="Txt_CHIP_FirstName" placeholder="Chip First Name" value="@ViewBag.D25">
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="Txt_CHIP_LastName">Last Name</label>
+                                <input type="text" class="form-control" id="Txt_CHIP_LastName" placeholder="Chip Last Name" value="@ViewBag.D26">
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="Txt_CHIP_Nationality">Nationality</label>
+                                <input type="text" class="form-control" id="Txt_CHIP_Nationality" placeholder="Chip Nationality" value="@ViewBag.D27">
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="Txt_CHIP_Gender">Gender</label>
+                                <input type="text" class="form-control" id="Txt_CHIP_Gender" placeholder="Chip Gender" value="@ViewBag.D28">
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="Txt_CHIP_Birthdate">Birthdate</label>
+                                <input type="text" class="form-control" id="Txt_CHIP_Birthdate" placeholder="Chip Birthdate" value="@ViewBag.D29">
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="Txt_CHIP_DocumentNo">Document No.</label>
+                                <input type="text" class="form-control" id="Txt_CHIP_DocumentNo" placeholder="Chip Document No." value="@ViewBag.D30">
+                            </div>
+                            <div class="form-group col-lg-12">
+                                <label for="Txt_MRZ_DocumentNo">Expire Date</label>
+                                <input type="text" class="form-control" id="Txt_CHIP_ExpireDate" placeholder="Chip Expire Date" value="@ViewBag.D31">
+                            </div>
+                            <div class="form-group col-lg-12">
+                                <label for="Txt_CHIP_Data">Chip Data</label>
+                                <input type="text" class="form-control" id="Txt_CHIP_Data" placeholder="Chip MRZ Data" value="@ViewBag.D32">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-inner mt--5">
+        <div class="row mt--2 form-inline">
+            <div class="col-md-12">
+                <div class="card full-height">
+                    <div class="card-body">
+                        <div class="card-title" style="color:#146de0"><i class="fas fa-toolbox"></i> User Tools</div>
+                        <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
+                            <div style="width:100%;text-align:left">
+                                <a href="javascript:void(0)" onclick="SaveChanges()" class="btn btn-success col-lg-2 col-md-12 col-sm-12" style="min-width:200px;margin:5px"><i class="fas fa-address-card" style="margin-right:10px"></i>Save Changes</a>
+                                <a href="javascript:void(0)" onclick="ReloadForm()" class="btn btn-primary col-lg-2 col-md-12 col-sm-12" style="min-width:200px;margin:5px"><i class="fas fa-images" style="margin-right:10px"></i>Reload Data</a>
+                                <a href="javascript:void(0)" onclick="ResetForm()" class="btn btn-danger col-lg-2 col-md-12 col-sm-12" style="min-width:200px;margin:5px"><i class="fas fa-trash" style="margin-right:10px"></i>Clear All</a>
+                                <a href="javascript:void(0)" onclick="ShowReport()" class="btn btn-dark col-lg-2 col-md-12 col-sm-12" style="min-width:200px;margin:5px"><i class="fas fa-notes-medical" style="margin-right:10px"></i>Show Report</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+@section JavaSCR{
+    <script>
+        function ReloadForm() {
+            document.getElementById("ANF").reset();
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+        }
+         function ShowReport() {
+            var BaseUrl = "@Url.Action("Details","Reports")";
+            BaseUrl = BaseUrl + "/" + @ViewBag.Doc_ID;
+            window.location.href = BaseUrl;
+        }
+        function ResetForm() {
+            document.getElementById('Txt_FirstName').value = "";
+            document.getElementById('Txt_LastName').value = "";
+            document.getElementById('Txt_DocumentIDF').value = "";
+            document.getElementById('Txt_AirBaudrate').value = "";
+            document.getElementById('Txt_ChipID').value = "";
+            document.getElementById('Txt_BAC').value = "";
+            document.getElementById('Txt_SAC').value = "";
+            document.getElementById('Txt_MRZ_FirstName').value = "";
+            document.getElementById('Txt_MRZ_LastName').value = "";
+            document.getElementById('Txt_MRZ_Nationality').value = "";
+            document.getElementById('Txt_MRZ_Gender').value = "";
+            document.getElementById('Txt_MRZ_Birthdate').value = "";
+            document.getElementById('Txt_MRZ_DocumentNo').value = "";
+            document.getElementById('Txt_MRZ_ExpireDate').value = "";
+            document.getElementById('Txt_MRZ_Data').value = "";
+            document.getElementById('Txt_CHIP_FirstName').value = "";
+            document.getElementById('Txt_CHIP_LastName').value = "";
+            document.getElementById('Txt_CHIP_Nationality').value = "";
+            document.getElementById('Txt_CHIP_Gender').value = "";
+            document.getElementById('Txt_CHIP_Birthdate').value = "";
+            document.getElementById('Txt_CHIP_DocumentNo').value = "";
+            document.getElementById('Txt_CHIP_ExpireDate').value = "";
+            document.getElementById('Txt_CHIP_Data').value = "";
+            document.querySelector('#Txt_Status [value="1"]').selected = true;
+            $('input').prop('checked', false);
+            document.getElementsByName('VAL_R1')[0].checked = true;
+            document.getElementsByName('VAL_R2')[0].checked = true;
+            document.getElementsByName('VAL_R3')[0].checked = true;
+            document.getElementsByName('VAL_R4')[0].checked = true;
+            document.getElementsByName('VAL_R5')[0].checked = true;
+            document.getElementsByName('VAL_R6')[0].checked = true;
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+        }
+        function SaveChanges() {
+            swal({ title: "Please Wait ...", text: "The system is processing your request", icon: "info", buttons: false });
+            setTimeout(function () {
+                SaveChangesActv();
+            }, 500);
+        }
+        function SaveChangesActv() {
+            var RD = "";
+            var VD = "";
+            var VL = "";
+            var Combo2H = document.getElementById("Txt_Status");
+            var StatusID = Combo2H.options[Combo2H.selectedIndex].value;
+            if (document.getElementById('DG1').checked == true) { RD = RD + "1"; } else { RD = RD + "0"; }
+            if (document.getElementById('DG2').checked == true) { RD = RD + "1"; } else { RD = RD + "0"; }
+            if (document.getElementById('DG3').checked == true) { RD = RD + "1"; } else { RD = RD + "0"; }
+            if (document.getElementById('DG4').checked == true) { RD = RD + "1"; } else { RD = RD + "0"; }
+            if (document.getElementById('DG5').checked == true) { RD = RD + "1"; } else { RD = RD + "0"; }
+            if (document.getElementById('DG6').checked == true) { RD = RD + "1"; } else { RD = RD + "0"; }
+            if (document.getElementById('DG7').checked == true) { RD = RD + "1"; } else { RD = RD + "0"; }
+            if (document.getElementById('DG8').checked == true) { RD = RD + "1"; } else { RD = RD + "0"; }
+            if (document.getElementById('DG9').checked == true) { RD = RD + "1"; } else { RD = RD + "0"; }
+            if (document.getElementById('DG10').checked == true) { RD = RD + "1"; } else { RD = RD + "0"; }
+            if (document.getElementById('DG11').checked == true) { RD = RD + "1"; } else { RD = RD + "0"; }
+            if (document.getElementById('DG12').checked == true) { RD = RD + "1"; } else { RD = RD + "0"; }
+            if (document.getElementById('DG13').checked == true) { RD = RD + "1"; } else { RD = RD + "0"; }
+            if (document.getElementById('DG14').checked == true) { RD = RD + "1"; } else { RD = RD + "0"; }
+            if (document.getElementById('DG15').checked == true) { RD = RD + "1"; } else { RD = RD + "0"; }
+            if (document.getElementById('DG16').checked == true) { RD = RD + "1"; } else { RD = RD + "0"; }
+            if (document.getElementById('VG1').checked == true) { VD = VD + "1"; } else { VD = VD + "0"; }
+            if (document.getElementById('VG2').checked == true) { VD = VD + "1"; } else { VD = VD + "0"; }
+            if (document.getElementById('VG3').checked == true) { VD = VD + "1"; } else { VD = VD + "0"; }
+            if (document.getElementById('VG4').checked == true) { VD = VD + "1"; } else { VD = VD + "0"; }
+            if (document.getElementById('VG5').checked == true) { VD = VD + "1"; } else { VD = VD + "0"; }
+            if (document.getElementById('VG6').checked == true) { VD = VD + "1"; } else { VD = VD + "0"; }
+            if (document.getElementById('VG7').checked == true) { VD = VD + "1"; } else { VD = VD + "0"; }
+            if (document.getElementById('VG8').checked == true) { VD = VD + "1"; } else { VD = VD + "0"; }
+            if (document.getElementById('VG9').checked == true) { VD = VD + "1"; } else { VD = VD + "0"; }
+            if (document.getElementById('VG10').checked == true) { VD = VD + "1"; } else { VD = VD + "0"; }
+            if (document.getElementById('VG11').checked == true) { VD = VD + "1"; } else { VD = VD + "0"; }
+            if (document.getElementById('VG12').checked == true) { VD = VD + "1"; } else { VD = VD + "0"; }
+            if (document.getElementById('VG13').checked == true) { VD = VD + "1"; } else { VD = VD + "0"; }
+            if (document.getElementById('VG14').checked == true) { VD = VD + "1"; } else { VD = VD + "0"; }
+            if (document.getElementById('VG15').checked == true) { VD = VD + "1"; } else { VD = VD + "0"; }
+            if (document.getElementById('VG16').checked == true) { VD = VD + "1"; } else { VD = VD + "0"; }
+            VL = VL + document.querySelector('input[name="VAL_R1"]:checked').value;
+            VL = VL + document.querySelector('input[name="VAL_R2"]:checked').value;
+            VL = VL + document.querySelector('input[name="VAL_R3"]:checked').value;
+            VL = VL + document.querySelector('input[name="VAL_R4"]:checked').value;
+            VL = VL + document.querySelector('input[name="VAL_R5"]:checked').value;
+            VL = VL + document.querySelector('input[name="VAL_R6"]:checked').value;
+            var formData = new FormData();
+            formData.append("IDVal", @ViewBag.Doc_ID);
+            formData.append("Txt_FirstName", $("#Txt_FirstName").val());
+            formData.append("Txt_LastName", $("#Txt_LastName").val());
+            formData.append("Txt_DocumentIDF", $("#Txt_DocumentIDF").val());
+            formData.append("StatusID", StatusID);
+            formData.append("Txt_AirBaudrate", $("#Txt_AirBaudrate").val());
+            formData.append("Txt_ChipID", $("#Txt_ChipID").val());
+            formData.append("Txt_BAC", $("#Txt_BAC").val());
+            formData.append("Txt_SAC", $("#Txt_SAC").val());
+            formData.append("Txt_MRZ_FirstName", $("#Txt_MRZ_FirstName").val());
+            formData.append("Txt_MRZ_LastName", $("#Txt_MRZ_LastName").val());
+            formData.append("Txt_MRZ_Nationality", $("#Txt_MRZ_Nationality").val());
+            formData.append("Txt_MRZ_Gender", $("#Txt_MRZ_Gender").val());
+            formData.append("Txt_MRZ_Birthdate", $("#Txt_MRZ_Birthdate").val());
+            formData.append("Txt_MRZ_DocumentNo", $("#Txt_MRZ_DocumentNo").val());
+            formData.append("Txt_MRZ_Data", $("#Txt_MRZ_Data").val().replace(/</g, '$'));
+            formData.append("Txt_CHIP_FirstName", $("#Txt_CHIP_FirstName").val());
+            formData.append("Txt_CHIP_LastName", $("#Txt_CHIP_LastName").val());
+            formData.append("Txt_CHIP_Nationality", $("#Txt_CHIP_Nationality").val());
+            formData.append("Txt_CHIP_Gender", $("#Txt_CHIP_Gender").val());
+            formData.append("Txt_CHIP_Birthdate", $("#Txt_CHIP_Birthdate").val());
+            formData.append("Txt_CHIP_DocumentNo", $("#Txt_CHIP_DocumentNo").val());
+            formData.append("Txt_CHIP_Data", $("#Txt_CHIP_Data").val().replace(/</g,'$'));
+            formData.append("RData", RD);
+            formData.append("VData", VD);
+            formData.append("Validation", VL);
+            formData.append("MRZ_ExpireD", $("#Txt_MRZ_ExpireDate").val());
+            formData.append("Chip_ExpireD", $("#Txt_CHIP_ExpireDate").val());
+            $.ajax({
+                url: "@Url.Action("GA_PassportSaveChanges", "Editor")",
+                type: "POST",
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                async: false,
+                error: function () { swal({ text: "The server encountered an error while executing your request", icon: "error", button: "OK", }); },
+                beforeSend: function () { },
+                success: function (data)
+                {
+                    var ErrorResult = "";
+                    var ErrorCode = "";
+                    $.each(data, function (i, item) {
+                        ErrorResult = item.Text;
+                        ErrorCode = item.Value;
+                    });
+                    if (ErrorCode == "2")
+                    { swal({ title: "Congratulations", text: "The passport with the information specified in the database was successfully saved", icon: "success", button: "OK", }); $("html, body").animate({ scrollTop: 0 }, "slow"); }
+                    else
+                    { swal({ text: ErrorResult, icon: "error", button: "OK", }); }
+                }
+            });
+        }
+    </script>
+}

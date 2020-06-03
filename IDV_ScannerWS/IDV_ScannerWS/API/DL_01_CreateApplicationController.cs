@@ -37,7 +37,7 @@ namespace IDV_ScannerWS.API
                         if (PB.ExpiredDateCheck(EXPD, PB.Get_Date()) == true)
                         {
                             string RelatCode = (CID + DID + UID + PB.Make_Security_Code(10) + PB.Get_Date().Replace("/", "") + PB.Get_Time().Replace(":", "")).Replace(" ", "");
-                            SQ.Execute_TSql("Insert Into US_DL_01_Application Values ('" + CID + "','" + DID + "','" + UID + "','" + IP + "','" + PB.Get_Date() + "','" + PB.Get_Time() + "','" + RelatCode + "','0','1','Wait For Upload','" + PB.Get_Date() + "','" + PB.Get_Time() + "')");
+                            SQ.Execute_TSql("Insert Into US_DL_01_Application Values ('" + CID + "','" + DID + "','" + UID + "','" + IP + "','" + PB.Get_Date() + "','" + PB.Get_Time() + "','" + RelatCode + "','0','1','Wait For Upload','" + PB.Get_Date() + "','" + PB.Get_Time() + "','0')");
                             DataTable DT2 = new DataTable();
                             DT2 = SQ.Get_DTable_TSQL("Select App_ID From US_DL_01_Application Where (Company_ID = '" + CID + "') And (Dealer_ID = '" + DID + "') And (User_ID = '" + UID + "') And (RelateCode = '" + RelatCode + "')");
                             if (DT2.Rows != null)
