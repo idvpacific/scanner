@@ -1,0 +1,170 @@
+﻿@using System.Data;
+@{
+    int EditActive = 0;
+    try { if (Session["Admin_Editable"].ToString().Trim() == "1") { EditActive = 1; } } catch (Exception) { }
+    ViewBag.Title = "Reports : All Documents ";
+    Layout = "~/Areas/Passport/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">All Documents Reports List :</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="basic-datatables" class="display table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Counter ID</th>
+                                <th>Document Type</th>
+                                <th>Document No.</th>
+                                <th>FirstName</th>
+                                <th>LastName</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Read</th>
+                                <th>Tools</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>ID</th>
+                                <th>Counter ID</th>
+                                <th>Document Type</th>
+                                <th>Document No.</th>
+                                <th>FirstName</th>
+                                <th>LastName</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Read</th>
+                                <th>Tools</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            @foreach (DataRow Row in ViewBag.DT)
+                            {
+                                <tr id="TRID_@Row[0].ToString().Trim()">
+                                    <td style="text-align:center;cursor:pointer" onclick="ShowReport('@Row[0].ToString().Trim()')">@Row[0].ToString().Trim()</td>
+                                    <td style="text-align:center;cursor:pointer" onclick="ShowReport('@Row[0].ToString().Trim()')">@Row[1].ToString().Trim()</td>
+                                    <td style="cursor:pointer" onclick="ShowReport('@Row[0].ToString().Trim()')">@Row[2].ToString().Trim()</td>
+                                    <td style="cursor:pointer" onclick="ShowReport('@Row[0].ToString().Trim()')">@Row[3].ToString().Trim()</td>
+                                    <td style="cursor:pointer" onclick="ShowReport('@Row[0].ToString().Trim()')">@Row[4].ToString().Trim()</td>
+                                    <td style="cursor:pointer" onclick="ShowReport('@Row[0].ToString().Trim()')">@Row[5].ToString().Trim()</td>
+                                    @switch (Row[10].ToString().Trim())
+                                    {
+                                        case "1":
+                                            {
+                                                <td style="text-align:center;cursor:pointer" onclick="ShowReport('@Row[0].ToString().Trim()')"><i class="btn btn-success" style="width:110px;padding:0px;padding-top:5px;padding-bottom:5px">@Row[6].ToString().Trim()</i></td>
+                                                break;
+                                            }
+                                        case "2":
+                                            {
+                                                <td style="text-align:center;cursor:pointer" onclick="ShowReport('@Row[0].ToString().Trim()')"><i class="btn btn-danger" style="width:110px;padding:0px;padding-top:5px;padding-bottom:5px">@Row[6].ToString().Trim()</i></td>
+                                                break;
+                                            }
+                                        case "3":
+                                            {
+                                                <td style="text-align:center;cursor:pointer" onclick="ShowReport('@Row[0].ToString().Trim()')"><i class="btn btn-warning" style="width:110px;padding:0px;padding-top:5px;padding-bottom:5px">@Row[6].ToString().Trim()</i></td>
+                                                break;
+                                            }
+                                        case "4":
+                                            {
+                                                <td style="text-align:center;cursor:pointer" onclick="ShowReport('@Row[0].ToString().Trim()')"><i class="btn btn-dark" style="width:110px;padding:0px;padding-top:5px;padding-bottom:5px">@Row[6].ToString().Trim()</i></td>
+                                                break;
+                                            }
+                                    }
+                                    <td style="text-align:center;cursor:pointer" onclick="ShowReport('@Row[0].ToString().Trim()')">@Row[7].ToString().Trim()</td>
+                                    <td style="text-align:center;cursor:pointer" onclick="ShowReport('@Row[0].ToString().Trim()')">@Row[8].ToString().Trim()</td>
+                                    @if (Row[9].ToString().Trim() == "0")
+                                    {
+                                        <td style="text-align:center;cursor:pointer" onclick="ShowReport('@Row[0].ToString().Trim()')"><i class="far fa-circle"></i></td>
+                                    }
+                                    else
+                                    {
+                                        <td style="text-align:center;cursor:pointer" onclick="ShowReport('@Row[0].ToString().Trim()')"><i class="far fa-check-circle"></i></td>
+                                    }
+                                    <td id="TDID_@Row[0].ToString().Trim()" style="text-align:center">
+                                        @if (EditActive == 1)
+                                        {
+                                            <a href="javascript:void(0)" onclick="RowEdit('@Row[0].ToString().Trim()')" class="fa fa-pen" style="text-decoration:none;margin-right:5px"></a>
+                                            <a href="javascript:void(0)" onclick="RowDelete('@Row[0].ToString().Trim()')" class="fa fa-trash" style="text-decoration:none"></a>
+                                        }
+                                        else
+                                        {
+                                            <a href="javascript:void(0)" onclick="RowEdit('@Row[0].ToString().Trim()')" class="fa fa-pen" style="text-decoration:none"></a>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section JavaSCR{
+    <script>
+        oTable = $('#basic-datatables').DataTable();
+        oTable.order([0, 'desc']).draw();
+        function ShowReport(OID) {
+            var BaseUrl = "@Url.Action("Details","Reports")";
+            BaseUrl = BaseUrl + "/" + OID;
+            window.location.href = BaseUrl;
+        }
+        function RowEdit(DID) {
+            var BaseUrl = "@Url.Action("EditSelector","AUE")";
+            BaseUrl = BaseUrl + "/" + DID;
+            window.location.href = BaseUrl;
+        }
+        function RowDelete(DID) {
+            swal({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                buttons: {
+                    confirm: {
+                        text: 'Yes, delete it!',
+                        className: 'btn btn-success'
+                    },
+                    cancel: {
+                        visible: true,
+                        className: 'btn btn-danger'
+                    }
+                }
+            }).then((Data) => {
+                if (Data) {
+                    $.ajax({
+                        url: "@Url.Action("DeleteRow", "ReportList")",
+                        data: { DID: DID },
+                        error: function () { ShowNoti('top', 'right', 'danger', 'withicon', 'Server Error ...', 'An error occurred while executing your request from the server','fa fa-exclamation-triangle'); },
+                        success: function (data)
+                        {
+                            var ErrorCode = "";
+                            var ErrorText = "";
+                            $.each(data, function (i, item) { ErrorText = item.Text; ErrorCode = item.Value; });
+                            if (ErrorCode == "2")
+                            {
+                                ShowNoti('top', 'right', 'success', 'withicon', 'Congratulations', 'The requested information has been successfully deleted', 'fas fa-check');
+                                document.getElementById('TDID_' + DID).innerHTML = "<i class=\"fa fa-trash\"></i>";
+                                document.getElementById('TRID_' + DID).style.backgroundColor = "lightpink";
+                                var CodeB = "#TRID_" + DID;
+                                $(CodeB).addClass("disabledbuttonAM");
+                            }
+                            else
+                            {
+                                ShowNoti('top', 'right', 'warning', 'withicon', 'System Error ...', ErrorText,'fa fa-exclamation-triangle');
+                            }
+                        }
+                    });
+                } else { swal.close(); }
+            });
+        }
+    </script>
+}

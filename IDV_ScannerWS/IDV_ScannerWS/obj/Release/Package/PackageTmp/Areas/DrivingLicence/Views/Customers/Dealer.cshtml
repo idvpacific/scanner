@@ -1,0 +1,89 @@
+﻿@using System.Data;
+@{
+    ViewBag.Title = "Dealer List";
+    Layout = "~/Areas/DrivingLicence/Views/Shared/_LayoutAdminDL.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Dealer List :</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="basic-datatables" class="display table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Dealer ID</th>
+                                <th>Company</th>
+                                <th>FullName</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>ExpiryDate</th>
+                                <th>Status</th>
+                                <th>Removed</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Dealer ID</th>
+                                <th>Company</th>
+                                <th>FullName</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>ExpiryDate</th>
+                                <th>Active</th>
+                                <th>Removed</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            @foreach (DataRow Row in ViewBag.DT)
+                            {
+                            <tr>
+                                <td style="text-align:center;cursor:pointer">@Row[0].ToString().Trim()</td>
+                                <td style="text-align:center;cursor:pointer">@Row[2].ToString().Trim()</td>
+                                <td style="text-align:center;cursor:pointer">@Row[3].ToString().Trim()</td>
+                                <td style="text-align:center;cursor:pointer">@Row[4].ToString().Trim()</td>
+                                <td style="text-align:center;cursor:pointer">@Row[5].ToString().Trim()</td>
+                                @if (@Row[6].ToString().Trim() == "")
+                                {
+                                    <td style="text-align:center;cursor:pointer">Unlimited</td>
+                                }
+                                else
+                                {
+                                    <td style="text-align:center;cursor:pointer">@Row[6].ToString().Trim()</td>
+                                }
+                                @if (Row[7].ToString().Trim() == "0")
+                                {
+                                    <td style="text-align:center;cursor:pointer"><i class="far fa-circle"></i></td>
+                                }
+                                else
+                                {
+                                    <td style="text-align:center;cursor:pointer"><i class="far fa-check-circle"></i></td>
+                                }
+                                @if (Row[8].ToString().Trim() == "0")
+                                {
+                                    <td style="text-align:center;cursor:pointer"><i class="far fa-circle"></i></td>
+                                }
+                                else
+                                {
+                                    <td style="text-align:center;cursor:pointer"><i class="far fa-check-circle"></i></td>
+                                }
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section JavaSCR{
+    <script>
+        oTable = $('#basic-datatables').DataTable();
+    </script>
+}
+
+

@@ -569,7 +569,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\DrivingLicence\Controllers\CustomersController.cs" />
     <Compile Include="Areas\DrivingLicence\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\DrivingLicence\Controllers\ReportsController.cs" />
+    <Compile Include="Areas\DrivingLicence\Controllers\ReportListController.cs" />
     <Compile Include="Areas\DrivingLicence\DrivingLicenceAreaRegistration.cs" />
     <Compile Include="Areas\Passport\PassportAreaRegistration.cs" />
     <Compile Include="Areas\Passport\Controllers\AUEController.cs" />
@@ -613,6 +616,22 @@
     <Content Include="Areas\DrivingLicence\Views\web.config" />
     <Content Include="Areas\DrivingLicence\Views\Shared\_LayoutAdminDL.cshtml" />
     <Content Include="Areas\DrivingLicence\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\DrivingLicence\Views\ReportList\Passed.cshtml" />
+    <Content Include="Areas\DrivingLicence\Views\ReportList\Failed.cshtml" />
+    <Content Include="Areas\DrivingLicence\Views\ReportList\OCR.cshtml" />
+    <Content Include="Areas\DrivingLicence\Views\ReportList\Caution.cshtml" />
+    <Content Include="Areas\DrivingLicence\Views\ReportList\Attention.cshtml" />
+    <Content Include="Areas\DrivingLicence\Views\ReportList\Unknown.cshtml" />
+    <Content Include="Areas\DrivingLicence\Views\ReportList\Pending.cshtml" />
+    <Content Include="Areas\DrivingLicence\Views\ReportList\Waiting.cshtml" />
+    <Content Include="Areas\DrivingLicence\Views\ReportList\AllDocuments.cshtml" />
+    <Content Include="Areas\DrivingLicence\Views\Reports\Details.cshtml" />
+    <Content Include="Areas\DrivingLicence\Views\Reports\Editor.cshtml" />
+    <Content Include="Areas\DrivingLicence\Views\Customers\Company.cshtml" />
+    <Content Include="Areas\DrivingLicence\Views\Customers\Dealer.cshtml" />
+    <Content Include="Areas\DrivingLicence\Views\Customers\Device.cshtml" />
+    <Content Include="Areas\DrivingLicence\Views\Customers\Logs.cshtml" />
+    <Content Include="Areas\DrivingLicence\Views\Customers\CompanyEditor.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\ErrorPage\Error404.cshtml" />
     <Content Include="Views\ErrorPage\Error500.cshtml" />
@@ -762,6 +781,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\DrivingLicence\Data\" />
+    <Folder Include="Areas\DrivingLicence\Views\Report\" />
     <Folder Include="Areas\Passport\Models\" />
     <Folder Include="Photos\Acuant\" />
     <Folder Include="Photos\Gemalto\" />

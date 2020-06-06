@@ -1,0 +1,139 @@
+﻿@using System.Data;
+@{
+    ViewBag.Title = "System Log";
+    Layout = "~/Areas/DrivingLicence/Views/Shared/_LayoutAdminDL.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Device Log List :</h4>
+            </div>
+            <div class="row" style="padding-left:20px;padding-right:20px;margin-top:10px">
+                <div class="form-group col-lg-4">
+                    <label for="Txt_FistName" style="margin-left:10px">Company Name :</label>
+                    <input type="text" class="form-control" id="Txt_CN" placeholder="Company Code" value="">
+                </div>
+                <div class="form-group col-lg-4">
+                    <label for="Txt_FistName" style="margin-left:10px">Dealer ID :</label>
+                    <input type="text" class="form-control" id="Txt_DI" placeholder="Dealer ID" value="">
+                </div>
+                <div class="form-group col-lg-4">
+                    <label for="Txt_FistName" style="margin-left:10px">Device ID :</label>
+                    <input type="text" class="form-control" id="Txt_DVI" placeholder="Device ID" value="">
+                </div>
+                <div class="form-group col-lg-6">
+                    <label for="Txt_FistName" style="margin-left:10px">IP Address :</label>
+                    <input type="text" class="form-control" id="Txt_IP" placeholder="Device IP Address" value="" style="text-align:center">
+                </div>
+                <div class="form-group col-lg-6">
+                    <label for="Txt_FistName" style="margin-left:10px">Log Date (DD/MM/YYYY) :</label>
+                    <input type="text" class="form-control" id="Txt_DS" placeholder="Log Date (DD/MM/YYYY)" value="@ViewBag.DateN" style="text-align:center">
+                </div>
+                @*<div class="form-group col-lg-4">
+                    <label for="Txt_FistName" style="margin-left:10px">End Date (DD/MM/YYYY) :</label>
+                    <input type="text" class="form-control" id="Txt_DE" placeholder="End Date (DD/MM/YYYY)" value="@ViewBag.DateN" style="text-align:center">
+                </div>*@
+            </div>
+            <div class="col-lg-12" style="text-align:right;padding-left:15px;padding-right:15px;margin-top:10px">
+                <input type="button" class="col-lg-2 btn btn-primary" style="cursor:pointer;opacity:1;pointer-events:auto" value="Reload Log" id="BTNRL" onclick="ReloadGrid()"/>
+            </div>
+            <hr />
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="basic-datatables" class="display table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Company</th>
+                                <th>Dealer</th>
+                                <th>Device</th>
+                                <th>Scanner</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>IP</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Company</th>
+                                <th>Dealer</th>
+                                <th>Device</th>
+                                <th>Scanner</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>IP</th>
+                                <th>Description</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            @foreach (DataRow Row in ViewBag.DT)
+                            {
+                                <tr>
+                                    <td style="text-align:center;cursor:pointer">@Row[0].ToString().Trim()</td>
+                                    <td style="text-align:center;cursor:pointer">@Row[1].ToString().Trim()</td>
+                                    <td style="text-align:center;cursor:pointer">@Row[2].ToString().Trim()</td>
+                                    <td style="text-align:center;cursor:pointer">@Row[3].ToString().Trim()</td>
+                                    <td style="text-align:center;cursor:pointer">@Row[4].ToString().Trim()</td>
+                                    <td style="text-align:center;cursor:pointer">@Row[5].ToString().Trim()</td>
+                                    <td style="text-align:center;cursor:pointer">@Row[6].ToString().Trim()</td>
+                                    <td style="text-align:left;cursor:pointer">@Row[7].ToString().Trim()</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section JavaSCR{
+    <script>
+        oTable = $('#basic-datatables').DataTable();
+        oTable.order([0, 'desc']).draw();
+        oTable.fnPageChange(0);
+        function ReloadGrid() {
+            document.getElementById("BTNRL").style.opacity = "0.5";
+            document.getElementById("BTNRL").style.pointerEvents = "none";
+            document.getElementById("BTNRL").value = "Please wait";
+            var inHt = "";
+            $.ajax({
+                url: "@Url.Action("ReloadGrid", "Customers")",
+                dataType: "json",
+                type: "GET",
+                data: { CN: $("#Txt_CN").val(), DID: $("#Txt_DI").val(), UID: $("#Txt_DVI").val(), IP: $("#Txt_IP").val(), SD: $("#Txt_DS").val() },
+                async: true,
+                error: function () {
+                    document.getElementById("BTNRL").style.opacity = "1";
+                    document.getElementById("BTNRL").style.pointerEvents = "auto";
+                    document.getElementById("BTNRL").value = "Reload Log";
+                    ShowNoti('top', 'right', 'warning', 'withicon', 'System Error ...', "It is not possible to refresh the table information, please try again after reviewing.", 'fa fa-exclamation-triangle');
+                },
+                beforeSend: function () { },
+                success: function (data)
+                {
+                    var ErrorCode = "";
+                    var ErrorResult = "";
+                    $.each(data, function (i, item) {
+                        ErrorCode = item.Value; ErrorResult = item.Text;
+                    });
+                    inHt = ErrorResult;
+                    document.getElementById("BTNRL").style.opacity = "1";
+                    document.getElementById("BTNRL").style.pointerEvents = "auto";
+                    document.getElementById("BTNRL").value = "Reload Log";
+                    $('#basic-datatables').DataTable().destroy();
+                    $('#basic-datatables').find('tbody').empty();
+                    $('#basic-datatables').find('tbody').append(inHt);
+                    $('#basic-datatables').DataTable().draw();
+                    oTable = $('#basic-datatables').DataTable();
+                    oTable.order([0, 'desc']).draw();
+                    oTable.fnPageChange(0);
+                }
+            });
+        }
+    </script>
+}
+
+

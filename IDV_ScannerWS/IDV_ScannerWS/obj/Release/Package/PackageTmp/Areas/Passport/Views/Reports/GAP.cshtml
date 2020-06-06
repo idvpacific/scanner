@@ -1,0 +1,502 @@
+﻿@using System.Data;
+@{
+    ViewBag.Title = "Report Details [ ID : " + ViewBag.Doc_ID + " ]";
+    Layout = "~/Areas/Passport/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div onclick="AddNote('@ViewBag.Doc_ID')" class="AddNoteF AddNoteFWH">
+    <div class="form-inline" style="text-align:center;width:100%;height:100%;">
+        <i class="fa fa-tag" style="font-size:25px"></i>
+        <i class="AddNoteFIT" style="font-size:16px;margin-left:12px">New Note</i>
+    </div>
+</div>
+
+<div onclick="RowEdit('@ViewBag.Doc_ID')" class="EditBtnF EditBtnFWH">
+    <div class="form-inline" style="text-align:center;width:100%;height:100%;">
+        <i class="fas fa-edit" style="font-size:25px"></i>
+        <i class="EditBtnFIT" style="font-size:16px;margin-left:12px">Edit Now</i>
+    </div>
+</div>
+
+<div class="page-inner mt--5">
+    <div class="row mt--2">
+        <div class="col-md-12">
+            <div class="card full-height">
+                <div class="card-body">
+                    <div class="card-title" style="color:#146de0"><i class="fa fa-id-badge"></i> Basic Information <span style="font-size:15px;font-weight:bold;color:#074595">( Doc.id #@ViewBag.Doc_ID )</span> <span style="font-size:15px;font-weight:bold;color:@ViewBag.EXPRes_Color">@ViewBag.EXPRes</span></div>
+                    <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
+                        <div class="col-lg-4">
+                            <h3 style="color:#074595">Software Name</h3>
+                            <h5>@ViewBag.C1</h5>
+                        </div>
+                        <div class="col-lg-4">
+                            <h3 style="color:#074595">Document Type</h3>
+                            <h5>@ViewBag.C2</h5>
+                        </div>
+                        <div class="col-lg-4">
+                            <h3 style="color:#074595">Detected Name</h3>
+                            <h5>@ViewBag.C3</h5>
+                        </div>
+                        <div class="col-lg-4">
+                            <h3 style="color:#074595">Insert Date</h3>
+                            <h5>@ViewBag.C4</h5>
+                        </div>
+                        <div class="col-lg-4">
+                            <h3 style="color:#074595">Insert Time</h3>
+                            <h5>@ViewBag.C5</h5>
+                        </div>
+                        <div class="col-lg-4">
+                            <h3 style="color:#074595">Status</h3>
+                            @if (@ViewBag.C6 == "1")
+                            {
+                                <h5><i class="btn btn-success" style="width:110px;padding:0px;padding-top:5px;padding-bottom:5px;cursor:default;pointer-events: none;">@ViewBag.C7</i></h5>
+                            }
+                            else
+                            {
+                                if (@ViewBag.C6 == "2")
+                                {
+                                    <h5><i class="btn btn-danger" style="width:110px;padding:0px;padding-top:5px;padding-bottom:5px;cursor:default;pointer-events: none;">@ViewBag.C7</i></h5>
+                                }
+                                else
+                                {
+                                    if (@ViewBag.C6 == "3")
+                                    {
+                                        <h5><i class="btn btn-warning" style="width:110px;padding:0px;padding-top:5px;padding-bottom:5px;cursor:default;pointer-events: none;">@ViewBag.C7</i></h5>
+                                    }
+                                    else
+                                    {
+                                        <h5><i class="btn btn-dark" style="width:110px;padding:0px;padding-top:5px;padding-bottom:5px;cursor:default;pointer-events: none;">@ViewBag.C7</i></h5>
+                                    }
+                                }
+                            }
+                        </div>
+                        <hr class="col-lg-12" />
+                        <div class="col-lg-4">
+                            <h3 style="color:#074595">Company Name</h3>
+                            <h5>@ViewBag.C8</h5>
+                        </div>
+                        <div class="col-lg-4">
+                            <h3 style="color:#074595">Branch Name</h3>
+                            <h5>@ViewBag.C9</h5>
+                        </div>
+                        <div class="col-lg-4">
+                            <h3 style="color:#074595">Counter Code</h3>
+                            <h5>#@ViewBag.C10</h5>
+                        </div>
+                        <div class="col-lg-4">
+                            <h3 style="color:#074595">Booth Responsible</h3>
+                            <h5>@ViewBag.C11</h5>
+                        </div>
+                        <div class="col-lg-8">
+                            <h3 style="color:#074595">Counter Address</h3>
+                            <h6>@ViewBag.C12</h6>
+                        </div>
+                        <hr class="col-lg-12" />
+                        <div class="col-lg-12">
+                            <h3 style="color:#074595"><i class="fa fa-pencil-alt" style="margin-right:10px"></i>Document Notes :</h3>
+                            <div class="col-lg-12" id="NTRLD">
+                                @if (ViewBag.Notes != null)
+                                {
+                                    foreach (DataRow RW in ViewBag.Notes)
+                                    {
+                                        <h4><i class="fa fa-user" style="margin-right:10px;margin-top:20px"></i>@RW[2].ToString().Trim() <span style="font-size:12px">[ @RW[3].ToString().Trim() - @RW[4].ToString().Trim() ]</span></h4>
+                                        <h6 style="margin-left:10px;text-align:justify;text-justify:auto;border-left:1px dashed black;padding-left:10px">@RW[5].ToString().Trim()</h6>
+                                    }
+                                }
+                                else
+                                {
+                                    <h6>No notes are attached</h6>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-inner mt--5">
+    <div class="row mt--2">
+        <div class="col-md-12">
+            <div class="card full-height">
+                <div class="card-body">
+                    <div class="card-title" style="color:#146de0"><i class="fa fa-lock"></i> Document Secure Data</div>
+                    <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
+                        <div class="col-lg-3">
+                            <h3 style="color:#074595">Air Baudrate</h3>
+                            <h5>@ViewBag.D1</h5>
+                        </div>
+                        <div class="col-lg-3">
+                            <h3 style="color:#074595">Chip ID</h3>
+                            <h5>@ViewBag.D2</h5>
+                        </div>
+                        <div class="col-lg-3">
+                            <h3 style="color:#074595">BAC</h3>
+                            <h5>@ViewBag.D3</h5>
+                        </div>
+                        <div class="col-lg-3">
+                            <h3 style="color:#074595">SAC</h3>
+                            <h5>@ViewBag.D4</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-inner mt--5">
+    <div class="row mt--2">
+        <div class="col-md-12">
+            <div class="card full-height">
+                <div class="card-body">
+                    <div class="card-title" style="color:#146de0"><i class="fas fa-tasks"></i> ePassport Status</div>
+                    <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
+                        <div class="col-lg-6">
+                            <h3 class="col-lg-12" style="padding-bottom:10px;padding-top:10px">Read Data :</h3>
+                            <div class="btn @ViewBag.DG1_R" style="cursor:default;padding:5px;margin-top:3px;width:60px">DG1</div>
+                            <div class="btn @ViewBag.DG2_R" style="cursor:default;padding:5px;margin-top:3px;width:60px">DG2</div>
+                            <div class="btn @ViewBag.DG3_R" style="cursor:default;padding:5px;margin-top:3px;width:60px">DG3</div>
+                            <div class="btn @ViewBag.DG4_R" style="cursor:default;padding:5px;margin-top:3px;width:60px">DG4</div>
+                            <div class="btn @ViewBag.DG5_R" style="cursor:default;padding:5px;margin-top:3px;width:60px">DG5</div>
+                            <div class="btn @ViewBag.DG6_R" style="cursor:default;padding:5px;margin-top:3px;width:60px">DG6</div>
+                            <div class="btn @ViewBag.DG7_R" style="cursor:default;padding:5px;margin-top:3px;width:60px">DG7</div>
+                            <div class="btn @ViewBag.DG8_R" style="cursor:default;padding:5px;margin-top:3px;width:60px">DG8</div>
+                            <div class="btn @ViewBag.DG9_R" style="cursor:default;padding:5px;margin-top:3px;width:60px">DG9</div>
+                            <div class="btn @ViewBag.DG10_R" style="cursor:default;padding:5px;margin-top:3px;width:60px">DG10</div>
+                            <div class="btn @ViewBag.DG11_R" style="cursor:default;padding:5px;margin-top:3px;width:60px">DG11</div>
+                            <div class="btn @ViewBag.DG12_R" style="cursor:default;padding:5px;margin-top:3px;width:60px">DG12</div>
+                            <div class="btn @ViewBag.DG13_R" style="cursor:default;padding:5px;margin-top:3px;width:60px">DG13</div>
+                            <div class="btn @ViewBag.DG14_R" style="cursor:default;padding:5px;margin-top:3px;width:60px">DG14</div>
+                            <div class="btn @ViewBag.DG15_R" style="cursor:default;padding:5px;margin-top:3px;width:60px">DG15</div>
+                            <div class="btn @ViewBag.DG16_R" style="cursor:default;padding:5px;margin-top:3px;width:60px">DG16</div>
+                        </div>
+                        <div class="col-lg-6">
+                            <h3 class="col-lg-12" style="padding-bottom:10px;padding-top:10px">Validated :</h3>
+                            <div class="btn @ViewBag.DG1_V" style="cursor:default;padding:5px;margin-top:3px;width:60px">DG1</div>
+                            <div class="btn @ViewBag.DG2_V" style="cursor:default;padding:5px;margin-top:3px;width:60px">DG2</div>
+                            <div class="btn @ViewBag.DG3_V" style="cursor:default;padding:5px;margin-top:3px;width:60px">DG3</div>
+                            <div class="btn @ViewBag.DG4_V" style="cursor:default;padding:5px;margin-top:3px;width:60px">DG4</div>
+                            <div class="btn @ViewBag.DG5_V" style="cursor:default;padding:5px;margin-top:3px;width:60px">DG5</div>
+                            <div class="btn @ViewBag.DG6_V" style="cursor:default;padding:5px;margin-top:3px;width:60px">DG6</div>
+                            <div class="btn @ViewBag.DG7_V" style="cursor:default;padding:5px;margin-top:3px;width:60px">DG7</div>
+                            <div class="btn @ViewBag.DG8_V" style="cursor:default;padding:5px;margin-top:3px;width:60px">DG8</div>
+                            <div class="btn @ViewBag.DG9_V" style="cursor:default;padding:5px;margin-top:3px;width:60px">DG9</div>
+                            <div class="btn @ViewBag.DG10_V" style="cursor:default;padding:5px;margin-top:3px;width:60px">DG10</div>
+                            <div class="btn @ViewBag.DG11_V" style="cursor:default;padding:5px;margin-top:3px;width:60px">DG11</div>
+                            <div class="btn @ViewBag.DG12_V" style="cursor:default;padding:5px;margin-top:3px;width:60px">DG12</div>
+                            <div class="btn @ViewBag.DG13_V" style="cursor:default;padding:5px;margin-top:3px;width:60px">DG13</div>
+                            <div class="btn @ViewBag.DG14_V" style="cursor:default;padding:5px;margin-top:3px;width:60px">DG14</div>
+                            <div class="btn @ViewBag.DG15_V" style="cursor:default;padding:5px;margin-top:3px;width:60px">DG15</div>
+                            <div class="btn @ViewBag.DG16_V" style="cursor:default;padding:5px;margin-top:3px;width:60px">DG16</div>
+                        </div>
+                        <div class="col-lg-12 form-inline">
+                            <h3 class="col-lg-12" style="padding-bottom:10px;padding-top:20px">Validation :</h3>
+                            <h4 class="col-lg-4"><i class="far @ViewBag.Chip_Val1" style="margin-right:10px"></i>BAC Active</h4>
+                            <h4 class="col-lg-4"><i class="far @ViewBag.Chip_Val2" style="margin-right:10px"></i>SAC Active</h4>
+                            <h4 class="col-lg-4"><i class="far @ViewBag.Chip_Val3" style="margin-right:10px"></i>Active Auth</h4>
+                            <h4 class="col-lg-4"><i class="far @ViewBag.Chip_Val4" style="margin-right:10px"></i>Signature</h4>
+                            <h4 class="col-lg-4"><i class="far @ViewBag.Chip_Val5" style="margin-right:10px"></i>Doc Signer Cert</h4>
+                            <h4 class="col-lg-4"><i class="far @ViewBag.Chip_Val6" style="margin-right:10px"></i>Signed Attr</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-inner mt--5">
+    <div class="row mt--2">
+        <div class="col-md-6">
+            <div class="card full-height">
+                <div class="card-body" style="min-height:670px">
+                    <div class="card-title" style="color:#146de0"><i class="fas fa-user"></i> MRZ Personal Info</div>
+                    <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
+                        <div class="col-lg-12" style="text-align:center;margin-bottom:20px;height:200px !important;width:150px !important;">
+                            <img id="myImg1" alt="MRZ Image" src="~/Photos/Gemalto/@ViewBag.Doc_ID/FC.jpeg" style="border:1px solid #ddd;border-radius:4px;padding:5px;height:200px !important;width:150px !important;" />
+                        </div>
+                        <div class="col-lg-12 form-inline">
+                            <div class="col-lg-6">
+                                <h3 style="color:#074595">First Name :</h3>
+                                <h5>@ViewBag.MRZD1</h5>
+                            </div>
+                            <div class="col-lg-6">
+                                <h3 style="color:#074595">Last Name :</h3>
+                                <h5>@ViewBag.MRZD2</h5>
+                            </div>
+                            <div class="col-lg-6">
+                                <h3 style="color:#074595">Nationality :</h3>
+                                <h5>@ViewBag.MRZD3</h5>
+                            </div>
+                            <div class="col-lg-6">
+                                <h3 style="color:#074595">Gender :</h3>
+                                <h5>@ViewBag.MRZD4</h5>
+                            </div>
+                            <div class="col-lg-6">
+                                <h3 style="color:#074595">Birthdate :</h3>
+                                <h5>@ViewBag.MRZD5</h5>
+                            </div>
+                            <div class="col-lg-6">
+                                <h3 style="color:#074595">Document No. :</h3>
+                                <h5>@ViewBag.MRZD6</h5>
+                            </div>
+                            <div class="col-lg-12">
+                                <h3 style="color:#074595">Expire Date :</h3>
+                                <h5>@ViewBag.MRZD8</h5>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="col-lg-12">
+                                <h3 style="color:#074595">MRZ Data :</h3>
+                                <h5>@ViewBag.MRZD7</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card full-height">
+                <div class="card-body" style="min-height:670px">
+                    <div class="card-title" style="color:#146de0"><i class="fas fa-microchip"></i> Chip Personal Info</div>
+                    <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
+                        <div class="col-lg-12" style="text-align:center;margin-bottom:20px;height:200px !important;width:150px !important;">
+                            <img id="myImg2" alt="Chip Image" src="~/Photos/Gemalto/@ViewBag.Doc_ID/RF.jpeg" style="border:1px solid #ddd;border-radius:4px;padding:5px;height:200px !important;width:150px !important;" />
+                        </div>
+                        <div class="col-lg-12 form-inline">
+                            <div class="col-lg-6">
+                                <h3 style="color:#074595">First Name :</h3>
+                                <h5>@ViewBag.CPD1</h5>
+                            </div>
+                            <div class="col-lg-6">
+                                <h3 style="color:#074595">Last Name :</h3>
+                                <h5>@ViewBag.CPD2</h5>
+                            </div>
+                            <div class="col-lg-6">
+                                <h3 style="color:#074595">Nationality :</h3>
+                                <h5>@ViewBag.CPD3</h5>
+                            </div>
+                            <div class="col-lg-6">
+                                <h3 style="color:#074595">Gender :</h3>
+                                <h5>@ViewBag.CPD4</h5>
+                            </div>
+                            <div class="col-lg-6">
+                                <h3 style="color:#074595">Birthdate :</h3>
+                                <h5>@ViewBag.CPD5</h5>
+                            </div>
+                            <div class="col-lg-6">
+                                <h3 style="color:#074595">Document No. :</h3>
+                                <h5>@ViewBag.CPD6</h5>
+                            </div>
+                            <div class="col-lg-12">
+                                <h3 style="color:#074595">Expire Date :</h3>
+                                <h5>@ViewBag.CPD8</h5>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="col-lg-12">
+                                <h3 style="color:#074595">MRZ Data :</h3>
+                                <h5>@ViewBag.CPD7</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-inner mt--5">
+    <div class="row mt--2">
+        <div class="col-md-12">
+            <div class="card full-height">
+                <div class="card-body">
+                    <div class="card-title" style="color:#146de0"><i class="fas fa-image"></i> Normal Image</div>
+                    <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
+                        <div class="col-lg-12" style="text-align:center">
+                            <img class="col-lg-12" id="myImg3" alt="Normal Image" src="~/Photos/Gemalto/@ViewBag.Doc_ID/NM.jpeg" style="border-radius:10px;" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-inner mt--5">
+    <div class="row mt--2">
+        <div class="col-md-12">
+            <div class="card full-height">
+                <div class="card-body">
+                    <div class="card-title" style="color:#146de0"><i class="fas fa-image"></i> Ultra Violet Image</div>
+                    <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
+                        <div class="col-lg-12" style="text-align:center">
+                            <img class="col-lg-12" id="myImg4" alt="Ultra Violet Image" src="~/Photos/Gemalto/@ViewBag.Doc_ID/UV.jpeg" style="border-radius:10px;" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-inner mt--5">
+    <div class="row mt--2 form-inline">
+        <div class="col-md-12">
+            <div class="card full-height">
+                <div class="card-body">
+                    <div class="card-title" style="color:#146de0"><i class="fas fa-images"></i> IR Image</div>
+                    <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
+                        <div class="col-lg-12" style="text-align:center">
+                            <img id="myImg5" alt="IR Image" src="~/Photos/Gemalto/@ViewBag.Doc_ID/IR.jpeg" style="width:100%;border-radius:10px;" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-inner mt--5">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title" style="color:#146de0"><i class="fas fa-table"></i> Chip All Data Table</div>
+        </div>
+        <div class="card-body table-full-width">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="text-align:center">#</th>
+                            <th scope="col" style="text-align:left">Key</th>
+                            <th scope="col" style="text-align:left">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (ViewBag.DDTAB != null)
+                        {
+                            int RowC = 0;
+                            foreach (DataRow Row in ViewBag.DDTAB)
+                            {
+                                RowC++;
+                                <tr>
+                                    <td style="text-align:center">@RowC</td>
+                                    <td style="text-align:left">@Row[1].ToString().Trim()</td>
+                                    <td style="text-align:left">@Row[2].ToString().Trim()</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myModal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="img01">
+    <div id="caption"></div>
+</div>
+
+@section JavaSCR{
+    <script>
+        oTable = $('#basic-datatables').DataTable();
+        var modal = document.getElementById("myModal");
+        var imgFC = document.getElementById("myImg1");
+        var imgRF = document.getElementById("myImg2");
+        var imgNM = document.getElementById("myImg3");
+        var imgUV = document.getElementById("myImg4");
+        var imgIR = document.getElementById("myImg5");
+        var modalImg = document.getElementById("img01");
+        var captionText = document.getElementById("caption");
+        imgFC.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+        imgRF.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+        imgNM.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+        imgUV.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+        imgIR.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+        var span = document.getElementsByClassName("close")[0];
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+        function RowEdit(DID) {
+            var BaseUrl = "@Url.Action("EditSelector","AUE")";
+            BaseUrl = BaseUrl + "/" + DID;
+            window.location.href = BaseUrl;
+        }
+        function ReloadNote(DID) {
+            $.ajax({
+                url: "@Url.Action("ReloadNotes", "Reports")",
+                type: "POST",
+                data: { DID: DID },
+                error: function () { ShowNoti('top', 'right', 'danger', 'withicon', 'Server Error ...', 'An error occurred while executing your request from the server', 'fa fa-exclamation-triangle'); },
+                success: function (data)
+                {
+                    var ErrorCode = "";
+                    var ErrorText = "";
+                    $.each(data, function (i, item) { ErrorText = item.Text; ErrorCode = item.Value; });
+                    if (ErrorCode == "2")
+                    {
+                        document.getElementById('NTRLD').innerHTML = "";
+                        document.getElementById('NTRLD').innerHTML = ErrorText;
+                    }
+                    else
+                    { ShowNoti('top', 'right', 'warning', 'withicon', 'System Error ...', ErrorText,'fa fa-exclamation-triangle'); }
+                }
+            });
+        }
+        function AddNote(DID) {
+            swal({
+                title: 'Add new note ...',
+                content: { element: "input", attributes: { placeholder: "Input Note", type: "text", id: "input-field", className: "form-control"} },
+                buttons: { cancel: {visible: true, className: 'btn btn-danger'}, confirm: {text : 'Add Note', className: 'btn btn-success'} },
+            }).then((Data) => {
+                if (Data) {
+                    $.ajax({
+                        url: "@Url.Action("AddNewComment", "Reports")",
+                        type: "POST",
+                        data: { DID: DID, Message: Data },
+                        error: function () { ShowNoti('top', 'right', 'danger', 'withicon', 'Server Error ...', 'An error occurred while executing your request from the server','fa fa-exclamation-triangle'); },
+                        success: function (data)
+                        {
+                            var ErrorCode = "";
+                            var ErrorText = "";
+                            $.each(data, function (i, item) { ErrorText = item.Text; ErrorCode = item.Value; });
+                            if (ErrorCode == "2")
+                            {
+                                ShowNoti('top', 'right', 'success', 'withicon', 'Congratulations', ErrorText, 'fas fa-check');
+                                ReloadNote(DID);
+                            }
+                            else
+                            {
+                                ShowNoti('top', 'right', 'warning', 'withicon', 'System Error ...', ErrorText,'fa fa-exclamation-triangle');
+                            }
+                        }
+                    });
+                } else { swal.close(); }
+            });
+        }
+    </script>
+}

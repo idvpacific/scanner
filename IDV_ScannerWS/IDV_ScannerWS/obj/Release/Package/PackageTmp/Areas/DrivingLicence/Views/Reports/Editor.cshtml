@@ -1,0 +1,385 @@
+﻿@using System.Data;
+@{
+    ViewBag.Title = "Edit Application Details [ App ID : " + ViewBag.App_ID + " ]";
+    Layout = "~/Areas/DrivingLicence/Views/Shared/_LayoutAdminDL.cshtml";
+    int OCRCount = 0;
+    int ALTCount = 0;
+    string C1S = "";
+    string C2S = "";
+    string C3S = "";
+    string C4S = "";
+    string C5S = "";
+    string C6S = "";
+    string C7S = "";
+    string C8S = "";
+    try
+    {
+        switch (ViewBag.Base[11].ToString().Trim())
+        {
+            case "1": { C1S = "selected"; break; }
+            case "2": { C2S = "selected"; break; }
+            case "3": { C3S = "selected"; break; }
+            case "4": { C4S = "selected"; break; }
+            case "5": { C5S = "selected"; break; }
+            case "6": { C6S = "selected"; break; }
+            case "7": { C7S = "selected"; break; }
+            case "8": { C8S = "selected"; break; }
+        }
+    }
+    catch (Exception)
+    {
+        C1S = "selected";
+    }
+}
+
+<div onclick="SaveApp('@ViewBag.App_ID')" class="AddNoteFS AddNoteFSWH">
+    <div class="form-inline" style="text-align:center;width:100%;height:100%;">
+        <i class="fas fa-save" style="font-size:25px"></i>
+        <i class="AddNoteFSIT" style="font-size:16px;margin-left:12px">Save Application</i>
+    </div>
+</div>
+
+<div onclick="ShowReport('@ViewBag.App_ID')" class="EditBtnF EditBtnFWH">
+    <div class="form-inline" style="text-align:center;width:100%;height:100%;">
+        <i class="fas fa-search" style="font-size:25px"></i>
+        <i class="EditBtnFIT" style="font-size:16px;margin-left:12px">Report</i>
+    </div>
+</div>
+
+<div class="row">
+    <div class="page-inner mt--5 col-lg-12">
+        <div class="row mt--2">
+            <div class="col-md-12">
+                <div class="card full-height">
+                    <div class="card-body">
+                        <div class="card-title" style="color:#146de0"><i class="fa fa-lock"></i> Application Information</div>
+                        <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
+                            <div class="col-lg-2" style="text-align:center">
+                                <h3 style="color:#074595;font-size:17px;font-style:italic">Com. Code</h3>
+                                <h5>@ViewBag.Base[1].ToString().Trim()</h5>
+                            </div>
+                            <div class="col-lg-4" style="text-align:center">
+                                <h3 style="color:#074595;font-size:17px;font-style:italic">Com.  Name</h3>
+                                <h5>@ViewBag.Base[2].ToString().Trim()</h5>
+                            </div>
+                            <div class="col-lg-3" style="text-align:center">
+                                <h3 style="color:#074595;font-size:17px;font-style:italic">Dealer ID</h3>
+                                <h5>@ViewBag.Base[5].ToString().Trim()</h5>
+                            </div>
+                            <div class="col-lg-3" style="text-align:center">
+                                <h3 style="color:#074595;font-size:17px;font-style:italic">Device ID</h3>
+                                <h5>@ViewBag.Base[6].ToString().Trim()</h5>
+                            </div>
+                            <hr style="width:100%;height:1px;padding-bottom:10px" />
+                            <div class="col-lg-2" style="text-align:center">
+                                <h3 style="color:#074595;font-size:17px;font-style:italic">Status Now</h3>
+                                <h5>@ViewBag.Base[12].ToString().Trim()</h5>
+                            </div>
+                            <div class="col-lg-2" style="text-align: center">
+                                <h3 style="color:#074595;font-size:17px;font-style:italic">IP</h3>
+                                <h5>@ViewBag.Base[7].ToString().Trim()</h5>
+                            </div>
+                            <div class="col-lg-2" style="text-align:center">
+                                <h3 style="color: #074595;font-size:17px;font-style:italic">Publish Date</h3>
+                                <h5>@ViewBag.Base[8].ToString().Trim()</h5>
+                            </div>
+                            <div class="col-lg-2" style="text-align:center">
+                                <h3 style="color:#074595;font-size:17px;font-style:italic">Publish Time</h3>
+                                <h5>@ViewBag.Base[9].ToString().Trim()</h5>
+                            </div>
+                            <div class="col-lg-2" style="text-align:center">
+                                <h3 style="color:#074595;font-size:17px;font-style:italic">Update Date</h3>
+                                <h5>@ViewBag.Base[13].ToString().Trim()</h5>
+                            </div>
+                            <div class="col-lg-2" style="text-align:center">
+                                <h3 style="color:#074595;font-size:17px;font-style:italic">Update Time</h3>
+                                <h5>@ViewBag.Base[14].ToString().Trim()</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="page-inner mt--5 col-lg-12">
+        <div class="row mt--2">
+            <div class="col-md-12">
+                <div class="card full-height">
+                    <div class="card-body">
+                        <div class="card-title" style="color:#146de0"><i class="fa fa-print"></i> OCR Fields</div>
+                        <div class="d-flex flex-wrap pb-2 pt-4">
+                            <div class="form-group col-lg-4">
+                                <label for="TXT_Email" style="margin-left:10px">Email Address :</label>
+                                <input type="text" class="form-control" id="TXT_Email" placeholder="Enter Email Address" value="@ViewBag.Contact[0][0].ToString().Trim()">
+                            </div>
+                            <div class="form-group col-lg-4">
+                                <label for="TXT_Email" style="margin-left:10px">Phone Number :</label>
+                                <input type="text" class="form-control" id="TXT_Phone" placeholder="Enter Phone Number" value="@ViewBag.Contact[0][1].ToString().Trim()">
+                            </div>
+                            <div class="form-group col-lg-4">
+                                <label for="Txt_Status" style="margin-left:10px">Status :</label>
+                                <select class="form-control form-control" id="Txt_Status">
+                                    <option value="1" @C1S>Uploading</option>
+                                    <option value="2" @C2S>Pending</option>
+                                    <option value="3" @C3S>Unknown</option>
+                                    <option value="4" @C4S>Attention</option>
+                                    <option value="5" @C5S>Caution</option>
+                                    <option value="6" @C6S>OCR</option>
+                                    <option value="7" @C7S>Failed</option>
+                                    <option value="8" @C8S>Passed</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="page-inner mt--5 col-lg-12">
+        <div class="row mt--2">
+            <div class="col-md-12">
+                <div class="card full-height">
+                    <div class="card-body">
+                        <div class="card-title" style="color:#146de0"><i class="fa fa-print"></i> OCR Fields</div>
+                        <div class="d-flex flex-wrap pb-2 pt-4" id="BoxOCR">
+                            @if (ViewBag.OCR != null)
+                            {
+                                foreach (DataRow RW in ViewBag.OCR)
+                                {
+                                    OCRCount++;
+                                    <div class="form-group col-lg-6" id="B_@OCRCount">
+                                        <label for="T_@OCRCount" id="L_@OCRCount" style="margin-left:10px">@RW[1].ToString().Trim() :<a href="javascript:void(0)" onclick="RemoveOCR('@OCRCount')" style="font-weight:normal;text-decoration:none;margin-left:10px">[ <i class="fa fa-trash"></i> Remove Field ]</a></label>
+                                        <input type="hidden" value="@RW[1].ToString().Trim()" id="TK_@OCRCount"/>
+                                        <input type="text" class="form-control" id="T_@OCRCount" placeholder="Enter @RW[1].ToString().Trim()" value="@RW[2].ToString().Trim()">
+                                    </div>
+                                }
+                            }
+                            <hr style="height:1px;width:100%" />
+                        </div>
+                        <div class="col-lg-12">
+                            <input type="button" class="btn btn-success" value=" Add New OCR Feild " onclick="AddOCR()" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="page-inner mt--5 col-lg-12">
+        <div class="row mt--2">
+            <div class="col-md-12">
+                <div class="card full-height">
+                    <div class="card-body">
+                        <div class="card-title" style="color:#146de0"><i class="fa fa-print"></i> Alert Fields</div>
+                        <div class="d-flex flex-wrap pb-2 pt-4" id="BoxALT">
+                            @if (ViewBag.Alert != null)
+                            {
+                                foreach (DataRow RW in ViewBag.Alert)
+                                {
+                                    ALTCount++;
+                                    <div class="form-group col-lg-6" id="R_@ALTCount">
+                                        <label for="A_@ALTCount" id="E_@ALTCount" style="margin-left:10px">Alert #@ALTCount :<a href="javascript:void(0)" onclick="RemoveAlert('@ALTCount')" style="font-weight:normal;text-decoration:none;margin-left:10px">[ <i class="fa fa-trash"></i> Remove Alert ]</a></label>
+                                        <input type="text" class="form-control" id="A_@ALTCount" placeholder="Enter Alert Description" value="@RW[0].ToString().Trim()">
+                                    </div>
+                                }
+                            }
+                            <hr style="height:1px;width:100%" />
+                        </div>
+                        <div class="col-lg-12">
+                            <input type="button" class="btn btn-success" value=" Add New Alert Feild " onclick="AddALT()" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section JavaSCR{
+    <script>
+        var OCRCnt = "0";
+        var OCRCntDig = 0;
+        var ALTCnt = "0";
+        var ALTCntDig = 0;
+        var i = 0; var j = 0;
+        function SaveApp(DID) {
+            if (OCRCnt == "0") { OCRCnt = "@OCRCount"; }
+            if (OCRCntDig == 0) { OCRCntDig = parseInt(OCRCnt); }
+            if (ALTCnt == "0") { ALTCnt = "@ALTCount"; }
+            if (ALTCntDig == 0) { ALTCntDig = parseInt(ALTCnt); }
+            ShowNoti('top', 'right', 'info', 'withicon', 'Please Wait ...', 'The system is processing your request', 'fa fa-spinner');
+            var CMBST = document.getElementById("Txt_Status");
+            var STVal = CMBST.options[CMBST.selectedIndex].value;
+            $.ajax({
+                url: "@Url.Action("EditBase", "Reports")",
+                type: "POST",
+                async: true,
+                data: { AI: DID, EM: $("#TXT_Email").val(), PH: $("#TXT_Phone").val(), ST: STVal },
+                error: function () { ShowNoti('top', 'right', 'danger', 'withicon', 'Server Error ...', 'An error occurred while executing your request from the server','fa fa-exclamation-triangle'); },
+                success: function (data)
+                {
+                    var ErrorCode = "";
+                    var ErrorText = "";
+                    $.each(data, function (i, item) { ErrorText = item.Text; ErrorCode = item.Value; });
+                    if (ErrorCode == "2")
+                    {
+                        $.ajax({
+                            url: "@Url.Action("ClearOCR", "Reports")",
+                            async: false,
+                            type: "POST",
+                            data: { AI: DID },
+                            error: function () {},
+                            success: function (data)
+                            {
+                                var ErrorCode = ""; var ErrorText = "";
+                                $.each(data, function (i, item) { ErrorText = item.Text; ErrorCode = item.Value; });
+                                if (ErrorCode == "2")
+                                {
+                                    j = 0;
+                                    for (i = 0; i <= OCRCntDig; i++) {
+                                        try {
+                                            var ROCR = document.getElementById("B_" + i);
+                                            if (ROCR.style.display != "none") {
+                                                j++;
+                                                var DK = ""; var DT = "";
+                                                DK = document.getElementById("TK_" + i).value;
+                                                DT = document.getElementById("T_" + i).value;
+                                                $.ajax({ url: "@Url.Action("ADDOCR", "Reports")", async: false, type: "POST", data: { AI: DID, DI: j, DK: DK, DV: DT } });
+                                            }
+                                        } catch (e) {}
+                                    }
+                                }
+                            }
+                        });
+                        $.ajax({
+                            url: "@Url.Action("ClearALT", "Reports")",
+                            async: false,
+                            type: "POST",
+                            data: { AI: DID },
+                            error: function () {},
+                            success: function (data)
+                            {
+                                var ErrorCode = ""; var ErrorText = "";
+                                $.each(data, function (i, item) { ErrorText = item.Text; ErrorCode = item.Value; });
+                                if (ErrorCode == "2")
+                                {
+                                    for (i = 0; i <= ALTCntDig; i++) {
+                                        try {
+                                            var ROCR = document.getElementById("R_" + i);
+                                            if (ROCR.style.display != "none") {
+                                                var DT = "";
+                                                DT = document.getElementById("A_" + i).value;
+                                                $.ajax({ url: "@Url.Action("ADDALT", "Reports")", async: false, type: "POST", data: { AI: DID, DV: DT } });
+                                            }
+                                        } catch (e) {}
+                                    }
+                                }
+                            }
+                        });
+                        var BaseUrl = "@Url.Action("Editor", "Reports", new { id="" })";
+                        BaseUrl = BaseUrl + "/" + DID;
+                        window.location.href = BaseUrl;
+                    }
+                    else
+                    {
+                        ShowNoti('top', 'right', 'warning', 'withicon', 'System Error ...', 'Error while editing application information','fa fa-exclamation-triangle');
+                    }
+                }
+            });
+        }
+        function RemoveOCR(FID) {
+            try {
+                swal({
+                    title: "Are you sure to remove?",
+                    text: "You will not be able to recover this field!",
+                    icon: "warning",
+                    buttons: [
+                        'No, cancel it!',
+                        'Yes, I am sure!'
+                    ],
+                    dangerMode: true,
+                }).then(function (isConfirm) {
+                    if (isConfirm) {
+                        var ROCR = document.getElementById("B_" + FID);
+                        ROCR.style.opacity = "0.5";
+                        ROCR.style.pointerEvents = "none";
+                        ROCR.style.display = "none";
+                    }
+                })
+            } catch (e) { }
+        }
+        function AddOCR() {
+            try {
+                if (OCRCnt == "0") { OCRCnt = "@OCRCount"; }
+                if (OCRCntDig == 0) { OCRCntDig = parseInt(OCRCnt); }
+                swal({
+                    title: "Please Enter OCR Title",
+                    icon: "info",
+                    content: { element: "input", attributes: { placeholder: "Please enter OCR Title" }, }
+                }).then(function (Txt) {
+                    if (Txt.trim() != "") {
+                        var BO = document.getElementById("BoxOCR");
+                        OCRCntDig++;
+                        var NOCF = "<div class=\"form-group col-lg-6\" id=\"B_" + OCRCntDig + "\">";
+                        NOCF += "<label for=\"T_" + OCRCntDig + "\" id=\"L_" + OCRCntDig + "\" style=\"margin-left:10px\">" + Txt.trim() + " <a href=\"javascript:void(0)\" onclick=\"RemoveOCR('" + OCRCntDig + "')\" style=\"font-weight:normal;text-decoration:none;margin-left:10px\">[ <i class=\"fa fa-trash\"></i> Remove Field ]</a></label>";
+                        NOCF += "<input type=\"hidden\" value=\"" + Txt.trim() + "\" id=\"TK_" + OCRCntDig + "\"/>";
+                        NOCF += "<input type=\"text\" class=\"form-control\" id=\"T_" + OCRCntDig + "\" placeholder=\"Enter " + Txt.trim() + "\" value=\"\">";
+                        NOCF += "</div>";
+                        BO.innerHTML += NOCF;
+                    }
+                })
+            } catch (e) {}
+        }
+        function RemoveAlert(FID) {
+            try {
+                swal({
+                    title: "Are you sure to remove?",
+                    text: "You will not be able to recover this field!",
+                    icon: "warning",
+                    buttons: [
+                        'No, cancel it!',
+                        'Yes, I am sure!'
+                    ],
+                    dangerMode: true,
+                }).then(function (isConfirm) {
+                    if (isConfirm) {
+                        var ROCR = document.getElementById("R_" + FID);
+                        ROCR.style.opacity = "0.5";
+                        ROCR.style.pointerEvents = "none";
+                        ROCR.style.display = "none";
+                    }
+                })
+            } catch (e) { }
+        }
+        function AddALT() {
+            try {
+                if (ALTCnt == "0") { ALTCnt = "@ALTCount"; }
+                if (ALTCntDig == 0) { ALTCntDig = parseInt(ALTCnt); }
+                var BO = document.getElementById("BoxALT");
+                ALTCntDig++;
+                var NOCF = "<div class=\"form-group col-lg-6\" id=\"R_" + ALTCntDig + "\">";
+                NOCF += "<label for=\"A_" + ALTCntDig + "\" id=\"E_" + ALTCntDig + "\" style=\"margin-left:10px\">" + "Alert #" + ALTCntDig + " <a href=\"javascript:void(0)\" onclick=\"RemoveAlert('" + ALTCntDig + "')\" style=\"font-weight:normal;text-decoration:none;margin-left:10px\">[ <i class=\"fa fa-trash\"></i> Remove Alert ]</a></label>";
+                NOCF += "<input type=\"text\" class=\"form-control\" id=\"A_" + ALTCntDig + "\" placeholder=\"Enter Alert Description\" value=\"\">";
+                NOCF += "</div>";
+                BO.innerHTML += NOCF;
+            } catch (e) {}
+        }
+        function ShowReport(DID) {
+            var BaseUrl = "@Url.Action("Details", "Reports")";
+            BaseUrl = BaseUrl + "/" + DID;
+            let VALC = document.createElement('a');
+            VALC.target = '_blank';
+            VALC.href = BaseUrl;
+            VALC.click();
+        }
+    </script>
+}
+

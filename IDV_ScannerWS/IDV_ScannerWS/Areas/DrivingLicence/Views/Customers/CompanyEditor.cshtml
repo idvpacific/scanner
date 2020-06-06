@@ -1,0 +1,257 @@
+﻿@{
+    ViewBag.Title = "Company Editor [ # ]";
+    Layout = "~/Areas/DrivingLicence/Views/Shared/_LayoutAdminDL.cshtml";
+}
+<div class="row mt--2">
+    <div class="col-md-12">
+        <div class="card full-height">
+            <div class="card-body">
+                <div class="card-title" style="color:#146de0"><i class="fa fa-building"></i> Edit Company [ @ViewBag.ComName ] Information</div>
+                <form class="d-flex flex-wrap justify-content-around pb-2 pt-4" id="EmasFrm">
+                    <div class="form-group col-lg-4">
+                        <label for="Txt_FistName" style="margin-left:10px">Company Name</label>
+                        <input type="text" class="form-control" id="Txt_ComName" placeholder="Company Name *" value="@ViewBag.DTR[1].ToString().Trim()">
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label for="Txt_FistName" style="margin-left:10px">Company ABN</label>
+                        <input type="text" class="form-control" id="Txt_ABN" placeholder="Company ABN" value="@ViewBag.DTR[2].ToString().Trim()">
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label for="Txt_FistName" style="margin-left:10px">License Expiration Date</label>
+                        <input type="text" class="form-control" id="Txt_EXP" placeholder="Expiry Date (DD/MM/YYYY)" value="@ViewBag.DTR[20].ToString().Trim()">
+                    </div>
+                    <div class="form-group col-lg-12">
+                        <label for="Txt_FistName" style="margin-left:10px">Company Address</label>
+                        <input type="text" class="form-control" id="Txt_ADD" placeholder="Address" value="@ViewBag.DTR[3].ToString().Trim()">
+                    </div>
+                    <hr class="col-lg-12" style="height:1px" />
+                    <div class="col-lg-12" style="font-weight:bold;font-size:15px;color:#146de0"><i class="fa fa-lock" style="margin-right:10px"></i>Security Setting</div>
+                    <div class="form-group col-lg-6">
+                        <label for="Txt_FistName" style="margin-left:10px">API Private Key<i class="fa fa-sync-alt" style="margin-left:10px;color:#146de0;cursor:pointer" onclick="GenerateCode('1')"></i></label>
+                        <input type="text" class="form-control" id="Txt_PK" placeholder="Private Key *" value="@ViewBag.DTR[14].ToString().Trim()">
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label for="Txt_FistName" style="margin-left:10px">API Password<i class="fa fa-sync-alt" style="margin-left:10px;color:#146de0;cursor:pointer" onclick="GenerateCode('2')"></i></label>
+                        <input type="text" class="form-control" id="Txt_PS" placeholder="Password *" value="@ViewBag.DTR[15].ToString().Trim()">
+                    </div>
+                    <div class="form-group col-lg-12">
+                        <label for="Txt_FistName" style="margin-left:10px">Call Back URL</label>
+                        <input type="text" class="form-control" id="Txt_CBU" placeholder="Call Back URL" value="@ViewBag.DTR[16].ToString().Trim()">
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label for="Txt_FistName" style="margin-left:10px">Win App Passwrod<i class="fa fa-sync-alt" style="margin-left:10px;color:#146de0;cursor:pointer" onclick="GenerateCode('3')"></i></label>
+                        <input type="text" class="form-control" id="Txt_PS_Con" placeholder="Config Password *" value="@ViewBag.DTR[17].ToString().Trim()">
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label for="Txt_FistName" style="margin-left:10px">Authentication Username<i class="fa fa-sync-alt" style="margin-left:10px;color:#146de0;cursor:pointer" onclick="GenerateCode('4')"></i></label>
+                        <input type="text" class="form-control" id="Txt_AT_US" placeholder="Authentication Username" value="@ViewBag.DTR[18].ToString().Trim()">
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label for="Txt_FistName" style="margin-left:10px">Authentication Password<i class="fa fa-sync-alt" style="margin-left:10px;color:#146de0;cursor:pointer" onclick="GenerateCode('5')"></i></label>
+                        <input type="text" class="form-control" id="Txt_AT_PS" placeholder="Authentication Password" value="@ViewBag.DTR[19].ToString().Trim()">
+                    </div>
+                    <hr class="col-lg-12" style="height:1px" />
+                    <div class="col-lg-12" style="font-weight:bold;font-size:15px;color:#146de0"><i class="fa fa-user" style="margin-right:10px"></i>Prime Contact</div>
+                    <div class="form-group col-lg-4">
+                        <label for="Txt_FistName" style="margin-left:10px">First Name</label>
+                        <input type="text" class="form-control" id="Txt_PC_FN" placeholder="First Name *" value="@ViewBag.DTR[4].ToString().Trim()">
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label for="Txt_FistName" style="margin-left:10px">Last Name</label>
+                        <input type="text" class="form-control" id="Txt_PC_LN" placeholder="Last Name *" value="@ViewBag.DTR[5].ToString().Trim()">
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label for="Txt_FistName" style="margin-left:10px">Position</label>
+                        <input type="text" class="form-control" id="Txt_PC_PS" placeholder="Position" value="@ViewBag.DTR[8].ToString().Trim()">
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label for="Txt_FistName" style="margin-left:10px">Phone Number</label>
+                        <input type="text" class="form-control" id="Txt_PC_PN" placeholder="Phone Number *" value="@ViewBag.DTR[7].ToString().Trim()">
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label for="Txt_FistName" style="margin-left:10px">Email Address</label>
+                        <input type="text" class="form-control" id="Txt_PC_EA" placeholder="Email Address *" value="@ViewBag.DTR[6].ToString().Trim()">
+                    </div>
+                    <hr class="col-lg-12" style="height:1px" />
+                    <div class="col-lg-12" style="font-weight:bold;font-size:15px;color:#146de0"><i class="fa fa-user" style="margin-right:10px"></i>Secondary Contact</div>
+                    <div class="form-group col-lg-4">
+                        <label for="Txt_FistName" style="margin-left:10px">First Name</label>
+                        <input type="text" class="form-control" id="Txt_SC_FN" placeholder="First Name" value="@ViewBag.DTR[9].ToString().Trim()">
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label for="Txt_FistName" style="margin-left:10px">Last Name</label>
+                        <input type="text" class="form-control" id="Txt_SC_LN" placeholder="Last Name" value="@ViewBag.DTR[10].ToString().Trim()">
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label for="Txt_FistName" style="margin-left:10px">Position</label>
+                        <input type="text" class="form-control" id="Txt_SC_PS" placeholder="Position" value="@ViewBag.DTR[13].ToString().Trim()">
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label for="Txt_FistName" style="margin-left:10px">Phone Number</label>
+                        <input type="text" class="form-control" id="Txt_SC_PN" placeholder="Phone Number" value="@ViewBag.DTR[12].ToString().Trim()">
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label for="Txt_FistName" style="margin-left:10px">Email Address</label>
+                        <input type="text" class="form-control" id="Txt_SC_EA" placeholder="Email Address" value="@ViewBag.DTR[11].ToString().Trim()">
+                    </div>
+                    <div class="form-group col-lg-12 form-inline" style="margin-left:10px">
+                        @if (ViewBag.DTR[21].ToString().Trim() == "1")
+                        {
+                            <input type="checkbox" id="IsAct_Ch" checked>
+                        }
+                        else
+                        {
+                            <input type="checkbox" id="IsAct_Ch">
+                        }
+                        <label for="IsAct_Ch" style="margin-left:10px">Company Acitivity Status : Enable</label>
+                    </div>
+                    <div class="col-lg-12" style="text-align:right;margin-top:25px">
+                        <a href="javascript:void(0)" id="BtnUF" onclick="AddNew()" class="btn btn-success col-lg-2 col-md-12 col-sm-12" style="min-width:200px;margin:5px"><i class="fas fa-save" style="margin-right:10px"></i>Save Changes</a>
+                        <a href="javascript:void(0)" id="BtnUF" onclick="DLCF('@ViewBag.ComID','1')" class="btn btn-primary col-lg-2 col-md-12 col-sm-12" style="min-width:200px;margin:5px"><i class="fa fa-sticky-note" style="margin-right:10px"></i>Download Secure Keys</a>
+                        <a href="javascript:void(0)" id="BtnUF" onclick="DLCF('@ViewBag.ComID','2')" class="btn btn-dark col-lg-2 col-md-12 col-sm-12" style="min-width:200px;margin:5px"><i class="fa fa-lock" style="margin-right:10px"></i>Download App Config</a>
+                        <a href="javascript:void(0)" onclick="ResetData()" class="btn btn-warning col-lg-2 col-md-12 col-sm-12" style="min-width:200px;margin:5px"><i class="fas fa-sync-alt" style="margin-right:10px"></i>Reload Form</a>
+                        <a href="javascript:void(0)" onclick="ClearForm()" class="btn btn-danger col-lg-1 col-md-12 col-sm-12" style="min-width:200px;margin:5px"><i class="fas fa-trash" style="margin-right:10px"></i>Clear Form</a>
+                        <a href="@Url.Action("Company","Customers",new { id="" })" class="btn btn-info col-lg-1 col-md-12 col-sm-12" style="min-width:200px;margin:5px"><i class="fas fa-backward" style="margin-right:10px"></i>Back</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section JavaSCR{
+    <script>
+        function ResetData() {
+            document.getElementById("EmasFrm").reset();
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+            document.getElementById("Txt_ComName").focus();
+        }
+        function ClearForm() {
+            document.getElementById("Txt_ComName").value = "";
+            document.getElementById("Txt_ABN").value = "";
+            document.getElementById("Txt_EXP").value = "";
+            document.getElementById("Txt_ADD").value = "";
+            document.getElementById("Txt_PK").value = "";
+            document.getElementById("Txt_PS").value = "";
+            document.getElementById("Txt_CBU").value = "";
+            document.getElementById("Txt_PS_Con").value = "";
+            document.getElementById("Txt_AT_US").value = "";
+            document.getElementById("Txt_AT_PS").value = "";
+            document.getElementById("Txt_PC_FN").value = "";
+            document.getElementById("Txt_PC_LN").value = "";
+            document.getElementById("Txt_PC_PS").value = "";
+            document.getElementById("Txt_PC_PN").value = "";
+            document.getElementById("Txt_PC_EA").value = "";
+            document.getElementById("Txt_SC_FN").value = "";
+            document.getElementById("Txt_SC_LN").value = "";
+            document.getElementById("Txt_SC_PS").value = "";
+            document.getElementById("Txt_SC_PN").value = "";
+            document.getElementById("Txt_SC_EA").value = "";
+            document.getElementById("IsAct_Ch").checked = false;
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+            document.getElementById("Txt_ComName").focus();
+        }
+        function AddNew() {
+            var ErrOC = 0;
+            if (document.getElementById("Txt_ComName").value.trim() == "") { ErrOC = 1; ShowNoti('top', 'right', 'danger', 'withicon', 'System Error ...', "Please fill Please enter the company name field", 'fa fa-exclamation-triangle'); }
+            if (document.getElementById("Txt_PK").value.trim() == "") { ErrOC = 1; ShowNoti('top', 'right', 'danger', 'withicon', 'System Error ...', "Please fill Please enter the API private key field", 'fa fa-exclamation-triangle'); }
+            if (document.getElementById("Txt_PS").value.trim() == "") { ErrOC = 1; ShowNoti('top', 'right', 'danger', 'withicon', 'System Error ...', "Please fill Please enter the API password field", 'fa fa-exclamation-triangle'); }
+            if (document.getElementById("Txt_PS_Con").value.trim() == "") { ErrOC = 1; ShowNoti('top', 'right', 'danger', 'withicon', 'System Error ...', "Please fill Please enter the windows application password field", 'fa fa-exclamation-triangle'); }
+            if (document.getElementById("Txt_PC_FN").value.trim() == "") { ErrOC = 1; ShowNoti('top', 'right', 'danger', 'withicon', 'System Error ...', "Please fill Please enter the prime contact first name field", 'fa fa-exclamation-triangle'); }
+            if (document.getElementById("Txt_PC_LN").value.trim() == "") { ErrOC = 1; ShowNoti('top', 'right', 'danger', 'withicon', 'System Error ...', "Please fill Please enter the prime contact last name field", 'fa fa-exclamation-triangle'); }
+            if (document.getElementById("Txt_PC_PN").value.trim() == "") { ErrOC = 1; ShowNoti('top', 'right', 'danger', 'withicon', 'System Error ...', "Please fill Please enter the prime contact phone number field", 'fa fa-exclamation-triangle'); }
+            if (document.getElementById("Txt_PC_EA").value.trim() == "") { ErrOC = 1; ShowNoti('top', 'right', 'danger', 'withicon', 'System Error ...', "Please fill Please enter the prime contact email address field", 'fa fa-exclamation-triangle'); }
+            if (ErrOC == 1) { $('#BtnUF').blur(); return; }
+            var ResText = "@ViewBag.ComID";
+            var CHCK = document.getElementById("IsAct_Ch").checked;
+            $.ajax({
+                url: "@Url.Action("Company_A1_Edit", "Customers")",
+                type: "POST",
+                dataType: 'json',
+                data: { BC: ResText, NM: $("#Txt_ComName").val(), ABN: $("#Txt_ABN").val(), EXD: $("#Txt_EXP").val(), ADD: $("#Txt_ADD").val(), CKAC: CHCK},
+                async: false,
+                error: function () { ShowNoti('top', 'right', 'warning', 'withicon', 'System Error ...', "The server encountered an error while executing your request [Err1]", 'fa fa-exclamation-triangle'); },
+                success: function (data) { }
+            });
+            $.ajax({
+                url: "@Url.Action("Company_A2", "Customers")",
+                type: "POST",
+                dataType: 'json',
+                data: { BC: ResText, PK: $("#Txt_PK").val(), PS: $("#Txt_PS").val(), CBU: $("#Txt_CBU").val(), CPS: $("#Txt_PS_Con").val(), ATU: $("#Txt_AT_US").val(), ATP: $("#Txt_AT_PS").val() },
+                async: false,
+                error: function () {},
+                success: function (data) { }
+            });
+            $.ajax({
+                url: "@Url.Action("Company_A3", "Customers")",
+                type: "POST",
+                dataType: 'json',
+                data: { BC: ResText, FN: $("#Txt_PC_FN").val(), LN: $("#Txt_PC_LN").val(), PS: $("#Txt_PC_PS").val(), PN: $("#Txt_PC_PN").val(), EA: $("#Txt_PC_EA").val() },
+                async: false,
+                error: function () {},
+                success: function (data) { }
+            });
+            $.ajax({
+                url: "@Url.Action("Company_A4", "Customers")",
+                type: "POST",
+                dataType: 'json',
+                data: { BC: ResText, FN: $("#Txt_SC_FN").val(), LN: $("#Txt_SC_LN").val(), PS: $("#Txt_SC_PS").val(), PN: $("#Txt_SC_PN").val(), EA: $("#Txt_SC_EA").val() },
+                async: false,
+                error: function () { },
+                success: function (data) { }
+            });
+            var baseURL = "@Url.Action("Company", "Customers", new { id = "" })";
+            window.location.href = baseURL;
+        }
+        function GenerateCode(WOT) {
+            $.ajax({
+                url: "@Url.Action("GenerateRandomKey", "Customers")",
+                type: "POST",
+                dataType: 'json',
+                data: { WOT: WOT },
+                async: false,
+                error: function () { ShowNoti('top', 'right', 'warning', 'withicon', 'System Error ...', "The server encountered an error while executing your request [Err1]", 'fa fa-exclamation-triangle'); },
+                success: function (data)
+                {
+                    var ResText = ""; var ResCode = "";
+                    $.each(data, function (i, item) { ResText = item.Text; ResCode = item.Value; });
+                    if (ResCode == "2") {
+                        if (WOT == '1') {
+                            document.getElementById("Txt_PK").value = ResText;
+                        }
+                        else {
+                            if (WOT == '2') {
+                                document.getElementById("Txt_PS").value = ResText;
+                            }
+                            else {
+                                if (WOT == '3') {
+                                    document.getElementById("Txt_PS_Con").value = ResText;
+                                }
+                                else {
+                                    if (WOT == '4') {
+                                        document.getElementById("Txt_AT_US").value = ResText;
+                                    }
+                                    else {
+                                        if (WOT == '5') {
+                                            document.getElementById("Txt_AT_PS").value = ResText;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else {
+                        ShowNoti('top', 'right', 'warning', 'withicon', 'System Error ...', "The server encountered an error while executing your request [Err2]", 'fa fa-exclamation-triangle');
+                    }
+                }
+            });
+        }
+        function DLCF(CFS, DCD) {
+            var BURL = "@Url.Action("DwnldFL", "Customers", new { id="ABC" })";
+            BURL = BURL.replace("ABC", CFS + "-" + DCD);
+            window.open(BURL, '_blank');
+        }
+    </script>
+}
+
+
+

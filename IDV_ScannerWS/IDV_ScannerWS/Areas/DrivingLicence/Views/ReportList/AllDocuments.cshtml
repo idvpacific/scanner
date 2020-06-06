@@ -1,0 +1,91 @@
+﻿@using System.Data;
+@{
+    ViewBag.Title = "Reports : All Documents ";
+    Layout = "~/Areas/DrivingLicence/Views/Shared/_LayoutAdminDL.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">All Documents Report List :</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="basic-datatables" class="display table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>App ID</th>
+                                <th>Company</th>
+                                <th>Dealer</th>
+                                <th>UserID</th>
+                                <th>Publish Date</th>
+                                <th>Last Update</th>
+                                <th>Status</th>
+                                <th>Read</th>
+                                <th>Edit</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>App ID</th>
+                                <th>Company</th>
+                                <th>Dealer</th>
+                                <th>UserID</th>
+                                <th>Publish Date</th>
+                                <th>Last Update</th>
+                                <th>Status</th>
+                                <th>Read</th>
+                                <th>Edit</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            @foreach (DataRow Row in ViewBag.DT)
+                            {
+                                <tr id="TRID_@Row[0].ToString().Trim()">
+                                    <td style="text-align:center;cursor:pointer" onclick="ShowReport('@Row[0].ToString().Trim()')">@Row[0].ToString().Trim()</td>
+                                    <td style="text-align:center;cursor:pointer" onclick="ShowReport('@Row[0].ToString().Trim()')">@Row[1].ToString().Trim()</td>
+                                    <td style="text-align:center;cursor:pointer" onclick="ShowReport('@Row[0].ToString().Trim()')">@Row[2].ToString().Trim()</td>
+                                    <td style="text-align:center;cursor:pointer" onclick="ShowReport('@Row[0].ToString().Trim()')">@Row[3].ToString().Trim()</td>
+                                    <td style="text-align:center;cursor:pointer" onclick="ShowReport('@Row[0].ToString().Trim()')">@Row[4].ToString().Trim()</td>
+                                    <td style="text-align:center;cursor:pointer" onclick="ShowReport('@Row[0].ToString().Trim()')">@Row[5].ToString().Trim()</td>
+                                    <td style="text-align:center;cursor:pointer" onclick="ShowReport('@Row[0].ToString().Trim()')">@Row[7].ToString().Trim()</td>
+                                    @if (Row[6].ToString().Trim() == "0")
+                                    {
+                                        <td style="text-align:center;cursor:pointer" onclick="ShowReport('@Row[0].ToString().Trim()')"><i class="far fa-circle"></i></td>
+                                    }
+                                    else
+                                    {
+                                        <td style="text-align:center;cursor:pointer" onclick="ShowReport('@Row[0].ToString().Trim()')"><i class="far fa-check-circle"></i></td>
+                                    }
+                                    <td id="TDID_@Row[0].ToString().Trim()" style="text-align:center">
+                                        <a href="javascript:void(0)" onclick="RowEdit('@Row[0].ToString().Trim()')" class="fa fa-pen" style="text-decoration:none"></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section JavaSCR{
+    <script>
+        oTable = $('#basic-datatables').DataTable();
+        oTable.order([4, 'desc']).draw();
+        function ShowReport(OID) {
+            var BaseUrl = "@Url.Action("Details","Reports")";
+            BaseUrl = BaseUrl + "/" + OID;
+            window.location.href = BaseUrl;
+        }
+        function RowEdit(DID) {
+            var BaseUrl = "@Url.Action("Editor", "Reports")";
+            BaseUrl = BaseUrl + "/" + DID;
+            window.location.href = BaseUrl;
+        }
+    </script>
+}
+
+

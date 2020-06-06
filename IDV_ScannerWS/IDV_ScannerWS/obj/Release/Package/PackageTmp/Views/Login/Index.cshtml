@@ -74,7 +74,7 @@
                     var ErrorCode = "";
                     $.each(data, function (i, item) { ErrorResult = item.Text; ErrorCode = item.Value; });
                     if (ErrorCode == "2")
-                    { var baseUrl = "@Url.Action("Index", "Dashboard", new { area = "Admin" })"; window.location.href = baseUrl; }
+                    { var baseUrl = "@Url.Action("Index", "Dashboard", new { area = "DrivingLicence" })"; window.location.href = baseUrl; }
                     else
                     { notify("top", "right", "fas fa-exclamation-triangle", "danger", "animated fadeIn", "animated fadeOut", "An error has occurred !", "Admin email or password not valid"); }
                 }
