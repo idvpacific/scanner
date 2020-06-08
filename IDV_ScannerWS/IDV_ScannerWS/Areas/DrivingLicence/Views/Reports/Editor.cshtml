@@ -284,6 +284,14 @@
                                 }
                             }
                         });
+                        $.ajax({
+                            url: "@Url.Action("SendCallBack", "Reports")",
+                            async: true,
+                            type: "POST",
+                            data: { APPID: DID },
+                            error: function () {},
+                            success: function () {}
+                        });
                         var BaseUrl = "@Url.Action("Editor", "Reports", new { id="" })";
                         BaseUrl = BaseUrl + "/" + DID;
                         window.location.href = BaseUrl;
