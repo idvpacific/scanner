@@ -90,7 +90,7 @@ namespace IDV_ScannerWS.Modules
             return bitmap;
         }
 
-        public void GetData(string AppID)
+        public void GetData(string AppID,bool Authen)
         {
             try
             {
@@ -126,7 +126,14 @@ namespace IDV_ScannerWS.Modules
                         _documentSettings.ImageCroppingExpectedSize = (CroppingExpectedSize)_croppingExpectedSize;
                         _documentSettings.ImageCroppingMode = (CroppingMode)_croppingMode;
                         _documentSettings.SubscriptionId = _subscriptionId;
-                        _documentSettings.ProcessMode = DocumentProcessMode.CaptureData;
+                        if(Authen==true)
+                        {
+                            _documentSettings.ProcessMode = DocumentProcessMode.Authenticate;
+                        }
+                        else
+                        {
+                            _documentSettings.ProcessMode = DocumentProcessMode.CaptureData;
+                        }
                         var documentInstanceId = _assureIdServiceClient.PostDocumentInstance(_documentSettings);
                         DocumentSide documentSide;
                         LightSource lightSource;
