@@ -26,7 +26,7 @@ namespace IDV_ScannerWS.API.DocTemplates
                 DTID = DTID.ToString().Trim();
                 DID = DID.ToString().Trim();
                 DataTable DT = new DataTable();
-                DT = SQ.Get_DTable_TSQL("Select X1,Y1,X2,Y2,X3,Y3,X4,Y4,Elm_Width,Elm_Height,OutputTag,OutputTitle,KeyActive,KeyCode,Similarity From Template_09_BackImage_Elements Where (CID = '" + CID + "') And (SID = '" + SID + "') And (DTID = '" + DTID + "') And (DID = '" + DID + "')");
+                DT = SQ.Get_DTable_TSQL("Select X1,Y1,X2,Y2,X3,Y3,X4,Y4,Elm_Width,Elm_Height,OutputTag,OutputTitle,KeyActive,KeyCode,Similarity,KeyIndex From Template_09_BackImage_Elements Where (CID = '" + CID + "') And (SID = '" + SID + "') And (DTID = '" + DTID + "') And (DID = '" + DID + "')");
                 if (DT.Rows != null)
                 {
                     if (DT.Rows.Count != 0)

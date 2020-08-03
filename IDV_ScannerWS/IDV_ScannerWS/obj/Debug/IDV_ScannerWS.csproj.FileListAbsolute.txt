@@ -99,3 +99,119 @@ E:\Project\09- Gemalto\Source\IDV_ScannerWS\IDV_ScannerWS\bin\Accord.Video.xml
 E:\Project\09- Gemalto\Source\IDV_ScannerWS\IDV_ScannerWS\bin\Accord.Vision.xml
 E:\Project\09- Gemalto\Source\IDV_ScannerWS\IDV_ScannerWS\bin\RestSharp.xml
 E:\Project\09- Gemalto\Source\IDV_ScannerWS\IDV_ScannerWS\obj\Debug\IDV_ScannerWS.csprojAssemblyReference.cache
+E:\Project\09- Gemalto\Source\IDV_ScannerWS\IDV_ScannerWS\bin\QRCodeDecoderLibrary.dll
+E:\Project\09- Gemalto\Source\IDV_ScannerWS\IDV_ScannerWS\bin\Spire.Barcode.dll
+E:\Project\09- Gemalto\Source\IDV_ScannerWS\IDV_ScannerWS\bin\Spire.License.dll
+E:\Project\09- Gemalto\Source\IDV_ScannerWS\IDV_ScannerWS\bin\System.Drawing.Common.dll
+E:\Project\09- Gemalto\Source\IDV_ScannerWS\IDV_ScannerWS\bin\QRCodeDecoderLibrary.pdb
+E:\Project\09- Gemalto\Source\IDV_ScannerWS\IDV_ScannerWS\bin\QRCodeDecoderLibrary.xml
+E:\Project\09- Gemalto\Source\IDV_ScannerWS\IDV_ScannerWS\bin\Spire.Barcode.xml
+E:\Project\09- Gemalto\Source\IDV_ScannerWS\IDV_ScannerWS\bin\Spire.License.xml
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\Accord.dll.config
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\IDV_ScannerWS.dll.config
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\IDV_ScannerWS.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\IDV_ScannerWS.pdb
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\csc.exe
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\csc.exe.config
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\csc.rsp
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\csi.exe
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\csi.exe.config
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\csi.rsp
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\Microsoft.CodeAnalysis.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\Microsoft.CSharp.Core.targets
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\Microsoft.Managed.Core.targets
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\Microsoft.VisualBasic.Core.targets
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\System.AppContext.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\System.Collections.Immutable.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\System.Console.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\System.Diagnostics.StackTrace.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\System.IO.Compression.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\System.IO.FileSystem.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\System.IO.FileSystem.Primitives.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\System.IO.Pipes.AccessControl.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\System.IO.Pipes.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\System.Reflection.Metadata.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\System.Security.AccessControl.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\System.Security.Claims.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\System.Security.Cryptography.Encoding.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\System.Security.Cryptography.Primitives.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\System.Security.Principal.Windows.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\System.Text.Encoding.CodePages.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\System.ValueTuple.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\System.Xml.ReaderWriter.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\System.Xml.XmlDocument.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\System.Xml.XPath.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\System.Xml.XPath.XDocument.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\vbc.exe
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\vbc.exe.config
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\vbc.rsp
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\VBCSCompiler.exe
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\roslyn\VBCSCompiler.exe.config
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\Accord.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\Accord.Imaging.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\Accord.MachineLearning.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\Accord.Math.Core.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\Accord.Math.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\Accord.Statistics.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\Accord.Video.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\Accord.Vision.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\Microsoft.Web.Infrastructure.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\Newtonsoft.Json.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\QRCodeDecoderLibrary.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\RestSharp.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\Spire.Barcode.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\Spire.License.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\Swashbuckle.Core.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\System.Drawing.Common.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\System.Interactive.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\System.Net.Http.Formatting.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\System.Web.Helpers.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\System.Web.Http.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\System.Web.Http.WebHost.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\System.Web.Mvc.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\System.Web.Razor.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\System.Web.Webpages.Deployment.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\System.Web.Webpages.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\System.Web.Webpages.Razor.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\WebActivatorEx.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\Accord.xml
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\Accord.Imaging.xml
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\Accord.MachineLearning.xml
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\Accord.Math.xml
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\Accord.Math.Core.xml
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\Accord.Statistics.xml
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\Accord.Video.xml
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\Accord.Vision.xml
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\QRCodeDecoderLibrary.pdb
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\QRCodeDecoderLibrary.xml
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\RestSharp.xml
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\Spire.Barcode.xml
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\Spire.License.xml
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\System.Interactive.xml
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\System.Web.Razor.xml
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\System.Web.Webpages.xml
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\System.Web.Webpages.Deployment.xml
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\System.Web.Webpages.Razor.xml
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\System.Web.Helpers.xml
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\System.Web.Mvc.xml
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\Newtonsoft.Json.xml
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\System.Net.Http.Formatting.xml
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\System.Web.Http.xml
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\System.Web.Http.WebHost.xml
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\obj\Debug\IDV_ScannerWS.csprojAssemblyReference.cache
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\obj\Debug\IDV_ScannerWS.csproj.CoreCompileInputs.cache
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\obj\Debug\IDV_ScannerWS.csproj.CopyComplete
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\obj\Debug\IDV_ScannerWS.dll
+E:\Project\04- IDV Scanner Site\Source\IDV_ScannerWS\IDV_ScannerWS\obj\Debug\IDV_ScannerWS.pdb

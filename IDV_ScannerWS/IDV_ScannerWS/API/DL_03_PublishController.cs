@@ -26,7 +26,7 @@ namespace IDV_ScannerWS.API
 
 
 
-                string OCRType_Code = "2";
+                string OCRType_Code = "1";
                 // Code 1 : IDV OCR
                 // Code 2 : Accuant OCR
                 // Code 3 : Accuant Authentication

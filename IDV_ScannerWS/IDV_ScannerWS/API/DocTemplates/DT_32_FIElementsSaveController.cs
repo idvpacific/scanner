@@ -47,6 +47,7 @@ namespace IDV_ScannerWS.API.DocTemplates
         public string V13 { get; set; }
         public string V14 { get; set; }
         public string V15 { get; set; }
+        public string V16 { get; set; }
     }
     public class DT_32_FIElementsSaveController : ApiController
     {
@@ -86,7 +87,7 @@ namespace IDV_ScannerWS.API.DocTemplates
                             {
                                 FIElement FIE = new FIElement();
                                 FIE = Newtonsoft.Json.JsonConvert.DeserializeObject<FIElement>(H_raw);
-                                SQ.Execute_TSql("Insert Into Template_08_FrontImage_Elements Values ('" + DBI.CountryID + "','" + DBI.StateID + "','" + DBI.DocumentTypeID + "','" + DBI.DocumentID + "','" + FIE.V1 + "','" + FIE.V2 + "','" + FIE.V3 + "','" + FIE.V4 + "','" + FIE.V5 + "','" + FIE.V6 + "','" + FIE.V7 + "','" + FIE.V8 + "','" + FIE.V9 + "','" + FIE.V10 + "','" + FIE.V11 + "','" + FIE.V12 + "','" + FIE.V13 + "','" + FIE.V14 + "','" + FIE.V15 + "')");
+                                SQ.Execute_TSql("Insert Into Template_08_FrontImage_Elements Values ('" + DBI.CountryID + "','" + DBI.StateID + "','" + DBI.DocumentTypeID + "','" + DBI.DocumentID + "','" + FIE.V1 + "','" + FIE.V2 + "','" + FIE.V3 + "','" + FIE.V4 + "','" + FIE.V5 + "','" + FIE.V6 + "','" + FIE.V7 + "','" + FIE.V8 + "','" + FIE.V9 + "','" + FIE.V10 + "','" + FIE.V11 + "','" + FIE.V12 + "','" + FIE.V13 + "','" + FIE.V14 + "','" + FIE.V15 + "','" + FIE.V16 + "')");
                                 LastRes = "OK";
                             }
                             else
