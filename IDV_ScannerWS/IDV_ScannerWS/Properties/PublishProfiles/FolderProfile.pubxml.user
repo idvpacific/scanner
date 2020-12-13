@@ -6,7 +6,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>E:\Project\09- Gemalto\Source\Export\Web</_PublishTargetUrl>
+    <_PublishTargetUrl>E:\02- Projects Done\04- IDV Scanner Site\Source\Export\16Nov2020</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="Accord.dll.config">
@@ -109,7 +109,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/06/2020 00:34:11</publishTime>
     </File>
     <File Include="Areas/DrivingLicence/Views/Reports/Details.cshtml">
-      <publishTime>06/06/2020 22:10:05</publishTime>
+      <publishTime>11/08/2020 03:31:01</publishTime>
     </File>
     <File Include="Areas/DrivingLicence/Views/Reports/Editor.cshtml">
       <publishTime>06/08/2020 19:30:07</publishTime>
@@ -199,10 +199,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/11/2017 13:19:50</publishTime>
     </File>
     <File Include="bin/IDV_ScannerWS.dll">
-      <publishTime>07/15/2020 01:12:12</publishTime>
+      <publishTime>11/16/2020 05:08:52</publishTime>
     </File>
     <File Include="bin/IDV_ScannerWS.pdb">
-      <publishTime>07/15/2020 01:12:12</publishTime>
+      <publishTime>11/16/2020 05:08:52</publishTime>
     </File>
     <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
       <publishTime>05/24/2018 20:08:22</publishTime>
@@ -212,6 +212,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>02/18/2018 17:14:54</publishTime>
+    </File>
+    <File Include="bin/QRCodeDecoderLibrary.dll">
+      <publishTime>07/19/2020 16:23:02</publishTime>
+    </File>
+    <File Include="bin/QRCodeDecoderLibrary.pdb">
+      <publishTime>07/19/2020 16:23:02</publishTime>
     </File>
     <File Include="bin/RestSharp.dll">
       <publishTime>05/18/2020 11:55:38</publishTime>
@@ -354,8 +360,17 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/roslyn/VBCSCompiler.exe.config">
       <publishTime>05/24/2018 20:08:24</publishTime>
     </File>
+    <File Include="bin/Spire.Barcode.dll">
+      <publishTime>05/25/2020 01:34:48</publishTime>
+    </File>
+    <File Include="bin/Spire.License.dll">
+      <publishTime>04/22/2020 11:05:22</publishTime>
+    </File>
     <File Include="bin/Swashbuckle.Core.dll">
       <publishTime>07/08/2017 07:00:56</publishTime>
+    </File>
+    <File Include="bin/System.Drawing.Common.dll">
+      <publishTime>09/18/2018 19:38:14</publishTime>
     </File>
     <File Include="bin/System.Interactive.dll">
       <publishTime>04/02/2020 20:04:26</publishTime>
@@ -2095,7 +2110,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/17/2020 00:20:01</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>07/15/2020 01:12:13</publishTime>
+      <publishTime>11/16/2020 05:08:53</publishTime>
     </File>
   </ItemGroup>
 </Project>

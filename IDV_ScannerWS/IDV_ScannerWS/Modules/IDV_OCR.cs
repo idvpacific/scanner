@@ -84,6 +84,12 @@ namespace IDV_ScannerWS.Modules
         public int TemplateAverageRank_Step2 { get; set; }
     }
 
+    public class OCR_Relut_Elements
+    {
+        public string Element_Key { get; set; }
+        public string Element_Value { get; set; }
+    }
+
     public class IDV_OCR
     {
         //-----------------------------------------------------------------------------------------------------
@@ -100,6 +106,8 @@ namespace IDV_ScannerWS.Modules
         int Rank_OCRFielad = 3;
         int Rank_TemplateAcceptedMinmumRank = 70;
         int NormalOcrLines_threshold = 20;
+        bool FrontIMage_Rotated = false;
+        bool BackIMage_Rotated = false;
         //-----------------------------------------------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------
         // Barcode 128 :
@@ -200,15 +208,49 @@ namespace IDV_ScannerWS.Modules
         {
             try
             {
-                Bitmap IMG = (Bitmap)IMGL;
-                HaarCascade cascade = new FaceHaarCascade();
-                for (int i = 5; i < 11; i++)
+                for (int i = 1; i < 5; i++)
                 {
-                    var detector = new HaarObjectDetector(cascade, IMGL.Width / i, ObjectDetectorSearchMode.Single);
-                    Rectangle[] objects = detector.ProcessFrame(IMG);
-                    if (objects.Length == 1)
+                    Bitmap IMG = null;
+                    switch (i)
                     {
-                        return true;
+                        case 1: { IMG = new Bitmap(IMGL); break; }
+                        case 2: { IMG = new Bitmap(IMGL); IMG.RotateFlip(RotateFlipType.Rotate90FlipNone); break; }
+                        case 3: { IMG = new Bitmap(IMGL); IMG.RotateFlip(RotateFlipType.Rotate180FlipNone); break; }
+                        case 4: { IMG = new Bitmap(IMGL); IMG.RotateFlip(RotateFlipType.Rotate270FlipNone); break; }
+                    }
+                    if (IMG.Width >= IMG.Height)
+                    {
+                        for (int j = 4; j < 9; j++)
+                        {
+                            try
+                            {
+                                HaarCascade cascade = new FaceHaarCascade();
+                                var detector = new HaarObjectDetector(cascade, IMG.Width / j, ObjectDetectorSearchMode.Single);
+                                Rectangle[] objects = detector.ProcessFrame(IMG);
+                                if (objects.Length == 1)
+                                {
+                                    Bitmap IMG2 = new Bitmap(IMG);
+                                    IMG2 = CropImage(IMG2, objects[0]);
+                                    for (int k = 1; k < 4; k++)
+                                    {
+                                        try
+                                        {
+                                            HaarCascade cascade2 = new FaceHaarCascade();
+                                            var detector2 = new HaarObjectDetector(cascade2, IMG2.Width / k, ObjectDetectorSearchMode.Single);
+                                            Rectangle[] objects2 = detector2.ProcessFrame(IMG2);
+                                            if (objects2.Length == 1)
+                                            {
+                                                return true;
+                                            }
+                                        }
+                                        catch (Exception)
+                                        { }
+                                    }
+                                }
+                            }
+                            catch (Exception)
+                            { }
+                        }
                     }
                 }
                 return false;
@@ -218,19 +260,54 @@ namespace IDV_ScannerWS.Modules
                 return false;
             }
         }
-        public Rectangle FaceDetector_FB(Image IMGL)
+        public Rectangle FaceDetector_FB(Image IMGL, ref Image FB_IMG)
         {
             try
             {
-                Bitmap IMG = (Bitmap)IMGL;
-                HaarCascade cascade = new FaceHaarCascade();
-                for (int i = 5; i < 11; i++)
+                for (int i = 1; i < 5; i++)
                 {
-                    var detector = new HaarObjectDetector(cascade, IMGL.Width / i, ObjectDetectorSearchMode.Single);
-                    Rectangle[] objects = detector.ProcessFrame(IMG);
-                    if (objects.Length == 1)
+                    Bitmap IMG = null;
+                    switch (i)
                     {
-                        return objects[0];
+                        case 1: { IMG = new Bitmap(IMGL); break; }
+                        case 2: { IMG = new Bitmap(IMGL); IMG.RotateFlip(RotateFlipType.Rotate90FlipNone); break; }
+                        case 3: { IMG = new Bitmap(IMGL); IMG.RotateFlip(RotateFlipType.Rotate180FlipNone); break; }
+                        case 4: { IMG = new Bitmap(IMGL); IMG.RotateFlip(RotateFlipType.Rotate270FlipNone); break; }
+                    }
+                    if (IMG.Width >= IMG.Height)
+                    {
+                        for (int j = 4; j < 9; j++)
+                        {
+                            try
+                            {
+                                HaarCascade cascade = new FaceHaarCascade();
+                                var detector = new HaarObjectDetector(cascade, IMG.Width / j, ObjectDetectorSearchMode.Single);
+                                Rectangle[] objects = detector.ProcessFrame(IMG);
+                                if (objects.Length == 1)
+                                {
+                                    Bitmap IMG2 = new Bitmap(IMG);
+                                    IMG2 = CropImage(IMG2, objects[0]);
+                                    for (int k = 1; k < 4; k++)
+                                    {
+                                        try
+                                        {
+                                            HaarCascade cascade2 = new FaceHaarCascade();
+                                            var detector2 = new HaarObjectDetector(cascade2, IMG2.Width / k, ObjectDetectorSearchMode.Single);
+                                            Rectangle[] objects2 = detector2.ProcessFrame(IMG2);
+                                            if (objects2.Length == 1)
+                                            {
+                                                FB_IMG = IMG;
+                                                return objects[0];
+                                            }
+                                        }
+                                        catch (Exception)
+                                        { }
+                                    }
+                                }
+                            }
+                            catch (Exception)
+                            { }
+                        }
                     }
                 }
                 return Rectangle.Empty;
@@ -274,17 +351,18 @@ namespace IDV_ScannerWS.Modules
                         }
                     case "90":
                         {
-                            try { IMGL.RotateFlip(RotateFlipType.Rotate90FlipXY); } catch (Exception) { }
+                            try { IMGL.RotateFlip(RotateFlipType.Rotate90FlipNone); } catch (Exception) { }
                             break;
                         }
                     case "180":
                         {
-                            try { IMGL.RotateFlip(RotateFlipType.RotateNoneFlipXY); } catch (Exception) { }
+
+                            try { IMGL.RotateFlip(RotateFlipType.Rotate180FlipNone); } catch (Exception) { }
                             break;
                         }
                     case "270":
                         {
-                            try { IMGL.RotateFlip(RotateFlipType.Rotate270FlipXY); } catch (Exception) { }
+                            try { IMGL.RotateFlip(RotateFlipType.Rotate270FlipNone); } catch (Exception) { }
                             break;
                         }
                     case "360":
@@ -349,7 +427,36 @@ namespace IDV_ScannerWS.Modules
         }
         //-----------------------------------------------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------
-        public void GetData(string AppID)
+        private void DataReady(ref List<OCR_Relut_Elements> ORE, string Key, string Value)
+        {
+            try
+            {
+                Key = Key.Trim();
+                Value = Value.Trim();
+                bool NeedAddNew = true;
+                foreach (OCR_Relut_Elements OCRR in ORE)
+                {
+                    if (OCRR.Element_Key == Key)
+                    {
+                        OCRR.Element_Value = OCRR.Element_Value = OCRR.Element_Value.Trim() + " " + Value;
+                        NeedAddNew = false;
+                    }
+                }
+                if (NeedAddNew == true)
+                {
+                    ORE.Add(new OCR_Relut_Elements()
+                    {
+                        Element_Key = Key,
+                        Element_Value = Value
+                    });
+                }
+            }
+            catch (Exception)
+            { }
+        }
+        //-----------------------------------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------------------------------
+        public void GetData(string AppID, int IsDemo)
         {
             try
             {
@@ -514,14 +621,17 @@ namespace IDV_ScannerWS.Modules
                                         string OCRResultLocal = IDVOCR((Bitmap)Selected_IMG, "JPG");
                                         OCR_Result OCRRes = JsonConvert.DeserializeObject<OCR_Result>(OCRResultLocal);
                                         OCR_Result OCRRes_Back = new OCR_Result();
-                                        OCR_Result OCR_Last_Front = new OCR_Result();
-                                        OCR_Result OCR_Last_Back = new OCR_Result();
+                                        OCR_Result OCR_Last_Front = null;
+                                        OCR_Result OCR_Last_Back = null;
+                                        FrontIMage_Rotated = false;
+                                        BackIMage_Rotated = false;
                                         if (OCRRes.OCRExitCode == 1)
                                         {
                                             if (OCRRes.IsErroredOnProcessing == false)
                                             {
                                                 if (OCRRes.ParsedResults[0].ErrorMessage.Trim() == "")
                                                 {
+
                                                     bool TemplateFounded = false;
                                                     TemplateList LST_Template = new TemplateList();
                                                     if (Selected_IMG_Front == true)
@@ -540,6 +650,11 @@ namespace IDV_ScannerWS.Modules
                                                         OCR_TextResult = OCR_TextResult.Replace("  ", " ").Replace("  ", " "); ;
                                                         OCR_TextOrientation = OCRRes.ParsedResults[0].TextOrientation.Trim();
                                                         OCR_Last_Front = OCRRes;
+                                                        if (OCR_Last_Front.ParsedResults[0].TextOrientation.ToString().Trim() != "0")
+                                                        {
+                                                            Img_Front_Nor = ImageRotation((Bitmap)Img_Front_Nor, OCR_Last_Front.ParsedResults[0].TextOrientation.ToString().Trim());
+                                                            FrontIMage_Rotated = true;
+                                                        }
                                                         // Searching for Template Start as Front Image :
                                                         DataTable DT_FIE_All = new DataTable();
                                                         DataTable DT_FIEK = new DataTable();
@@ -576,7 +691,7 @@ namespace IDV_ScannerWS.Modules
                                                                     FIE_TemplateCode[FIE_TemplateCode_Row - 1, 20] = 0; // Template Last Rank -------------------------------> OK
                                                                     // Search For Key Front Image :
                                                                     DT_FIEK = new DataTable();
-                                                                    DT_FIEK = SQ.Get_DTable_TSQL("Select KeyCode,Similarity,X1,Y1,Y2,KeyIndex From Template_08_FrontImage_Elements Where (DID = '" + RW1[0].ToString().Trim() + "') And (KeyActive = '1') And (KeyCode <> '') Order By X1,Y1");
+                                                                    DT_FIEK = SQ.Get_DTable_TSQL("Select KeyCode,Similarity,X1,Y1,Y2,KeyIndex,KeyPosition From Template_08_FrontImage_Elements Where (DID = '" + RW1[0].ToString().Trim() + "') And (KeyActive = '1') And (KeyCode <> '') Order By X1,Y1");
                                                                     if (DT_FIEK.Rows != null)
                                                                     {
                                                                         if (DT_FIEK.Rows.Count > 0)
@@ -616,9 +731,9 @@ namespace IDV_ScannerWS.Modules
                                                                             M_Y1 = (int)((int.Parse(DT_FIEK.Rows[0][3].ToString().Trim()) + int.Parse(DT_FIEK.Rows[0][4].ToString().Trim())) / 2);
                                                                             M_X2 = int.Parse(DT_FIEK.Rows[DT_FIEK.Rows.Count - 1][2].ToString().Trim());
                                                                             M_Y2 = (int)((int.Parse(DT_FIEK.Rows[DT_FIEK.Rows.Count - 1][3].ToString().Trim()) + int.Parse(DT_FIEK.Rows[DT_FIEK.Rows.Count - 1][4].ToString().Trim())) / 2);
-                                                                            if (SF.KeyDetector(ref S_X1, ref S_Y1, DT_FIEK.Rows[0][0].ToString().Trim(), OCRRes.ParsedResults[0].TextOverlay.Lines, DT_FIEK.Rows[0][1].ToString().Trim(), int.Parse(DT_FIEK.Rows[0][5].ToString().Trim())) == true)
+                                                                            if (SF.KeyDetector(ref S_X1, ref S_Y1, DT_FIEK.Rows[0][0].ToString().Trim(), OCRRes.ParsedResults[0].TextOverlay.Lines, DT_FIEK.Rows[0][1].ToString().Trim(), int.Parse(DT_FIEK.Rows[0][5].ToString().Trim()), DT_FIEK.Rows[0][6].ToString().Trim()) == true)
                                                                             {
-                                                                                if (SF.KeyDetector(ref S_X2, ref S_Y2, DT_FIEK.Rows[DT_FIEK.Rows.Count - 1][0].ToString().Trim(), OCRRes.ParsedResults[0].TextOverlay.Lines, DT_FIEK.Rows[DT_FIEK.Rows.Count - 1][1].ToString().Trim(), int.Parse(DT_FIEK.Rows[DT_FIEK.Rows.Count - 1][5].ToString().Trim())) == true)
+                                                                                if (SF.KeyDetector(ref S_X2, ref S_Y2, DT_FIEK.Rows[DT_FIEK.Rows.Count - 1][0].ToString().Trim(), OCRRes.ParsedResults[0].TextOverlay.Lines, DT_FIEK.Rows[DT_FIEK.Rows.Count - 1][1].ToString().Trim(), int.Parse(DT_FIEK.Rows[DT_FIEK.Rows.Count - 1][5].ToString().Trim()), DT_FIEK.Rows[DT_FIEK.Rows.Count - 1][6].ToString().Trim()) == true)
                                                                                 {
                                                                                     int XSM = Math.Abs(S_X1 - S_X2);
                                                                                     int XMM = Math.Abs(M_X1 - M_X2);
@@ -653,7 +768,13 @@ namespace IDV_ScannerWS.Modules
                                                                                     {
                                                                                         int CPX = (int)((int.Parse(RW2[0].ToString().Trim()) * FIE_TemplateCode[FIE_TemplateCode_Row - 1, 6]) + FIE_TemplateCode[FIE_TemplateCode_Row - 1, 8]);
                                                                                         int CPY = (int)((int.Parse(RW2[1].ToString().Trim()) * FIE_TemplateCode[FIE_TemplateCode_Row - 1, 7]) + FIE_TemplateCode[FIE_TemplateCode_Row - 1, 9]);
-                                                                                        Color CLS = ((Bitmap)Img_Front_Nor).GetPixel(CPX, CPY);
+                                                                                        Color CLS = Color.Black;
+                                                                                        try
+                                                                                        {
+                                                                                            CLS = ((Bitmap)Img_Front_Nor).GetPixel(CPX, CPY);
+                                                                                        }
+                                                                                        catch (Exception)
+                                                                                        { }
                                                                                         IMG_IP += SF.GetColorSimilarity(CLS, Color.FromArgb(int.Parse(RW2[2].ToString().Trim()), int.Parse(RW2[3].ToString().Trim()), int.Parse(RW2[4].ToString().Trim())));
                                                                                         IMG_BP += int.Parse(RW2[5].ToString().Trim());
                                                                                     }
@@ -669,7 +790,7 @@ namespace IDV_ScannerWS.Modules
                                                                                 if ((RW1[1].ToString().Trim() == "1") && ((RW1[2].ToString().Trim() == "0")))
                                                                                 {
                                                                                     // Get OCR Result Of Back Image :
-                                                                                    if (OCRRes_Back == null)
+                                                                                    if (OCRRes_Back.ParsedResults == null)
                                                                                     {
                                                                                         string OCRResultLocalBack = IDVOCR((Bitmap)Img_Back_Nor, "JPG");
                                                                                         OCRRes_Back = JsonConvert.DeserializeObject<OCR_Result>(OCRResultLocalBack);
@@ -680,10 +801,19 @@ namespace IDV_ScannerWS.Modules
                                                                                         OCR_TextResult_Back = OCR_TextResult_Back.Replace("  ", " ").Replace("  ", " "); ;
                                                                                         OCR_TextOrientation_Back = OCRRes_Back.ParsedResults[0].TextOrientation.Trim();
                                                                                         OCR_Last_Back = OCRRes_Back;
+                                                                                        if (OCR_Last_Back.ParsedResults[0].TextOrientation.ToString().Trim() != "0")
+                                                                                        {
+                                                                                            Img_Back_Nor = ImageRotation((Bitmap)Img_Back_Nor, OCR_Last_Back.ParsedResults[0].TextOrientation.ToString().Trim());
+                                                                                            BackIMage_Rotated = true;
+                                                                                        }
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        OCR_Last_Back = OCRRes_Back;
                                                                                     }
                                                                                     // Search For Key Back Image :
                                                                                     DataTable DT_FBEK = new DataTable();
-                                                                                    DT_FBEK = SQ.Get_DTable_TSQL("Select KeyCode,Similarity,X1,Y1,Y2,KeyIndex From Template_09_BackImage_Elements Where (DID = '" + RW1[0].ToString().Trim() + "') And (KeyActive = '1') And (KeyCode <> '') Order By X1,Y1");
+                                                                                    DT_FBEK = SQ.Get_DTable_TSQL("Select KeyCode,Similarity,X1,Y1,Y2,KeyIndex,KeyPosition From Template_09_BackImage_Elements Where (DID = '" + RW1[0].ToString().Trim() + "') And (KeyActive = '1') And (KeyCode <> '') Order By X1,Y1");
                                                                                     if (DT_FBEK.Rows != null)
                                                                                     {
                                                                                         if (DT_FBEK.Rows.Count > 0)
@@ -723,9 +853,9 @@ namespace IDV_ScannerWS.Modules
                                                                                             M_Y1 = (int)((int.Parse(DT_FBEK.Rows[0][3].ToString().Trim()) + int.Parse(DT_FBEK.Rows[0][4].ToString().Trim())) / 2);
                                                                                             M_X2 = int.Parse(DT_FBEK.Rows[DT_FBEK.Rows.Count - 1][2].ToString().Trim());
                                                                                             M_Y2 = (int)((int.Parse(DT_FBEK.Rows[DT_FBEK.Rows.Count - 1][3].ToString().Trim()) + int.Parse(DT_FBEK.Rows[DT_FBEK.Rows.Count - 1][4].ToString().Trim())) / 2);
-                                                                                            if (SF.KeyDetector(ref S_X1, ref S_Y1, DT_FBEK.Rows[0][0].ToString().Trim(), OCRRes_Back.ParsedResults[0].TextOverlay.Lines, DT_FBEK.Rows[0][1].ToString().Trim(), int.Parse(DT_FBEK.Rows[0][5].ToString().Trim())) == true)
+                                                                                            if (SF.KeyDetector(ref S_X1, ref S_Y1, DT_FBEK.Rows[0][0].ToString().Trim(), OCRRes_Back.ParsedResults[0].TextOverlay.Lines, DT_FBEK.Rows[0][1].ToString().Trim(), int.Parse(DT_FBEK.Rows[0][5].ToString().Trim()), DT_FBEK.Rows[0][6].ToString().Trim()) == true)
                                                                                             {
-                                                                                                if (SF.KeyDetector(ref S_X2, ref S_Y2, DT_FBEK.Rows[DT_FBEK.Rows.Count - 1][0].ToString().Trim(), OCRRes_Back.ParsedResults[0].TextOverlay.Lines, DT_FBEK.Rows[DT_FBEK.Rows.Count - 1][1].ToString().Trim(), int.Parse(DT_FBEK.Rows[DT_FBEK.Rows.Count - 1][5].ToString().Trim())) == true)
+                                                                                                if (SF.KeyDetector(ref S_X2, ref S_Y2, DT_FBEK.Rows[DT_FBEK.Rows.Count - 1][0].ToString().Trim(), OCRRes_Back.ParsedResults[0].TextOverlay.Lines, DT_FBEK.Rows[DT_FBEK.Rows.Count - 1][1].ToString().Trim(), int.Parse(DT_FBEK.Rows[DT_FBEK.Rows.Count - 1][5].ToString().Trim()), DT_FBEK.Rows[DT_FBEK.Rows.Count - 1][6].ToString().Trim()) == true)
                                                                                                 {
                                                                                                     int XSM = Math.Abs(S_X1 - S_X2);
                                                                                                     int XMM = Math.Abs(M_X1 - M_X2);
@@ -760,7 +890,13 @@ namespace IDV_ScannerWS.Modules
                                                                                                     {
                                                                                                         int CPX = (int)((int.Parse(RW2[0].ToString().Trim()) * FIE_TemplateCode[FIE_TemplateCode_Row - 1, 10]) + FIE_TemplateCode[FIE_TemplateCode_Row - 1, 12]);
                                                                                                         int CPY = (int)((int.Parse(RW2[1].ToString().Trim()) * FIE_TemplateCode[FIE_TemplateCode_Row - 1, 11]) + FIE_TemplateCode[FIE_TemplateCode_Row - 1, 13]);
-                                                                                                        Color CLS = ((Bitmap)Img_Back_Nor).GetPixel(CPX, CPY);
+                                                                                                        Color CLS = Color.Black;
+                                                                                                        try
+                                                                                                        {
+                                                                                                            CLS = ((Bitmap)Img_Back_Nor).GetPixel(CPX, CPY);
+                                                                                                        }
+                                                                                                        catch (Exception)
+                                                                                                        { }
                                                                                                         IMG_IP += SF.GetColorSimilarity(CLS, Color.FromArgb(int.Parse(RW2[2].ToString().Trim()), int.Parse(RW2[3].ToString().Trim()), int.Parse(RW2[4].ToString().Trim())));
                                                                                                         IMG_BP += int.Parse(RW2[5].ToString().Trim());
                                                                                                     }
@@ -1087,6 +1223,11 @@ namespace IDV_ScannerWS.Modules
                                                         OCR_TextResult = OCR_TextResult.Replace("  ", " ").Replace("  ", " "); ;
                                                         OCR_TextOrientation = OCRRes.ParsedResults[0].TextOrientation.Trim();
                                                         OCR_Last_Back = OCRRes;
+                                                        if (OCR_Last_Back.ParsedResults[0].TextOrientation.ToString().Trim() != "0")
+                                                        {
+                                                            Img_Back_Nor = ImageRotation((Bitmap)Img_Back_Nor, OCR_Last_Back.ParsedResults[0].TextOrientation.ToString().Trim());
+                                                            BackIMage_Rotated = true;
+                                                        }
                                                         // Searching for Template Only Back Image :
                                                         DataTable DT_FIE_All = new DataTable();
                                                         DataTable DT_FIEK = new DataTable();
@@ -1123,7 +1264,7 @@ namespace IDV_ScannerWS.Modules
                                                                     FIE_TemplateCode[FIE_TemplateCode_Row - 1, 20] = 0; // Template Last Rank -------------------------------> OK
                                                                     // Search For Key Back Image :
                                                                     DT_FIEK = new DataTable();
-                                                                    DT_FIEK = SQ.Get_DTable_TSQL("Select KeyCode,Similarity,X1,Y1,Y2,KeyIndex From Template_09_BackImage_Elements Where (DID = '" + RW1[0].ToString().Trim() + "') And (KeyActive = '1') And (KeyCode <> '') Order By X1,Y1");
+                                                                    DT_FIEK = SQ.Get_DTable_TSQL("Select KeyCode,Similarity,X1,Y1,Y2,KeyIndex,KeyPosition From Template_09_BackImage_Elements Where (DID = '" + RW1[0].ToString().Trim() + "') And (KeyActive = '1') And (KeyCode <> '') Order By X1,Y1");
                                                                     if (DT_FIEK.Rows != null)
                                                                     {
                                                                         if (DT_FIEK.Rows.Count > 0)
@@ -1163,9 +1304,9 @@ namespace IDV_ScannerWS.Modules
                                                                             M_Y1 = (int)((int.Parse(DT_FIEK.Rows[0][3].ToString().Trim()) + int.Parse(DT_FIEK.Rows[0][4].ToString().Trim())) / 2);
                                                                             M_X2 = int.Parse(DT_FIEK.Rows[DT_FIEK.Rows.Count - 1][2].ToString().Trim());
                                                                             M_Y2 = (int)((int.Parse(DT_FIEK.Rows[DT_FIEK.Rows.Count - 1][3].ToString().Trim()) + int.Parse(DT_FIEK.Rows[DT_FIEK.Rows.Count - 1][4].ToString().Trim())) / 2);
-                                                                            if (SF.KeyDetector(ref S_X1, ref S_Y1, DT_FIEK.Rows[0][0].ToString().Trim(), OCRRes.ParsedResults[0].TextOverlay.Lines, DT_FIEK.Rows[0][1].ToString().Trim(), int.Parse(DT_FIEK.Rows[0][5].ToString().Trim())) == true)
+                                                                            if (SF.KeyDetector(ref S_X1, ref S_Y1, DT_FIEK.Rows[0][0].ToString().Trim(), OCRRes.ParsedResults[0].TextOverlay.Lines, DT_FIEK.Rows[0][1].ToString().Trim(), int.Parse(DT_FIEK.Rows[0][5].ToString().Trim()), DT_FIEK.Rows[0][6].ToString().Trim()) == true)
                                                                             {
-                                                                                if (SF.KeyDetector(ref S_X2, ref S_Y2, DT_FIEK.Rows[DT_FIEK.Rows.Count - 1][0].ToString().Trim(), OCRRes.ParsedResults[0].TextOverlay.Lines, DT_FIEK.Rows[DT_FIEK.Rows.Count - 1][1].ToString().Trim(), int.Parse(DT_FIEK.Rows[DT_FIEK.Rows.Count - 1][5].ToString().Trim())) == true)
+                                                                                if (SF.KeyDetector(ref S_X2, ref S_Y2, DT_FIEK.Rows[DT_FIEK.Rows.Count - 1][0].ToString().Trim(), OCRRes.ParsedResults[0].TextOverlay.Lines, DT_FIEK.Rows[DT_FIEK.Rows.Count - 1][1].ToString().Trim(), int.Parse(DT_FIEK.Rows[DT_FIEK.Rows.Count - 1][5].ToString().Trim()), DT_FIEK.Rows[DT_FIEK.Rows.Count - 1][6].ToString().Trim()) == true)
                                                                                 {
                                                                                     int XSM = Math.Abs(S_X1 - S_X2);
                                                                                     int XMM = Math.Abs(M_X1 - M_X2);
@@ -1200,7 +1341,13 @@ namespace IDV_ScannerWS.Modules
                                                                                     {
                                                                                         int CPX = (int)((int.Parse(RW2[0].ToString().Trim()) * FIE_TemplateCode[FIE_TemplateCode_Row - 1, 6]) + FIE_TemplateCode[FIE_TemplateCode_Row - 1, 8]);
                                                                                         int CPY = (int)((int.Parse(RW2[1].ToString().Trim()) * FIE_TemplateCode[FIE_TemplateCode_Row - 1, 7]) + FIE_TemplateCode[FIE_TemplateCode_Row - 1, 9]);
-                                                                                        Color CLS = ((Bitmap)Img_Back_Nor).GetPixel(CPX, CPY);
+                                                                                        Color CLS = Color.Black;
+                                                                                        try
+                                                                                        {
+                                                                                            CLS = ((Bitmap)Img_Back_Nor).GetPixel(CPX, CPY);
+                                                                                        }
+                                                                                        catch (Exception)
+                                                                                        { }
                                                                                         IMG_IP += SF.GetColorSimilarity(CLS, Color.FromArgb(int.Parse(RW2[2].ToString().Trim()), int.Parse(RW2[3].ToString().Trim()), int.Parse(RW2[4].ToString().Trim())));
                                                                                         IMG_BP += int.Parse(RW2[5].ToString().Trim());
                                                                                     }
@@ -1216,7 +1363,7 @@ namespace IDV_ScannerWS.Modules
                                                                                 if ((RW1[1].ToString().Trim() == "1") && ((RW1[2].ToString().Trim() == "0")))
                                                                                 {
                                                                                     // Get OCR Result Of Front Image :
-                                                                                    if (OCRRes_Back == null)
+                                                                                    if (OCRRes_Back.ParsedResults == null)
                                                                                     {
                                                                                         string OCRResultLocalBack = IDVOCR((Bitmap)Img_Front_Nor, "JPG");
                                                                                         OCRRes_Back = JsonConvert.DeserializeObject<OCR_Result>(OCRResultLocalBack);
@@ -1227,10 +1374,15 @@ namespace IDV_ScannerWS.Modules
                                                                                         OCR_TextResult_Back = OCR_TextResult_Back.Replace("  ", " ").Replace("  ", " "); ;
                                                                                         OCR_TextOrientation_Back = OCRRes_Back.ParsedResults[0].TextOrientation.Trim();
                                                                                         OCR_Last_Front = OCRRes_Back;
+                                                                                        if (OCR_Last_Front.ParsedResults[0].TextOrientation.ToString().Trim() != "0")
+                                                                                        {
+                                                                                            Img_Front_Nor = ImageRotation((Bitmap)Img_Front_Nor, OCR_Last_Front.ParsedResults[0].TextOrientation.ToString().Trim());
+                                                                                            FrontIMage_Rotated = true;
+                                                                                        }
                                                                                     }
                                                                                     // Search For Key Front Image :
                                                                                     DataTable DT_FBEK = new DataTable();
-                                                                                    DT_FBEK = SQ.Get_DTable_TSQL("Select KeyCode,Similarity,X1,Y1,Y2,KeyIndex From Template_08_FrontImage_Elements Where (DID = '" + RW1[0].ToString().Trim() + "') And (KeyActive = '1') And (KeyCode <> '') Order By X1,Y1");
+                                                                                    DT_FBEK = SQ.Get_DTable_TSQL("Select KeyCode,Similarity,X1,Y1,Y2,KeyIndex,KeyPosition From Template_08_FrontImage_Elements Where (DID = '" + RW1[0].ToString().Trim() + "') And (KeyActive = '1') And (KeyCode <> '') Order By X1,Y1");
                                                                                     if (DT_FBEK.Rows != null)
                                                                                     {
                                                                                         if (DT_FBEK.Rows.Count > 0)
@@ -1270,9 +1422,9 @@ namespace IDV_ScannerWS.Modules
                                                                                             M_Y1 = (int)((int.Parse(DT_FBEK.Rows[0][3].ToString().Trim()) + int.Parse(DT_FBEK.Rows[0][4].ToString().Trim())) / 2);
                                                                                             M_X2 = int.Parse(DT_FBEK.Rows[DT_FBEK.Rows.Count - 1][2].ToString().Trim());
                                                                                             M_Y2 = (int)((int.Parse(DT_FBEK.Rows[DT_FBEK.Rows.Count - 1][3].ToString().Trim()) + int.Parse(DT_FBEK.Rows[DT_FBEK.Rows.Count - 1][4].ToString().Trim())) / 2);
-                                                                                            if (SF.KeyDetector(ref S_X1, ref S_Y1, DT_FBEK.Rows[0][0].ToString().Trim(), OCRRes_Back.ParsedResults[0].TextOverlay.Lines, DT_FBEK.Rows[0][1].ToString().Trim(), int.Parse(DT_FBEK.Rows[0][5].ToString().Trim())) == true)
+                                                                                            if (SF.KeyDetector(ref S_X1, ref S_Y1, DT_FBEK.Rows[0][0].ToString().Trim(), OCRRes_Back.ParsedResults[0].TextOverlay.Lines, DT_FBEK.Rows[0][1].ToString().Trim(), int.Parse(DT_FBEK.Rows[0][5].ToString().Trim()), DT_FBEK.Rows[0][6].ToString().Trim()) == true)
                                                                                             {
-                                                                                                if (SF.KeyDetector(ref S_X2, ref S_Y2, DT_FBEK.Rows[DT_FBEK.Rows.Count - 1][0].ToString().Trim(), OCRRes_Back.ParsedResults[0].TextOverlay.Lines, DT_FBEK.Rows[DT_FBEK.Rows.Count - 1][1].ToString().Trim(), int.Parse(DT_FBEK.Rows[DT_FBEK.Rows.Count - 1][5].ToString().Trim())) == true)
+                                                                                                if (SF.KeyDetector(ref S_X2, ref S_Y2, DT_FBEK.Rows[DT_FBEK.Rows.Count - 1][0].ToString().Trim(), OCRRes_Back.ParsedResults[0].TextOverlay.Lines, DT_FBEK.Rows[DT_FBEK.Rows.Count - 1][1].ToString().Trim(), int.Parse(DT_FBEK.Rows[DT_FBEK.Rows.Count - 1][5].ToString().Trim()), DT_FBEK.Rows[DT_FBEK.Rows.Count - 1][6].ToString().Trim()) == true)
                                                                                                 {
                                                                                                     int XSM = Math.Abs(S_X1 - S_X2);
                                                                                                     int XMM = Math.Abs(M_X1 - M_X2);
@@ -1307,7 +1459,13 @@ namespace IDV_ScannerWS.Modules
                                                                                                     {
                                                                                                         int CPX = (int)((int.Parse(RW2[0].ToString().Trim()) * FIE_TemplateCode[FIE_TemplateCode_Row - 1, 10]) + FIE_TemplateCode[FIE_TemplateCode_Row - 1, 12]);
                                                                                                         int CPY = (int)((int.Parse(RW2[1].ToString().Trim()) * FIE_TemplateCode[FIE_TemplateCode_Row - 1, 11]) + FIE_TemplateCode[FIE_TemplateCode_Row - 1, 13]);
-                                                                                                        Color CLS = ((Bitmap)Img_Front_Nor).GetPixel(CPX, CPY);
+                                                                                                        Color CLS = Color.Black;
+                                                                                                        try
+                                                                                                        {
+                                                                                                            CLS = ((Bitmap)Img_Front_Nor).GetPixel(CPX, CPY);
+                                                                                                        }
+                                                                                                        catch (Exception)
+                                                                                                        { }
                                                                                                         IMG_IP += SF.GetColorSimilarity(CLS, Color.FromArgb(int.Parse(RW2[2].ToString().Trim()), int.Parse(RW2[3].ToString().Trim()), int.Parse(RW2[4].ToString().Trim())));
                                                                                                         IMG_BP += int.Parse(RW2[5].ToString().Trim());
                                                                                                     }
@@ -1625,122 +1783,526 @@ namespace IDV_ScannerWS.Modules
                                                     {
                                                         if (LST_Template.TemplateAverageRank >= Rank_TemplateAcceptedMinmumRank)
                                                         {
-                                                            // Get Front Image Elements :
-
-
-                                                            // Get Front Image Barcode :
-
-
-                                                            // Get Back Image Elements :
-
-
-                                                            // Get Back Image Barcode :
-
-
-                                                            // Save Data To Sql :
-
-
+                                                            DataTable DT_BaseConfig = new DataTable();
+                                                            DT_BaseConfig = SQ.Get_DTable_TSQL("Select FrontImage,FrontImageBarcode,FrontImageBarcodeQR,OnlyFrontImageBarcode,OnlyFrontImageBarcodeQR,FrontImageBarcodeReplcaseField,BackImage,BackImageBarcode,BackImageBarcodeQR,OnlyBackImageBarcode,OnlyBackImageBarcodeQR,BackImageBarcodeReplcaseField From Template_06_BasicConfiguration Where (DID = '" + LST_Template.TemplateID + "')");
+                                                            if (DT_BaseConfig.Rows != null)
+                                                            {
+                                                                if (DT_BaseConfig.Rows.Count == 1)
+                                                                {
+                                                                    var OREL = new List<OCR_Relut_Elements>();
+                                                                    try
+                                                                    {
+                                                                        OREL.Clear();
+                                                                    }
+                                                                    catch (Exception)
+                                                                    { }
+                                                                    try
+                                                                    {
+                                                                        DataTable DTOPF = new DataTable();
+                                                                        DTOPF = SQ.Get_DTable_TSQL("Select OutputTitle From Template_08_FrontImage_Elements Where (DID = '" + LST_Template.TemplateID + "') And (OutputTag = '1')");
+                                                                        foreach (DataRow RW in DTOPF.Rows)
+                                                                        {
+                                                                            DataReady(ref OREL, RW[0].ToString().Trim(), "");
+                                                                        }
+                                                                    }
+                                                                    catch (Exception)
+                                                                    { }
+                                                                    try
+                                                                    {
+                                                                        DataTable DTOPF = new DataTable();
+                                                                        DTOPF = SQ.Get_DTable_TSQL("Select OutputTitle From Template_09_BackImage_Elements Where (DID = '" + LST_Template.TemplateID + "') And (OutputTag = '1')");
+                                                                        foreach (DataRow RW in DTOPF.Rows)
+                                                                        {
+                                                                            DataReady(ref OREL, RW[0].ToString().Trim(), "");
+                                                                        }
+                                                                    }
+                                                                    catch (Exception)
+                                                                    { }
+                                                                    if (OCR_Last_Front.ParsedResults != null)
+                                                                    {
+                                                                        if (DT_BaseConfig.Rows[0][0].ToString().Trim() == "1")
+                                                                        {
+                                                                            if (DT_BaseConfig.Rows[0][3].ToString().Trim() == "1")
+                                                                            {
+                                                                                if (DT_BaseConfig.Rows[0][5].ToString().Trim() != "")
+                                                                                {
+                                                                                    // Only Read Barcode :
+                                                                                    if (DT_BaseConfig.Rows[0][4].ToString().Trim() == "1")
+                                                                                    {
+                                                                                        // QR Barcode :
+                                                                                        string BRCDR = "";
+                                                                                        BRCDR = Barcode_QR_Read((Bitmap)Img_Front_Nor);
+                                                                                        DataReady(ref OREL, DT_BaseConfig.Rows[0][5].ToString().Trim(), BRCDR);
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        // 128 Normal Barcode :
+                                                                                        string BRCDR = "";
+                                                                                        BRCDR = Barcode_128_Read((Bitmap)Img_Front_Nor);
+                                                                                        DataReady(ref OREL, DT_BaseConfig.Rows[0][5].ToString().Trim(), BRCDR);
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                // Get Front Image Elements :
+                                                                                DataTable DTWRD = new DataTable();
+                                                                                foreach (Line LN in OCR_Last_Front.ParsedResults[0].TextOverlay.Lines)
+                                                                                {
+                                                                                    foreach (Word WD in LN.Words)
+                                                                                    {
+                                                                                        try
+                                                                                        {
+                                                                                            int T = (int)Math.Round((WD.Top - LST_Template.FrontImage_Y_TopLeft_Refrence) / LST_Template.FrontImage_Y_Coeficient);
+                                                                                            int B = (int)Math.Round(T + (WD.Height / LST_Template.FrontImage_Y_Coeficient));
+                                                                                            int L = (int)Math.Round((WD.Left - LST_Template.FrontImage_X_TopLeft_Refrence) / LST_Template.FrontImage_X_Coeficient);
+                                                                                            int R = (int)Math.Round(L + (WD.Width / LST_Template.FrontImage_X_Coeficient));
+                                                                                            DTWRD = new DataTable();
+                                                                                            DTWRD = SQ.Get_DTable_TSQL("Select OutputTitle From Template_08_FrontImage_Elements Where (DID = '" + LST_Template.TemplateID + "') And (OutputTag = '1') And (X1 <= '" + L + "') And (Y1 <= '" + T + "') And (X4 >= '" + R + "') And (Y4 >= '" + B + "')");
+                                                                                            if (DTWRD.Rows != null)
+                                                                                            {
+                                                                                                if (DTWRD.Rows.Count == 1)
+                                                                                                {
+                                                                                                    try
+                                                                                                    {
+                                                                                                        DataReady(ref OREL, DTWRD.Rows[0][0].ToString().Trim(), WD.WordText.Trim());
+                                                                                                    }
+                                                                                                    catch (Exception)
+                                                                                                    { }
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                        catch (Exception)
+                                                                                        { }
+                                                                                    }
+                                                                                }
+                                                                                // Read Image Barcode :
+                                                                                if (DT_BaseConfig.Rows[0][1].ToString().Trim() == "1")
+                                                                                {
+                                                                                    if (DT_BaseConfig.Rows[0][5].ToString().Trim() != "")
+                                                                                    {
+                                                                                        if (DT_BaseConfig.Rows[0][2].ToString().Trim() == "1")
+                                                                                        {
+                                                                                            // QR Barcode :
+                                                                                            string BRCDR = "";
+                                                                                            BRCDR = Barcode_QR_Read((Bitmap)Img_Front_Nor);
+                                                                                            DataReady(ref OREL, DT_BaseConfig.Rows[0][5].ToString().Trim(), BRCDR);
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            // 128 Normal Barcode :
+                                                                                            string BRCDR = "";
+                                                                                            BRCDR = Barcode_128_Read((Bitmap)Img_Front_Nor);
+                                                                                            DataReady(ref OREL, DT_BaseConfig.Rows[0][5].ToString().Trim(), BRCDR);
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                    if (OCR_Last_Back.ParsedResults != null)
+                                                                    {
+                                                                        if (DT_BaseConfig.Rows[0][6].ToString().Trim() == "1")
+                                                                        {
+                                                                            if (DT_BaseConfig.Rows[0][9].ToString().Trim() == "1")
+                                                                            {
+                                                                                if (DT_BaseConfig.Rows[0][11].ToString().Trim() != "")
+                                                                                {
+                                                                                    // Only Read Barcode :
+                                                                                    if (DT_BaseConfig.Rows[0][10].ToString().Trim() == "1")
+                                                                                    {
+                                                                                        // QR Barcode :
+                                                                                        string BRCDR = "";
+                                                                                        BRCDR = Barcode_QR_Read((Bitmap)Img_Back_Nor);
+                                                                                        DataReady(ref OREL, DT_BaseConfig.Rows[0][11].ToString().Trim(), BRCDR);
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        // 128 Normal Barcode :
+                                                                                        string BRCDR = "";
+                                                                                        BRCDR = Barcode_128_Read((Bitmap)Img_Back_Nor);
+                                                                                        DataReady(ref OREL, DT_BaseConfig.Rows[0][11].ToString().Trim(), BRCDR);
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                // Get Back Image Elements :
+                                                                                DataTable DTWRD = new DataTable();
+                                                                                foreach (Line LN in OCR_Last_Back.ParsedResults[0].TextOverlay.Lines)
+                                                                                {
+                                                                                    foreach (Word WD in LN.Words)
+                                                                                    {
+                                                                                        try
+                                                                                        {
+                                                                                            int T = (int)Math.Round((WD.Top - LST_Template.BackImage_Y_TopLeft_Refrence) / LST_Template.BackImage_Y_Coeficient);
+                                                                                            int B = (int)Math.Round(T + (WD.Height / LST_Template.BackImage_Y_Coeficient));
+                                                                                            int L = (int)Math.Round((WD.Left - LST_Template.BackImage_X_TopLeft_Refrence) / LST_Template.BackImage_X_Coeficient);
+                                                                                            int R = (int)Math.Round(L + (WD.Width / LST_Template.BackImage_X_Coeficient));
+                                                                                            DTWRD = new DataTable();
+                                                                                            DTWRD = SQ.Get_DTable_TSQL("Select OutputTitle From Template_09_BackImage_Elements Where (DID = '" + LST_Template.TemplateID + "') And (OutputTag = '1') And (X1 <= '" + L + "') And (Y1 <= '" + T + "') And (X4 >= '" + R + "') And (Y4 >= '" + B + "')");
+                                                                                            if (DTWRD.Rows != null)
+                                                                                            {
+                                                                                                if (DTWRD.Rows.Count == 1)
+                                                                                                {
+                                                                                                    try
+                                                                                                    {
+                                                                                                        DataReady(ref OREL, DTWRD.Rows[0][0].ToString().Trim(), WD.WordText.Trim());
+                                                                                                    }
+                                                                                                    catch (Exception)
+                                                                                                    { }
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                        catch (Exception)
+                                                                                        { }
+                                                                                    }
+                                                                                }
+                                                                                // Read Image Barcode :
+                                                                                if (DT_BaseConfig.Rows[0][7].ToString().Trim() == "1")
+                                                                                {
+                                                                                    if (DT_BaseConfig.Rows[0][11].ToString().Trim() != "")
+                                                                                    {
+                                                                                        if (DT_BaseConfig.Rows[0][8].ToString().Trim() == "1")
+                                                                                        {
+                                                                                            // QR Barcode :
+                                                                                            string BRCDR = "";
+                                                                                            BRCDR = Barcode_QR_Read((Bitmap)Img_Back_Nor);
+                                                                                            DataReady(ref OREL, DT_BaseConfig.Rows[0][11].ToString().Trim(), BRCDR);
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            // 128 Normal Barcode :
+                                                                                            string BRCDR = "";
+                                                                                            BRCDR = Barcode_128_Read((Bitmap)Img_Back_Nor);
+                                                                                            DataReady(ref OREL, DT_BaseConfig.Rows[0][11].ToString().Trim(), BRCDR);
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                    if (IsDemo == 0)
+                                                                    {
+                                                                        // Save Data To Sql :
+                                                                        SQ.Execute_TSql("Delete From US_DL_03_Documents Where (App_ID = '" + AppID + "')");
+                                                                        int RowN = 0;
+                                                                        foreach (OCR_Relut_Elements ORE in OREL)
+                                                                        {
+                                                                            RowN++;
+                                                                            SQ.Execute_TSql("Insert Into US_DL_03_Documents Values ('" + AppID + "','" + RowN + "','" + ORE.Element_Key.Trim() + "','" + ORE.Element_Value.Replace("?", " ").Replace("  ", " ").Trim() + "')");
+                                                                        }
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        // Save Data To Sql OCR Table Test :
+                                                                        SQ.Execute_TSql("Delete From US_DL_03_Documents_OCR Where (App_ID = '" + AppID + "')");
+                                                                        int RowN = 0;
+                                                                        foreach (OCR_Relut_Elements ORE in OREL)
+                                                                        {
+                                                                            RowN++;
+                                                                            SQ.Execute_TSql("Insert Into US_DL_03_Documents_OCR Values ('" + AppID + "','" + RowN + "','" + ORE.Element_Key.Trim() + "','" + ORE.Element_Value.Replace("?", " ").Replace("  ", " ").Trim() + "')");
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
                                                             // Rotation Image :
-                                                            //if (IMG_Nor_Tag_Front == true)
-                                                            //{
-                                                            //    Img_Front_Nor = ImageRotation((Bitmap)Img_Front_Nor, OCR_TextOrientation);
-                                                            //}
-                                                            //if (IMG_Nor_Tag_Back == true)
-                                                            //{
-                                                            //    if ((OCR_TextOrientation_Back != "0") || (OCR_TextOrientation_Back != ""))
-                                                            //    {
-                                                            //        Img_Back_Nor = ImageRotation((Bitmap)Img_Back_Nor, OCR_TextOrientation_Back);
-                                                            //    }
-                                                            //    else
-                                                            //    {
-                                                            //        Img_Back_Nor = ImageRotation((Bitmap)Img_Back_Nor, OCR_TextOrientation);
-                                                            //    }
-                                                            //}
-                                                            //if (IMG_IR_Tag_Front == true)
-                                                            //{
-                                                            //    Img_Front_IR = ImageRotation((Bitmap)Img_Front_IR, OCR_TextOrientation);
-                                                            //}
-
-                                                            //if (IMG_IR_Tag_Back == true)
-                                                            //{
-                                                            //    if ((OCR_TextOrientation_Back != "0") || (OCR_TextOrientation_Back != ""))
-                                                            //    {
-                                                            //        Img_Back_IR = ImageRotation((Bitmap)Img_Back_IR, OCR_TextOrientation_Back);
-                                                            //    }
-                                                            //    else
-                                                            //    {
-                                                            //        Img_Back_IR = ImageRotation((Bitmap)Img_Back_IR, OCR_TextOrientation);
-                                                            //    }
-                                                            //}
-                                                            //if (IMG_UV_Tag_Front == true)
-                                                            //{
-                                                            //    Img_Front_UV = ImageRotation((Bitmap)Img_Front_UV, OCR_TextOrientation);
-                                                            //}
-                                                            //if (IMG_UV_Tag_Back == true)
-                                                            //{
-                                                            //    if ((OCR_TextOrientation_Back != "0") || (OCR_TextOrientation_Back != ""))
-                                                            //    {
-                                                            //        Img_Back_UV = ImageRotation((Bitmap)Img_Back_UV, OCR_TextOrientation_Back);
-                                                            //    }
-                                                            //    else
-                                                            //    {
-                                                            //        Img_Back_UV = ImageRotation((Bitmap)Img_Back_UV, OCR_TextOrientation);
-                                                            //    }
-                                                            //}
-                                                            // Crop Front Image :
-
-
-                                                            // Crop Back Image :
-
-
-                                                            // Save Result Images :
-                                                            string SIMGP = "";
+                                                            string IMG_Rotation_F = "0";
+                                                            string IMG_Rotation_B = "0";
+                                                            try
+                                                            {
+                                                                if ((OCR_Last_Front.ParsedResults != null) && (OCR_Last_Back.ParsedResults == null))
+                                                                {
+                                                                    IMG_Rotation_F = OCR_Last_Front.ParsedResults[0].TextOrientation.ToString().Trim();
+                                                                    IMG_Rotation_B = OCR_Last_Front.ParsedResults[0].TextOrientation.ToString().Trim();
+                                                                }
+                                                            }
+                                                            catch (Exception)
+                                                            {
+                                                                IMG_Rotation_F = "0";
+                                                                IMG_Rotation_B = "0";
+                                                            }
+                                                            try
+                                                            {
+                                                                if ((OCR_Last_Back.ParsedResults != null) && (OCR_Last_Front.ParsedResults == null))
+                                                                {
+                                                                    IMG_Rotation_F = OCR_Last_Back.ParsedResults[0].TextOrientation.ToString().Trim();
+                                                                    IMG_Rotation_B = OCR_Last_Back.ParsedResults[0].TextOrientation.ToString().Trim();
+                                                                }
+                                                            }
+                                                            catch (Exception)
+                                                            {
+                                                                IMG_Rotation_F = "0";
+                                                                IMG_Rotation_B = "0";
+                                                            }
+                                                            try
+                                                            {
+                                                                if ((OCR_Last_Front.ParsedResults != null) && (OCR_Last_Back.ParsedResults != null))
+                                                                {
+                                                                    IMG_Rotation_F = OCR_Last_Front.ParsedResults[0].TextOrientation.ToString().Trim();
+                                                                    IMG_Rotation_B = OCR_Last_Back.ParsedResults[0].TextOrientation.ToString().Trim();
+                                                                }
+                                                            }
+                                                            catch (Exception)
+                                                            {
+                                                                IMG_Rotation_F = "0";
+                                                                IMG_Rotation_B = "0";
+                                                            }
                                                             if (IMG_Nor_Tag_Front == true)
                                                             {
-                                                                SIMGP = "";
-                                                                SIMGP = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Result/2.jpg");
-                                                                Img_Front_Nor.Save(SIMGP, ImageFormat.Jpeg);
+                                                                if (FrontIMage_Rotated == false)
+                                                                {
+                                                                    Img_Front_Nor = ImageRotation((Bitmap)Img_Front_Nor, IMG_Rotation_F);
+                                                                }
                                                             }
                                                             if (IMG_Nor_Tag_Back == true)
                                                             {
-                                                                SIMGP = "";
-                                                                SIMGP = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Result/3.jpg");
-                                                                Img_Back_Nor.Save(SIMGP, ImageFormat.Jpeg);
+                                                                if (BackIMage_Rotated == false)
+                                                                {
+                                                                    Img_Back_Nor = ImageRotation((Bitmap)Img_Back_Nor, IMG_Rotation_B);
+                                                                }
                                                             }
                                                             if (IMG_IR_Tag_Front == true)
                                                             {
-                                                                SIMGP = "";
-                                                                SIMGP = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Result/4.jpg");
-                                                                Img_Front_IR.Save(SIMGP, ImageFormat.Jpeg);
+                                                                Img_Front_IR = ImageRotation((Bitmap)Img_Front_IR, IMG_Rotation_F);
                                                             }
                                                             if (IMG_IR_Tag_Back == true)
                                                             {
-                                                                SIMGP = "";
-                                                                SIMGP = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Result/5.jpg");
-                                                                Img_Back_IR.Save(SIMGP, ImageFormat.Jpeg);
+                                                                Img_Back_IR = ImageRotation((Bitmap)Img_Back_IR, IMG_Rotation_B);
                                                             }
                                                             if (IMG_UV_Tag_Front == true)
                                                             {
-                                                                SIMGP = "";
-                                                                SIMGP = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Result/6.jpg");
-                                                                Img_Front_UV.Save(SIMGP, ImageFormat.Jpeg);
+                                                                Img_Front_UV = ImageRotation((Bitmap)Img_Front_UV, IMG_Rotation_F);
                                                             }
                                                             if (IMG_UV_Tag_Back == true)
                                                             {
-                                                                SIMGP = "";
-                                                                SIMGP = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Result/7.jpg");
-                                                                Img_Back_UV.Save(SIMGP, ImageFormat.Jpeg);
+                                                                Img_Back_UV = ImageRotation((Bitmap)Img_Back_UV, IMG_Rotation_B);
                                                             }
-                                                            // Save Face Image :
-                                                            if (FaceDetected == true)
+                                                            // Crop X, Y, Width And Height Coeficion :
+                                                            Rectangle RFI = new Rectangle(0, 0, 0, 0);
+                                                            Rectangle RBI = new Rectangle(0, 0, 0, 0);
+                                                            try
+                                                            {
+                                                                if ((OCR_Last_Front.ParsedResults != null) && (OCR_Last_Back.ParsedResults == null))
+                                                                {
+                                                                    DataTable DTIS = new DataTable();
+                                                                    DTIS = SQ.Get_DTable_TSQL("Select Img_W,Img_H From Template_07_Images Where (DID = '" + LST_Template.TemplateID + "') And (ImageID = '1')");
+                                                                    try
+                                                                    {
+                                                                        double FIW = double.Parse(DTIS.Rows[0][0].ToString().Trim());
+                                                                        double FIH = double.Parse(DTIS.Rows[0][1].ToString().Trim());
+                                                                        RFI.X = (int)LST_Template.FrontImage_X_TopLeft_Refrence;
+                                                                        RFI.Y = (int)LST_Template.FrontImage_Y_TopLeft_Refrence;
+                                                                        RFI.Width = (int)(FIW * LST_Template.FrontImage_X_Coeficient);
+                                                                        RFI.Height = (int)(FIH * LST_Template.FrontImage_Y_Coeficient);
+                                                                    }
+                                                                    catch (Exception)
+                                                                    { }
+                                                                    RBI = RFI;
+                                                                }
+                                                            }
+                                                            catch (Exception) { }
+                                                            try
+                                                            {
+                                                                if ((OCR_Last_Back.ParsedResults != null) && (OCR_Last_Front.ParsedResults == null))
+                                                                {
+                                                                    DataTable DTIS = new DataTable();
+                                                                    DTIS = SQ.Get_DTable_TSQL("Select Img_W,Img_H From Template_07_Images Where (DID = '" + LST_Template.TemplateID + "') And (ImageID = '2')");
+                                                                    try
+                                                                    {
+                                                                        double BIW = double.Parse(DTIS.Rows[0][0].ToString().Trim());
+                                                                        double BIH = double.Parse(DTIS.Rows[0][1].ToString().Trim());
+                                                                        RBI.X = (int)LST_Template.BackImage_X_TopLeft_Refrence;
+                                                                        RBI.Y = (int)LST_Template.BackImage_Y_TopLeft_Refrence;
+                                                                        RBI.Width = (int)(BIW * LST_Template.BackImage_X_Coeficient);
+                                                                        RBI.Height = (int)(BIH * LST_Template.BackImage_Y_Coeficient);
+                                                                    }
+                                                                    catch (Exception)
+                                                                    { }
+                                                                    RFI = RBI;
+                                                                }
+                                                            }
+                                                            catch (Exception) { }
+                                                            try
+                                                            {
+                                                                if ((OCR_Last_Front.ParsedResults != null) && (OCR_Last_Back.ParsedResults != null))
+                                                                {
+                                                                    DataTable DTIS = new DataTable();
+                                                                    DTIS = SQ.Get_DTable_TSQL("Select Img_W,Img_H From Template_07_Images Where (DID = '" + LST_Template.TemplateID + "') And (ImageID = '1')");
+                                                                    try
+                                                                    {
+                                                                        double FIW = double.Parse(DTIS.Rows[0][0].ToString().Trim());
+                                                                        double FIH = double.Parse(DTIS.Rows[0][1].ToString().Trim());
+                                                                        RFI.X = (int)LST_Template.FrontImage_X_TopLeft_Refrence;
+                                                                        RFI.Y = (int)LST_Template.FrontImage_Y_TopLeft_Refrence;
+                                                                        RFI.Width = (int)(FIW * LST_Template.FrontImage_X_Coeficient);
+                                                                        RFI.Height = (int)(FIH * LST_Template.FrontImage_Y_Coeficient);
+                                                                    }
+                                                                    catch (Exception)
+                                                                    { }
+                                                                    DTIS = new DataTable();
+                                                                    DTIS = SQ.Get_DTable_TSQL("Select Img_W,Img_H From Template_07_Images Where (DID = '" + LST_Template.TemplateID + "') And (ImageID = '2')");
+                                                                    try
+                                                                    {
+                                                                        double BIW = double.Parse(DTIS.Rows[0][0].ToString().Trim());
+                                                                        double BIH = double.Parse(DTIS.Rows[0][1].ToString().Trim());
+                                                                        RBI.X = (int)LST_Template.BackImage_X_TopLeft_Refrence;
+                                                                        RBI.Y = (int)LST_Template.BackImage_Y_TopLeft_Refrence;
+                                                                        RBI.Width = (int)(BIW * LST_Template.BackImage_X_Coeficient);
+                                                                        RBI.Height = (int)(BIH * LST_Template.BackImage_Y_Coeficient);
+                                                                    }
+                                                                    catch (Exception)
+                                                                    { }
+                                                                }
+                                                            }
+                                                            catch (Exception) { }
+                                                            // Crop Image :
+                                                            try
+                                                            {
+                                                                if (IMG_Nor_Tag_Front == true) { Img_Front_Nor = CropImage(Img_Front_Nor, RFI); }
+                                                            } catch (Exception) {}
+                                                            try
+                                                            {
+                                                                if (IMG_Nor_Tag_Back == true) { Img_Back_Nor = CropImage(Img_Back_Nor, RBI); }
+                                                            } catch (Exception) {}
+                                                            try
+                                                            {
+                                                                if (IMG_IR_Tag_Front == true) { Img_Front_IR = CropImage(Img_Front_IR, RFI); }
+                                                            }
+                                                            catch (Exception) { }
+                                                            try
+                                                            {
+                                                                if (IMG_IR_Tag_Back == true) { Img_Back_IR = CropImage(Img_Back_IR, RBI); }
+                                                            }
+                                                            catch (Exception) { }
+                                                            try
+                                                            {
+                                                                if (IMG_UV_Tag_Front == true) { Img_Front_UV = CropImage(Img_Front_UV, RFI); }
+                                                            }
+                                                            catch (Exception) { }
+                                                            try
+                                                            {
+                                                                if (IMG_UV_Tag_Back == true) { Img_Back_UV = CropImage(Img_Back_UV, RBI); }
+                                                            }
+                                                            catch (Exception) { }
+                                                            // Save Result Images :
+                                                            if (IsDemo == 0)
+                                                            {
+                                                                string SIMGP = "";
+                                                                if (IMG_Nor_Tag_Front == true)
+                                                                {
+                                                                    SIMGP = "";
+                                                                    SIMGP = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Result/2.jpg");
+                                                                    Img_Front_Nor.Save(SIMGP, ImageFormat.Jpeg);
+                                                                }
+                                                                if (IMG_Nor_Tag_Back == true)
+                                                                {
+                                                                    SIMGP = "";
+                                                                    SIMGP = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Result/3.jpg");
+                                                                    Img_Back_Nor.Save(SIMGP, ImageFormat.Jpeg);
+                                                                }
+                                                                if (IMG_IR_Tag_Front == true)
+                                                                {
+                                                                    SIMGP = "";
+                                                                    SIMGP = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Result/4.jpg");
+                                                                    Img_Front_IR.Save(SIMGP, ImageFormat.Jpeg);
+                                                                }
+                                                                if (IMG_IR_Tag_Back == true)
+                                                                {
+                                                                    SIMGP = "";
+                                                                    SIMGP = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Result/5.jpg");
+                                                                    Img_Back_IR.Save(SIMGP, ImageFormat.Jpeg);
+                                                                }
+                                                                if (IMG_UV_Tag_Front == true)
+                                                                {
+                                                                    SIMGP = "";
+                                                                    SIMGP = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Result/6.jpg");
+                                                                    Img_Front_UV.Save(SIMGP, ImageFormat.Jpeg);
+                                                                }
+                                                                if (IMG_UV_Tag_Back == true)
+                                                                {
+                                                                    SIMGP = "";
+                                                                    SIMGP = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Result/7.jpg");
+                                                                    Img_Back_UV.Save(SIMGP, ImageFormat.Jpeg);
+                                                                }
+                                                                // Save Face Image :
+                                                                if (FaceDetected == true)
+                                                                {
+                                                                    try
+                                                                    {
+                                                                        Image Selected_IMG_LC = null;
+                                                                        Rectangle rct = FaceDetector_FB(Selected_IMG, ref Selected_IMG_LC);
+                                                                        Image FCIMG = CropImage(Selected_IMG_LC, rct);
+                                                                        SIMGP = "";
+                                                                        SIMGP = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Result/1.jpg");
+                                                                        FCIMG.Save(SIMGP, ImageFormat.Jpeg);
+                                                                    }
+                                                                    catch (Exception)
+                                                                    { }
+                                                                }
+                                                            }
+                                                            else
                                                             {
                                                                 try
                                                                 {
-                                                                    Rectangle rct = FaceDetector_FB(Selected_IMG);
-                                                                    Image FCIMG = CropImage(Selected_IMG, rct);
+                                                                    string SIMGP = "";
                                                                     SIMGP = "";
-                                                                    SIMGP = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/Result/1.jpg");
-                                                                    FCIMG.Save(SIMGP, ImageFormat.Jpeg);
+                                                                    SIMGP = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/DemoResult");
+                                                                    if (System.IO.Directory.Exists(SIMGP) == false)
+                                                                    {
+                                                                        System.IO.Directory.CreateDirectory(SIMGP);
+                                                                    }
+                                                                    if (IMG_Nor_Tag_Front == true)
+                                                                    {
+                                                                        SIMGP = "";
+                                                                        SIMGP = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/DemoResult/2.jpg");
+                                                                        Img_Front_Nor.Save(SIMGP, ImageFormat.Jpeg);
+                                                                    }
+                                                                    if (IMG_Nor_Tag_Back == true)
+                                                                    {
+                                                                        SIMGP = "";
+                                                                        SIMGP = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/DemoResult/3.jpg");
+                                                                        Img_Back_Nor.Save(SIMGP, ImageFormat.Jpeg);
+                                                                    }
+                                                                    if (IMG_IR_Tag_Front == true)
+                                                                    {
+                                                                        SIMGP = "";
+                                                                        SIMGP = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/DemoResult/4.jpg");
+                                                                        Img_Front_IR.Save(SIMGP, ImageFormat.Jpeg);
+                                                                    }
+                                                                    if (IMG_IR_Tag_Back == true)
+                                                                    {
+                                                                        SIMGP = "";
+                                                                        SIMGP = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/DemoResult/5.jpg");
+                                                                        Img_Back_IR.Save(SIMGP, ImageFormat.Jpeg);
+                                                                    }
+                                                                    if (IMG_UV_Tag_Front == true)
+                                                                    {
+                                                                        SIMGP = "";
+                                                                        SIMGP = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/DemoResult/6.jpg");
+                                                                        Img_Front_UV.Save(SIMGP, ImageFormat.Jpeg);
+                                                                    }
+                                                                    if (IMG_UV_Tag_Back == true)
+                                                                    {
+                                                                        SIMGP = "";
+                                                                        SIMGP = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/DemoResult/7.jpg");
+                                                                        Img_Back_UV.Save(SIMGP, ImageFormat.Jpeg);
+                                                                    }
+                                                                    // Save Face Image :
+                                                                    if (FaceDetected == true)
+                                                                    {
+                                                                        try
+                                                                        {
+                                                                            Image Selected_IMG_LC = null;
+                                                                            Rectangle rct = FaceDetector_FB(Selected_IMG, ref Selected_IMG_LC);
+                                                                            Image FCIMG = CropImage(Selected_IMG_LC, rct);
+                                                                            SIMGP = "";
+                                                                            SIMGP = System.Web.Hosting.HostingEnvironment.MapPath("~/Photos/Acuant/" + AppID + "/DemoResult/1.jpg");
+                                                                            FCIMG.Save(SIMGP, ImageFormat.Jpeg);
+                                                                        }
+                                                                        catch (Exception)
+                                                                        { }
+                                                                    }
                                                                 }
                                                                 catch (Exception)
                                                                 { }
@@ -1804,7 +2366,7 @@ namespace IDV_ScannerWS.Modules
                     SQ.Execute_TSql("Update US_DL_01_Application Set [Status_Code] = '3',[Status_Text] = 'Unknown',[ErrorMessage] = 'DT return null etting',[Update_Date] = '" + PB.Get_Date() + "',[Update_Time] = '" + PB.Get_Time() + "' Where (ApplicationID = '" + AppID + "')");
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {   // Structure Error.
                 SQ.Execute_TSql("Update US_DL_01_Application Set [Status_Code] = '3',[Status_Text] = 'Unknown',[ErrorMessage] = 'Local exception error',[Update_Date] = '" + PB.Get_Date() + "',[Update_Time] = '" + PB.Get_Time() + "' Where (ApplicationID = '" + AppID + "')");
             }
@@ -1812,4 +2374,6 @@ namespace IDV_ScannerWS.Modules
         //-----------------------------------------------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------
     }
+
+
 }

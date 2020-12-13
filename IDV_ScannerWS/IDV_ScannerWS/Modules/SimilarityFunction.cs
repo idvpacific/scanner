@@ -93,11 +93,12 @@ namespace IDV_ScannerWS.Modules
         }
         //----------------------------------------------------------------------------------------
         //----------------------------------------------------------------------------------------
-        public bool KeyDetector(ref int X, ref int Y, string Key, IList<Line> Lines, string Similarity, int KeyIndex)
+        public bool KeyDetector(ref int X, ref int Y, string Key, IList<Line> Lines, string Similarity, int KeyIndex, string KeyPosition)
         {
             try
             {
                 bool resTF = false;
+                KeyPosition = KeyPosition.Trim().ToUpper();
                 X = -1; Y = -1;
                 Key = Key.ToLower().Trim();
                 if (KeyIndex <= 0) { KeyIndex = 1; }
@@ -105,6 +106,8 @@ namespace IDV_ScannerWS.Modules
                 int SimilarityInt = int.Parse(Similarity);
                 int KeyFounded = 0;
                 Line SelectedLineKey = null;
+                Line SelectedLineKeySec = null;
+                Line SelectedLineKeyLst = null;
                 foreach (Line LN in Lines)
                 {
                     foreach (Word WD in LN.Words)
@@ -114,35 +117,481 @@ namespace IDV_ScannerWS.Modules
                             KeyFounded++;
                             if (KeyFounded >= KeyIndex)
                             {
-                                SelectedLineKey = LN;
+                                SelectedLineKeySec = LN;
                                 break;
                             }
-                        }
-                        if (SelectedLineKey != null) { break; }
-                    }
-                    if (SelectedLineKey != null) { break; }
-                }
-                if (SelectedLineKey != null)
-                {
-                    double LNTop = SelectedLineKey.MinTop;
-                    double LNHeight = SelectedLineKey.MaxHeight;
-                    Y = (int)Math.Round((LNTop + (LNTop + LNHeight)) / 2);
-                    foreach (Word WD in SelectedLineKey.Words)
-                    {
-                        if (X < 0)
-                        {
-                            X = (int)Math.Round(WD.Left);
-                        }
-                        else
-                        {
-                            if (X > WD.Left)
+                            else
                             {
-                                X = (int)Math.Round(WD.Left);
+                                SelectedLineKey = LN;
                             }
                         }
+                        if (SelectedLineKeySec != null) { break; }
                     }
-                    if ((Y >= 0) && (X >= 0)) { resTF = true; }
+                    if (SelectedLineKeySec != null) { break; }
                 }
+                if ((SelectedLineKey != null) && (SelectedLineKeySec == null)) { SelectedLineKeyLst = SelectedLineKey; }
+                if ((SelectedLineKey == null) && (SelectedLineKeySec != null)) { SelectedLineKeyLst = SelectedLineKeySec; }
+                if ((SelectedLineKey != null) && (SelectedLineKeySec != null))
+                {
+                    switch (KeyPosition)
+                    {
+                        case "T":
+                            {
+                                if (SelectedLineKey.MinTop <= SelectedLineKeySec.MinTop)
+                                {
+                                    SelectedLineKeyLst = SelectedLineKey;
+                                }
+                                else
+                                {
+                                    SelectedLineKeyLst = SelectedLineKeySec;
+                                }
+                                break;
+                            }
+                        //-----------------------------------------------
+                        case "TL":
+                            {
+                                if (SelectedLineKey.MinTop < SelectedLineKeySec.MinTop)
+                                {
+                                    SelectedLineKeyLst = SelectedLineKey;
+                                }
+                                else
+                                {
+                                    if (SelectedLineKey.MinTop == SelectedLineKeySec.MinTop)
+                                    {
+                                        int XK = 0;
+                                        int XKS = 0;
+                                        foreach (Word WD in SelectedLineKey.Words)
+                                        {
+                                            if ((int)(Math.Round(CalculateSimilarity(Key.ToUpper(), WD.WordText.Trim().ToUpper()) * 100)) >= SimilarityInt)
+                                            {
+                                                XK = (int)WD.Left;
+                                            }
+                                        }
+                                        foreach (Word WD in SelectedLineKeySec.Words)
+                                        {
+                                            if ((int)(Math.Round(CalculateSimilarity(Key.ToUpper(), WD.WordText.Trim().ToUpper()) * 100)) >= SimilarityInt)
+                                            {
+                                                XKS = (int)WD.Left;
+                                            }
+                                        }
+                                        if (XK <= XKS)
+                                        {
+                                            SelectedLineKeyLst = SelectedLineKey;
+                                        }
+                                        else
+                                        {
+                                            SelectedLineKeyLst = SelectedLineKeySec;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        SelectedLineKeyLst = SelectedLineKeySec;
+                                    }
+                                }
+                                break;
+                            }
+                        //-----------------------------------------------
+                        case "TB": { break; } // Wrong Definition 
+                        //-----------------------------------------------
+                        case "TR":
+                            {
+                                if (SelectedLineKey.MinTop < SelectedLineKeySec.MinTop)
+                                {
+                                    SelectedLineKeyLst = SelectedLineKey;
+                                }
+                                else
+                                {
+                                    if (SelectedLineKey.MinTop == SelectedLineKeySec.MinTop)
+                                    {
+                                        int XK = 0;
+                                        int XKS = 0;
+                                        foreach (Word WD in SelectedLineKey.Words)
+                                        {
+                                            if ((int)(Math.Round(CalculateSimilarity(Key.ToUpper(), WD.WordText.Trim().ToUpper()) * 100)) >= SimilarityInt)
+                                            {
+                                                XK = (int)WD.Left;
+                                            }
+                                        }
+                                        foreach (Word WD in SelectedLineKeySec.Words)
+                                        {
+                                            if ((int)(Math.Round(CalculateSimilarity(Key.ToUpper(), WD.WordText.Trim().ToUpper()) * 100)) >= SimilarityInt)
+                                            {
+                                                XKS = (int)WD.Left;
+                                            }
+                                        }
+                                        if (XK >= XKS)
+                                        {
+                                            SelectedLineKeyLst = SelectedLineKey;
+                                        }
+                                        else
+                                        {
+                                            SelectedLineKeyLst = SelectedLineKeySec;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        SelectedLineKeyLst = SelectedLineKeySec;
+                                    }
+                                }
+                                break;
+                            }
+                        //-----------------------------------------------
+                        case "L":
+                            {
+                                int XK = 0;
+                                int XKS = 0;
+                                foreach (Word WD in SelectedLineKey.Words)
+                                {
+                                    if ((int)(Math.Round(CalculateSimilarity(Key.ToUpper(), WD.WordText.Trim().ToUpper()) * 100)) >= SimilarityInt)
+                                    {
+                                        XK = (int)WD.Left;
+                                    }
+                                }
+                                foreach (Word WD in SelectedLineKeySec.Words)
+                                {
+                                    if ((int)(Math.Round(CalculateSimilarity(Key.ToUpper(), WD.WordText.Trim().ToUpper()) * 100)) >= SimilarityInt)
+                                    {
+                                        XKS = (int)WD.Left;
+                                    }
+                                }
+                                if (XK <= XKS)
+                                {
+                                    SelectedLineKeyLst = SelectedLineKey;
+                                }
+                                else
+                                {
+                                    SelectedLineKeyLst = SelectedLineKeySec;
+                                }
+                                break;
+                            }
+                        //-----------------------------------------------
+                        case "LT":
+                            {
+                                int XK = 0;
+                                int XKS = 0;
+                                foreach (Word WD in SelectedLineKey.Words)
+                                {
+                                    if ((int)(Math.Round(CalculateSimilarity(Key.ToUpper(), WD.WordText.Trim().ToUpper()) * 100)) >= SimilarityInt)
+                                    {
+                                        XK = (int)WD.Left;
+                                    }
+                                }
+                                foreach (Word WD in SelectedLineKeySec.Words)
+                                {
+                                    if ((int)(Math.Round(CalculateSimilarity(Key.ToUpper(), WD.WordText.Trim().ToUpper()) * 100)) >= SimilarityInt)
+                                    {
+                                        XKS = (int)WD.Left;
+                                    }
+                                }
+                                if (XK < XKS)
+                                {
+                                    SelectedLineKeyLst = SelectedLineKey;
+                                }
+                                else
+                                {
+                                    if (XK == XKS)
+                                    {
+                                        if (SelectedLineKey.MinTop <= SelectedLineKeySec.MinTop)
+                                        {
+                                            SelectedLineKeyLst = SelectedLineKey;
+                                        }
+                                        else
+                                        {
+                                            SelectedLineKeyLst = SelectedLineKeySec;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        SelectedLineKeyLst = SelectedLineKeySec;
+                                    }
+                                }
+                                break;
+                            }
+                        //-----------------------------------------------
+                        case "LB":
+                            {
+                                int XK = 0;
+                                int XKS = 0;
+                                foreach (Word WD in SelectedLineKey.Words)
+                                {
+                                    if ((int)(Math.Round(CalculateSimilarity(Key.ToUpper(), WD.WordText.Trim().ToUpper()) * 100)) >= SimilarityInt)
+                                    {
+                                        XK = (int)WD.Left;
+                                    }
+                                }
+                                foreach (Word WD in SelectedLineKeySec.Words)
+                                {
+                                    if ((int)(Math.Round(CalculateSimilarity(Key.ToUpper(), WD.WordText.Trim().ToUpper()) * 100)) >= SimilarityInt)
+                                    {
+                                        XKS = (int)WD.Left;
+                                    }
+                                }
+                                if (XK < XKS)
+                                {
+                                    SelectedLineKeyLst = SelectedLineKey;
+                                }
+                                else
+                                {
+                                    if (XK == XKS)
+                                    {
+                                        if (SelectedLineKey.MinTop >= SelectedLineKeySec.MinTop)
+                                        {
+                                            SelectedLineKeyLst = SelectedLineKey;
+                                        }
+                                        else
+                                        {
+                                            SelectedLineKeyLst = SelectedLineKeySec;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        SelectedLineKeyLst = SelectedLineKeySec;
+                                    }
+                                }
+                                break;
+                            }
+                        //-----------------------------------------------
+                        case "LR": { break; } // Wrong Definition 
+                        //-----------------------------------------------
+                        case "R":
+                            {
+                                int XK = 0;
+                                int XKS = 0;
+                                foreach (Word WD in SelectedLineKey.Words)
+                                {
+                                    if ((int)(Math.Round(CalculateSimilarity(Key.ToUpper(), WD.WordText.Trim().ToUpper()) * 100)) >= SimilarityInt)
+                                    {
+                                        XK = (int)WD.Left;
+                                    }
+                                }
+                                foreach (Word WD in SelectedLineKeySec.Words)
+                                {
+                                    if ((int)(Math.Round(CalculateSimilarity(Key.ToUpper(), WD.WordText.Trim().ToUpper()) * 100)) >= SimilarityInt)
+                                    {
+                                        XKS = (int)WD.Left;
+                                    }
+                                }
+                                if (XK >= XKS)
+                                {
+                                    SelectedLineKeyLst = SelectedLineKey;
+                                }
+                                else
+                                {
+                                    SelectedLineKeyLst = SelectedLineKeySec;
+                                }
+                                break;
+                            }
+                        //-----------------------------------------------
+                        case "RT":
+                            {
+                                int XK = 0;
+                                int XKS = 0;
+                                foreach (Word WD in SelectedLineKey.Words)
+                                {
+                                    if ((int)(Math.Round(CalculateSimilarity(Key.ToUpper(), WD.WordText.Trim().ToUpper()) * 100)) >= SimilarityInt)
+                                    {
+                                        XK = (int)WD.Left;
+                                    }
+                                }
+                                foreach (Word WD in SelectedLineKeySec.Words)
+                                {
+                                    if ((int)(Math.Round(CalculateSimilarity(Key.ToUpper(), WD.WordText.Trim().ToUpper()) * 100)) >= SimilarityInt)
+                                    {
+                                        XKS = (int)WD.Left;
+                                    }
+                                }
+                                if (XK > XKS)
+                                {
+                                    SelectedLineKeyLst = SelectedLineKey;
+                                }
+                                else
+                                {
+                                    if (XK == XKS)
+                                    {
+                                        if (SelectedLineKey.MinTop <= SelectedLineKeySec.MinTop)
+                                        {
+                                            SelectedLineKeyLst = SelectedLineKey;
+                                        }
+                                        else
+                                        {
+                                            SelectedLineKeyLst = SelectedLineKeySec;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        SelectedLineKeyLst = SelectedLineKeySec;
+                                    }
+                                }
+                                break;
+                            }
+                        //-----------------------------------------------
+                        case "RL": { break; } // Wrong Definition 
+                        //-----------------------------------------------
+                        case "RB":
+                            {
+                                int XK = 0;
+                                int XKS = 0;
+                                foreach (Word WD in SelectedLineKey.Words)
+                                {
+                                    if ((int)(Math.Round(CalculateSimilarity(Key.ToUpper(), WD.WordText.Trim().ToUpper()) * 100)) >= SimilarityInt)
+                                    {
+                                        XK = (int)WD.Left;
+                                    }
+                                }
+                                foreach (Word WD in SelectedLineKeySec.Words)
+                                {
+                                    if ((int)(Math.Round(CalculateSimilarity(Key.ToUpper(), WD.WordText.Trim().ToUpper()) * 100)) >= SimilarityInt)
+                                    {
+                                        XKS = (int)WD.Left;
+                                    }
+                                }
+                                if (XK > XKS)
+                                {
+                                    SelectedLineKeyLst = SelectedLineKey;
+                                }
+                                else
+                                {
+                                    if (XK == XKS)
+                                    {
+                                        if (SelectedLineKey.MinTop >= SelectedLineKeySec.MinTop)
+                                        {
+                                            SelectedLineKeyLst = SelectedLineKey;
+                                        }
+                                        else
+                                        {
+                                            SelectedLineKeyLst = SelectedLineKeySec;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        SelectedLineKeyLst = SelectedLineKeySec;
+                                    }
+                                }
+                                break;
+                            }
+                        //-----------------------------------------------
+                        case "B":
+                            {
+                                if (SelectedLineKey.MinTop >= SelectedLineKeySec.MinTop)
+                                {
+                                    SelectedLineKeyLst = SelectedLineKey;
+                                }
+                                else
+                                {
+                                    SelectedLineKeyLst = SelectedLineKeySec;
+                                }
+                                break;
+                            }
+                        //-----------------------------------------------
+                        case "BT": { break; } // Wrong Definition 
+                        //-----------------------------------------------
+                        case "BL":
+                            {
+                                if (SelectedLineKey.MinTop > SelectedLineKeySec.MinTop)
+                                {
+                                    SelectedLineKeyLst = SelectedLineKey;
+                                }
+                                else
+                                {
+                                    if (SelectedLineKey.MinTop == SelectedLineKeySec.MinTop)
+                                    {
+                                        int XK = 0;
+                                        int XKS = 0;
+                                        foreach (Word WD in SelectedLineKey.Words)
+                                        {
+                                            if ((int)(Math.Round(CalculateSimilarity(Key.ToUpper(), WD.WordText.Trim().ToUpper()) * 100)) >= SimilarityInt)
+                                            {
+                                                XK = (int)WD.Left;
+                                            }
+                                        }
+                                        foreach (Word WD in SelectedLineKeySec.Words)
+                                        {
+                                            if ((int)(Math.Round(CalculateSimilarity(Key.ToUpper(), WD.WordText.Trim().ToUpper()) * 100)) >= SimilarityInt)
+                                            {
+                                                XKS = (int)WD.Left;
+                                            }
+                                        }
+                                        if (XK <= XKS)
+                                        {
+                                            SelectedLineKeyLst = SelectedLineKey;
+                                        }
+                                        else
+                                        {
+                                            SelectedLineKeyLst = SelectedLineKeySec;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        SelectedLineKeyLst = SelectedLineKeySec;
+                                    }
+                                }
+                                break;
+                            }
+                        //-----------------------------------------------
+                        case "BR":
+                            {
+                                if (SelectedLineKey.MinTop > SelectedLineKeySec.MinTop)
+                                {
+                                    SelectedLineKeyLst = SelectedLineKey;
+                                }
+                                else
+                                {
+                                    if (SelectedLineKey.MinTop == SelectedLineKeySec.MinTop)
+                                    {
+                                        int XK = 0;
+                                        int XKS = 0;
+                                        foreach (Word WD in SelectedLineKey.Words)
+                                        {
+                                            if ((int)(Math.Round(CalculateSimilarity(Key.ToUpper(), WD.WordText.Trim().ToUpper()) * 100)) >= SimilarityInt)
+                                            {
+                                                XK = (int)WD.Left;
+                                            }
+                                        }
+                                        foreach (Word WD in SelectedLineKeySec.Words)
+                                        {
+                                            if ((int)(Math.Round(CalculateSimilarity(Key.ToUpper(), WD.WordText.Trim().ToUpper()) * 100)) >= SimilarityInt)
+                                            {
+                                                XKS = (int)WD.Left;
+                                            }
+                                        }
+                                        if (XK >= XKS)
+                                        {
+                                            SelectedLineKeyLst = SelectedLineKey;
+                                        }
+                                        else
+                                        {
+                                            SelectedLineKeyLst = SelectedLineKeySec;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        SelectedLineKeyLst = SelectedLineKeySec;
+                                    }
+                                }
+                                break;
+                            }
+                        //-----------------------------------------------
+                        default:
+                            {
+                                SelectedLineKeyLst = SelectedLineKey;
+                                break;
+                            }
+                    }
+                }
+                if (SelectedLineKeyLst != null)
+                {
+                    double LNTop = SelectedLineKeyLst.MinTop;
+                    double LNHeight = SelectedLineKeyLst.MaxHeight;
+                    Y = (int)Math.Round((LNTop + (LNTop + LNHeight)) / 2);
+                    foreach (Word WD in SelectedLineKeyLst.Words)
+                    {
+                        if ((int)(Math.Round(CalculateSimilarity(Key.ToUpper(), WD.WordText.Trim().ToUpper()) * 100)) >= SimilarityInt)
+                        {
+                            X = (int)WD.Left;
+                        }
+                    }
+                }
+                if ((Y >= 0) && (X >= 0)) { resTF = true; }
                 return resTF;
             }
             catch (Exception)

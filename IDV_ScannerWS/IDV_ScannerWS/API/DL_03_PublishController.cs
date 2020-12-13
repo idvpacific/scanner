@@ -26,7 +26,7 @@ namespace IDV_ScannerWS.API
 
 
 
-                string OCRType_Code = "1";
+                string OCRType_Code = "2";
                 // Code 1 : IDV OCR
                 // Code 2 : Accuant OCR
                 // Code 3 : Accuant Authentication
@@ -68,7 +68,7 @@ namespace IDV_ScannerWS.API
                             {
                                 if (OCRType_Code == "1")
                                 {
-                                    IDVOCR.GetData(APPID);
+                                    IDVOCR.GetData(APPID, 0);
                                 }
                                 else
                                 {
@@ -80,6 +80,7 @@ namespace IDV_ScannerWS.API
                                     {
                                         AID.GetData(APPID, true);
                                     }
+                                    IDVOCR.GetData(APPID, 1);
                                 }
                             });
                             LastRes = "OK";

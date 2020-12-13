@@ -4,12 +4,20 @@
     Layout = "~/Areas/DrivingLicence/Views/Shared/_LayoutAdminDL.cshtml";
 }
 
-<div onclick="RowEdit('@ViewBag.App_ID')" class="AddNoteF AddNoteFWH">
-    <div class="form-inline" style="text-align:center;width:100%;height:100%;">
-        <i class="fas fa-edit" style="font-size:25px"></i>
-        <i class="AddNoteFIT" style="font-size:16px;margin-left:12px">Edit Data</i>
-    </div>
-</div>
+@{
+    try
+    {
+        <div onclick="RowEdit('@ViewBag.App_ID')" class="AddNoteF AddNoteFWH">
+            <div class="form-inline" style="text-align:center;width:100%;height:100%;">
+                <i class="fas fa-edit" style="font-size:25px"></i>
+                <i class="AddNoteFIT" style="font-size:16px;margin-left:12px">Edit Data</i>
+            </div>
+        </div>
+    }
+    catch (Exception)
+    {
+    }
+}
 
 <div class="row">
     <div class="page-inner mt--5 col-lg-12">
@@ -21,44 +29,64 @@
                         <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
                             <div class="col-lg-2" style="text-align:center">
                                 <h3 style="color:#074595;font-size:17px;font-style:italic">Com. Code</h3>
-                                <h5>@ViewBag.Base[1].ToString().Trim()</h5>
+                                @{ try
+                                    { <h5>@ViewBag.Base[1].ToString().Trim()</h5> }
+                                catch (Exception) { } }
                             </div>
                             <div class="col-lg-4" style="text-align:center">
                                 <h3 style="color:#074595;font-size:17px;font-style:italic">Com.  Name</h3>
-                                <h5>@ViewBag.Base[2].ToString().Trim()</h5>
+                                @{ try
+                                    { <h5>@ViewBag.Base[2].ToString().Trim()</h5> }
+                                catch (Exception) { } }
                             </div>
                             <div class="col-lg-3" style="text-align:center">
                                 <h3 style="color:#074595;font-size:17px;font-style:italic">Dealer ID</h3>
-                                <h5>@ViewBag.Base[5].ToString().Trim()</h5>
+                                @{ try
+                                    { <h5>@ViewBag.Base[5].ToString().Trim()</h5> }
+                                catch (Exception) { } }
                             </div>
                             <div class="col-lg-3" style="text-align:center">
                                 <h3 style="color:#074595;font-size:17px;font-style:italic">Device ID</h3>
-                                <h5>@ViewBag.Base[6].ToString().Trim()</h5>
+                                @{ try
+                                    { <h5>@ViewBag.Base[6].ToString().Trim()</h5> }
+                                catch (Exception) { } }
                             </div>
                             <hr style="width:100%;height:1px;padding-bottom:10px" />
                             <div class="col-lg-2" style="text-align:center">
                                 <h3 style="color:#074595;font-size:17px;font-style:italic">Status</h3>
-                                <h5>@ViewBag.Base[12].ToString().Trim()</h5>
+                                @{ try
+                                    { <h5>@ViewBag.Base[12].ToString().Trim()</h5> }
+                                catch (Exception) { } }
                             </div>
                             <div class="col-lg-2" style="text-align: center">
                                 <h3 style="color:#074595;font-size:17px;font-style:italic">IP</h3>
-                                <h5>@ViewBag.Base[7].ToString().Trim()</h5>
+                                @{ try
+                                    { <h5>@ViewBag.Base[7].ToString().Trim()</h5> }
+                                catch (Exception) { } }
                             </div>
                             <div class="col-lg-2" style="text-align:center">
                                 <h3 style="color: #074595;font-size:17px;font-style:italic">Publish Date</h3>
-                                <h5>@ViewBag.Base[8].ToString().Trim()</h5>
+                                @{ try
+                                    { <h5>@ViewBag.Base[8].ToString().Trim()</h5> }
+                                catch (Exception) { } }
                             </div>
                             <div class="col-lg-2" style="text-align:center">
                                 <h3 style="color:#074595;font-size:17px;font-style:italic">Publish Time</h3>
-                                <h5>@ViewBag.Base[9].ToString().Trim()</h5>
+                                @{ try
+                                    { <h5>@ViewBag.Base[9].ToString().Trim()</h5> }
+                                catch (Exception) { } }
                             </div>
                             <div class="col-lg-2" style="text-align:center">
                                 <h3 style="color:#074595;font-size:17px;font-style:italic">Update Date</h3>
-                                <h5>@ViewBag.Base[13].ToString().Trim()</h5>
+                                @{ try
+                                    { <h5>@ViewBag.Base[13].ToString().Trim()</h5> }
+                                catch (Exception) { } }
                             </div>
                             <div class="col-lg-2" style="text-align:center">
                                 <h3 style="color:#074595;font-size:17px;font-style:italic">Update Time</h3>
-                                <h5>@ViewBag.Base[14].ToString().Trim()</h5>
+                                @{ try
+                                    { <h5>@ViewBag.Base[14].ToString().Trim()</h5> }
+                                catch (Exception) { } }
                             </div>
                         </div>
                     </div>
@@ -74,7 +102,11 @@
                         <div class="card-title" style="color:#146de0"><i class="fas fa-image"></i> Face Image</div>
                         <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
                             <div class="col-lg-12" style="text-align:center;height:150px">
-                                <img id="IMG1" onclick="ShowRealSize('1')" alt="Face Image" src="~/Photos/Acuant/@ViewBag.App_ID/Result/1.jpg" style="border-radius:10px;height:150px;width:auto;cursor:pointer" />
+                                @{ try
+                                    {
+                                        <img id="IMG1" onclick="ShowRealSize('1')" alt="Face Image" src="~/Photos/Acuant/@ViewBag.App_ID/Result/1.jpg" style="border-radius:10px;height:150px;width:auto;cursor:pointer" />
+                                    }
+                                    catch (Exception) { } }
                             </div>
                         </div>
                     </div>
@@ -90,7 +122,11 @@
                         <div class="card-title" style="color:#146de0"><i class="fas fa-image"></i> Signature Image</div>
                         <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
                             <div class="col-lg-12" style="text-align:center;height:150px">
-                                <img id="IMG8" onclick="ShowRealSize('8')" alt="Signature Image" src="~/Photos/Acuant/@ViewBag.App_ID/Result/8.jpg" style="border-radius:10px;height:150px;width:auto;cursor:pointer" />
+                                @{ try
+                                    {
+                                        <img id="IMG8" onclick="ShowRealSize('8')" alt="Signature Image" src="~/Photos/Acuant/@ViewBag.App_ID/Result/8.jpg" style="border-radius:10px;height:150px;width:auto;cursor:pointer" />
+                                    }
+                                    catch (Exception) { } }
                             </div>
                         </div>
                     </div>
@@ -106,7 +142,11 @@
                         <div class="card-title" style="color:#146de0"><i class="fas fa-images"></i> Visible Front Image</div>
                         <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
                             <div class="col-lg-12" style="text-align:center;height:200px">
-                                <img id="IMG2" onclick="ShowRealSize('2')" alt="Visible Front Image" src="~/Photos/Acuant/@ViewBag.App_ID/Result/2.jpg" style="border-radius:10px;height:200px;width:auto;cursor:pointer" />
+                                @{ try
+                                    {
+                                        <img id="IMG2" onclick="ShowRealSize('2')" alt="Visible Front Image" src="~/Photos/Acuant/@ViewBag.App_ID/Result/2.jpg" style="border-radius:10px;height:200px;width:auto;cursor:pointer" />
+                                    }
+                                    catch (Exception) { } }
                             </div>
                         </div>
                     </div>
@@ -122,7 +162,11 @@
                         <div class="card-title" style="color:#146de0"><i class="fas fa-images"></i> Visible Back Image</div>
                         <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
                             <div class="col-lg-12" style="text-align:center;height:200px">
-                                <img id="IMG3" onclick="ShowRealSize('3')" alt="Visible Back Image" src="~/Photos/Acuant/@ViewBag.App_ID/Result/3.jpg" style="border-radius:10px;height:200px;width:auto;cursor:pointer" />
+                                @{ try
+                                    {
+                                        <img id="IMG3" onclick="ShowRealSize('3')" alt="Visible Back Image" src="~/Photos/Acuant/@ViewBag.App_ID/Result/3.jpg" style="border-radius:10px;height:200px;width:auto;cursor:pointer" />
+                                    }
+                                    catch (Exception) { } }
                             </div>
                         </div>
                     </div>
@@ -138,7 +182,11 @@
                         <div class="card-title" style="color:#146de0"><i class="fas fa-images"></i> IR Front Image</div>
                         <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
                             <div class="col-lg-12" style="text-align:center;height:200px">
-                                <img id="IMG4" onclick="ShowRealSize('4')" alt="IR Front Image" src="~/Photos/Acuant/@ViewBag.App_ID/Result/4.jpg" style="border-radius:10px;height:200px;width:auto;cursor:pointer" />
+                                @{ try
+                                    {
+                                        <img id="IMG4" onclick="ShowRealSize('4')" alt="IR Front Image" src="~/Photos/Acuant/@ViewBag.App_ID/Result/4.jpg" style="border-radius:10px;height:200px;width:auto;cursor:pointer" />
+                                    }
+                                    catch (Exception) { } }
                             </div>
                         </div>
                     </div>
@@ -154,7 +202,11 @@
                         <div class="card-title" style="color:#146de0"><i class="fas fa-images"></i> IR Back Image</div>
                         <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
                             <div class="col-lg-12" style="text-align:center;height:200px">
-                                <img id="IMG5" onclick="ShowRealSize('5')" alt="IR Back Image" src="~/Photos/Acuant/@ViewBag.App_ID/Result/5.jpg" style="border-radius:10px;height:200px;width:auto;cursor:pointer" />
+                                @{ try
+                                    {
+                                        <img id="IMG5" onclick="ShowRealSize('5')" alt="IR Back Image" src="~/Photos/Acuant/@ViewBag.App_ID/Result/5.jpg" style="border-radius:10px;height:200px;width:auto;cursor:pointer" />
+                                    }
+                                    catch (Exception) { } }
                             </div>
                         </div>
                     </div>
@@ -170,7 +222,11 @@
                         <div class="card-title" style="color:#146de0"><i class="fas fa-images"></i> Ultra Violet Front Image</div>
                         <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
                             <div class="col-lg-12" style="text-align:center;height:200px">
-                                <img id="IMG6" onclick="ShowRealSize('6')" alt="UltraViolet Front Image" src="~/Photos/Acuant/@ViewBag.App_ID/Result/6.jpg" style="border-radius:10px;height:200px;width:auto;cursor:pointer" />
+                                @{ try
+                                    {
+                                        <img id="IMG6" onclick="ShowRealSize('6')" alt="UltraViolet Front Image" src="~/Photos/Acuant/@ViewBag.App_ID/Result/6.jpg" style="border-radius:10px;height:200px;width:auto;cursor:pointer" />
+                                    }
+                                    catch (Exception) { } }
                             </div>
                         </div>
                     </div>
@@ -186,7 +242,11 @@
                         <div class="card-title" style="color:#146de0"><i class="fas fa-images"></i> Ultra Violet Back Image</div>
                         <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
                             <div class="col-lg-12" style="text-align:center;height:200px">
-                                <img id="IMG7" onclick="ShowRealSize('7')" alt="UltraViolet Back Image" src="~/Photos/Acuant/@ViewBag.App_ID/Result/7.jpg" style="border-radius:10px;height:200px;width:auto;cursor:pointer" />
+                                @{ try
+                                    {
+                                        <img id="IMG7" onclick="ShowRealSize('7')" alt="UltraViolet Back Image" src="~/Photos/Acuant/@ViewBag.App_ID/Result/7.jpg" style="border-radius:10px;height:200px;width:auto;cursor:pointer" />
+                                    }
+                                    catch (Exception) { } }
                             </div>
                         </div>
                     </div>
@@ -197,10 +257,10 @@
 </div>
 
 <div class="row">
-    <div class="mt--4 col-lg-12">
+    <div class="mt--4 col-lg-6">
         <div class="card">
             <div class="card-header">
-                <div class="card-title" style="color:#146de0"><i class="fas fa-table"></i> OCR Data</div>
+                <div class="card-title" style="color:#146de0"><i class="fas fa-table"></i> Accuant OCR</div>
             </div>
             <div class="card-body table-full-width">
                 <div class="table-responsive">
@@ -208,22 +268,64 @@
                         <thead>
                             <tr>
                                 <th scope="col" style="text-align:center">OCR ID</th>
-                                <th scope="col" style="text-align:center">Key</th>
-                                <th scope="col" style="text-align:center">Value</th>
+                                <th scope="col" style="text-align:left">Key</th>
+                                <th scope="col" style="text-align:left">Value</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @if (ViewBag.OCR != null)
-                            {
-                                foreach (DataRow Row in ViewBag.OCR)
+                            @{ try
                                 {
-                                    <tr>
-                                        <td style="text-align:center">@Row[0].ToString().Trim()</td>
-                                        <td style="text-align:center">@Row[1].ToString().Trim()</td>
-                                        <td style="text-align:left">@Row[2].ToString().Trim()</td>
-                                    </tr>
+                                    if (ViewBag.OCR != null)
+                                    {
+                                        foreach (DataRow Row in ViewBag.OCR)
+                                        {
+                                            <tr>
+                                                <td style="text-align:center">@Row[0].ToString().Trim()</td>
+                                                <td style="text-align:left">@Row[1].ToString().Trim()</td>
+                                                <td style="text-align:left">@Row[2].ToString().Trim()</td>
+                                            </tr>
+                                        }
+                                    }
                                 }
-                            }
+                                catch (Exception) { } }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt--4 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title" style="color:#146de0"><i class="fas fa-table"></i> IDV OCR</div>
+            </div>
+            <div class="card-body table-full-width">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="text-align:center">OCR ID</th>
+                                <th scope="col" style="text-align:left">Key</th>
+                                <th scope="col" style="text-align:left">Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ try
+                                {
+                                    if (ViewBag.IDVOCR != null)
+                                    {
+                                        foreach (DataRow Row in ViewBag.IDVOCR)
+                                        {
+                                            <tr>
+                                                <td style="text-align:center">@Row[0].ToString().Trim()</td>
+                                                <td style="text-align:left">@Row[1].ToString().Trim()</td>
+                                                <td style="text-align:left">@Row[2].ToString().Trim()</td>
+                                            </tr>
+                                        }
+                                    }
+                                }
+                                catch (Exception) { } }
                         </tbody>
                     </table>
                 </div>
@@ -247,17 +349,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if (ViewBag.Confirm != null)
-                            {
-                                foreach (DataRow Row in ViewBag.Confirm)
+                            @{ try
                                 {
-                                    <tr>
-                                        <td style="text-align:center">@Row[0].ToString().Trim()</td>
-                                        <td style="text-align:center">@Row[1].ToString().Trim()</td>
-                                        <td style="text-align:left">@Row[2].ToString().Trim()</td>
-                                    </tr>
+                                    if (ViewBag.Confirm != null)
+                                    {
+                                        foreach (DataRow Row in ViewBag.Confirm)
+                                        {
+                                            <tr>
+                                                <td style="text-align:center">@Row[0].ToString().Trim()</td>
+                                                <td style="text-align:center">@Row[1].ToString().Trim()</td>
+                                                <td style="text-align:left">@Row[2].ToString().Trim()</td>
+                                            </tr>
+                                        }
+                                    }
                                 }
-                            }
+                                catch (Exception) { } }
                         </tbody>
                     </table>
                 </div>
@@ -278,17 +384,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if (ViewBag.Alert != null)
-                            {
-                                int RowC = 0;
-                                foreach (DataRow Row in ViewBag.Alert)
+                            @{ try
                                 {
-                                    RowC++;
-                                    <tr>
-                                        <td style="text-align:left">@Row[0].ToString().Trim()</td>
-                                    </tr>
+                                    if (ViewBag.Alert != null)
+                                    {
+                                        int RowC = 0;
+                                        foreach (DataRow Row in ViewBag.Alert)
+                                        {
+                                            RowC++;
+                                            <tr>
+                                                <td style="text-align:left">@Row[0].ToString().Trim()</td>
+                                            </tr>
+                                        }
+                                    }
                                 }
-                            }
+                                catch (Exception) { } }
                         </tbody>
                     </table>
                 </div>
@@ -310,16 +420,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if (ViewBag.Contact != null)
-                            {
-                                foreach (DataRow Row in ViewBag.Contact)
+                            @{ try
                                 {
-                                    <tr>
-                                        <td style="text-align:center">@Row[0].ToString().Trim()</td>
-                                        <td style="text-align:center">@Row[1].ToString().Trim()</td>
-                                    </tr>
+                                    if (ViewBag.Contact != null)
+                                    {
+                                        foreach (DataRow Row in ViewBag.Contact)
+                                        {
+                                            <tr>
+                                                <td style="text-align:center">@Row[0].ToString().Trim()</td>
+                                                <td style="text-align:center">@Row[1].ToString().Trim()</td>
+                                            </tr>
+                                        }
+                                    }
                                 }
-                            }
+                                catch (Exception) { } }
                         </tbody>
                     </table>
                 </div>

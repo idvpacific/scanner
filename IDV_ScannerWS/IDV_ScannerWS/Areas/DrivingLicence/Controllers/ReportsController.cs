@@ -38,6 +38,9 @@ namespace IDV_ScannerWS.Areas.DrivingLicence.Controllers
                         DataTable DTOCR = new DataTable();
                         DTOCR = SQ.Get_DTable_TSQL("Select Document_ID,Document_Key,Document_Value From US_DL_03_Documents Where (App_ID = '" + AppID + "')");
                         ViewBag.OCR = DTOCR.Rows;
+                        DataTable DTOCRIDV = new DataTable();
+                        DTOCRIDV = SQ.Get_DTable_TSQL("Select Document_ID,Document_Key,Document_Value From US_DL_03_Documents_OCR Where (App_ID = '" + AppID + "')");
+                        ViewBag.IDVOCR = DTOCRIDV.Rows;
                         DataTable DTCON = new DataTable();
                         DTCON = SQ.Get_DTable_TSQL("Select Document_ID,Document_Key,Document_Value From US_DL_04_DocumentsLast Where (App_ID = '" + AppID + "')");
                         ViewBag.Confirm = DTCON.Rows;
